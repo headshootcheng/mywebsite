@@ -4,12 +4,28 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "watch:style": "postcss ./styles/tailwind.css -o ./styles/output.css  -w",
+    "build:style": "postcss ./styles/tailwind.css -o ./styles/output.css --env prodution ",
+    "build": "npm run build:style && next build",
+    "start": "next start",
+    "lint": "eslint --fix --ext .js,.jsx ."
   },
   "dependencies": {
+    "@tailwindcss/jit": "^0.1.18",
+    "autoprefixer": "^10.2.5",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.25.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-unused-imports": "^1.1.1",
     "next": "^10.0.0",
+    "postcss": "^8.2.13",
+    "postcss-cli": "^8.3.1",
+    "prettier": "^2.2.1",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "tailwindcss": "^2.1.2"
   }
 }
