@@ -8,10 +8,14 @@
     "build:style": "postcss ./styles/tailwind.css -o ./styles/output.css --env prodution ",
     "build": "npm run build:style && next build",
     "start": "next start",
-    "lint": "eslint --fix --ext .js,.jsx ."
+    "lint": "eslint --fix --ext .ts,.tsx ."
   },
   "dependencies": {
     "@tailwindcss/jit": "^0.1.18",
+    "@types/node": "^15.0.1",
+    "@types/react": "^17.0.4",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
     "autoprefixer": "^10.2.5",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.25.0",
@@ -26,6 +30,8 @@
     "prettier": "^2.2.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "tailwindcss": "^2.1.2"
+    "tailwindcss": "^2.1.2",
+    "typescipt": "^1.0.0",
+    "typescript": "^4.2.4"
   }
 }
