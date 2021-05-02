@@ -1,0 +1,21 @@
+.header{
+    @apply h-20 
+}
+.toolbar{
+    @apply flex flex-row items-center justify-between  mx-4
+}
+
+.menuList{
+    @apply flex flex-row items-center justify-end
+}
+
+.title{
+    font-family: 'Pacifico', cursive;
+    @apply  text-2xl
+}
+
+.option{
+    @apply  mx-3 text-xl ;
+    font-family: 'Nunito Sans', sans-serif;
+    
+}

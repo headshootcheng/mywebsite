@@ -558,12 +558,8 @@ video {
 	--tw-ring-shadow: 0 0 #0000;
 }
 
-.bg-green-600 {
-	--tw-bg-opacity: 1;
-	background-color: rgba(5, 150, 105, var(--tw-bg-opacity));
+.flex-1 {
+	flex: 1 1 0%;
 }
-
-.text-red-900 {
-	--tw-text-opacity: 1;
-	color: rgba(127, 29, 29, var(--tw-text-opacity));
-}
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200&family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300&family=Pacifico&display=swap');

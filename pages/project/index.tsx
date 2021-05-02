@@ -1,14 +1,15 @@
 import React from "react";
 import Head from "next/head";
-const Home = () => {
+
+const Project = () => {
   return (
     <>
       <Head>
-        <title>Home</title>
+        <title>My Project</title>
       </Head>
-      <div>Home</div>
+      <div>project</div>
     </>
   );
 };
 
-export default Home;
+export default Project;
