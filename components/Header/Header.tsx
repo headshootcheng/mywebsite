@@ -9,6 +9,11 @@ interface Props {
   window?: () => Window;
   children: React.ReactElement;
 }
+interface option {
+  id: string;
+  link: string;
+  display: string;
+}
 
 const HideOnScroll = (props: Props) => {
   const { children, window } = props;
@@ -19,16 +24,7 @@ const HideOnScroll = (props: Props) => {
     </Slide>
   );
 };
-const Header = () => {
-  interface option {
-    id: string;
-    link: string;
-    display: string;
-  }
-  const menuOptionList: option[] = [
-    { id: "home", link: "/", display: "Home" },
-    { id: "project", link: "/project", display: "Project" },
-  ];
+const Header = ({ menuOptionList }: { menuOptionList: option[] }) => {
   return (
     <HideOnScroll>
       <AppBar className={classes.header} color="transparent">
