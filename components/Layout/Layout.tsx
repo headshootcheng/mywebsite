@@ -1,8 +1,16 @@
 import React from "react";
 import Header from "../Header/Header";
 import classes from "./Layout.module.css";
-
-const Layout = (props) => {
+interface option {
+  id: string;
+  link: string;
+  display: string;
+}
+interface Props {
+  menuOptionList: option[];
+  children?: React.ReactNode;
+}
+const Layout = (props: Props) => {
   return (
     <>
       <Header menuOptionList={props.menuOptionList} />
