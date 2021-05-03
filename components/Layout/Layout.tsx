@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { option } from "../../utils/globalInterface";
 import Header from "../Header/Header";
-import Sidebar from "../Sidebar/sidebar";
+import Sidebar from "../Sidebar/Sidebar";
 import classes from "./Layout.module.css";
 
 interface Props {
