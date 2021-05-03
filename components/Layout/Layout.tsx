@@ -1,20 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
+import { option } from "../../utils/globalInterface";
 import Header from "../Header/Header";
+import Sidebar from "../Sidebar/sidebar";
 import classes from "./Layout.module.css";
-interface option {
-  id: string;
-  link: string;
-  display: string;
-}
+
 interface Props {
   menuOptionList: option[];
   children?: React.ReactNode;
 }
 const Layout = (props: Props) => {
+  const [isMenuOpen, setMenuOpen] = useState<boolean>(false);
+
+  const onCloseMenu: () => void = () => {
+    setMenuOpen(false);
+  };
+
+  const onOpenMenu: () => void = () => {
+    setMenuOpen(true);
+  };
+
   return (
     <>
-      <Header menuOptionList={props.menuOptionList} />
-      <div className={classes.wrapper}>{props.children}</div>
+      <Header menuOptionList={props.menuOptionList} onOpenMenu={onOpenMenu} />
+      <div className={classes.wrapper}>
+        <Sidebar
+          menuOptionList={props.menuOptionList}
+          onCloseMenu={onCloseMenu}
+          isMenuOpen={isMenuOpen}
+        />
+        {props.children}
+      </div>
     </>
   );
 };

@@ -1,35 +1,28 @@
 import React from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Slide from "@material-ui/core/Slide";
-import useScrollTrigger from "@material-ui/core/useScrollTrigger";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
 import classes from "./Header.module.css";
 import Link from "next/link";
-interface Props {
-  window?: () => Window;
-  children: React.ReactElement;
-}
-interface option {
-  id: string;
-  link: string;
-  display: string;
-}
+import * as ScreenUtil from "../../utils/screenUtil";
+import { option } from "../../utils/globalInterface";
 
-const HideOnScroll = (props: Props) => {
-  const { children, window } = props;
-  const trigger = useScrollTrigger({ target: window ? window() : undefined });
+interface Props {
+  menuOptionList: option[];
+  onOpenMenu: () => void;
+}
+const Header = ({ menuOptionList, onOpenMenu }: Props) => {
   return (
-    <Slide appear={false} direction="down" in={!trigger}>
-      {children}
-    </Slide>
-  );
-};
-const Header = ({ menuOptionList }: { menuOptionList: option[] }) => {
-  return (
-    <HideOnScroll>
-      <AppBar className={classes.header} color="transparent">
-        <Toolbar className={classes.toolbar}>
-          <span className={classes.title}>Petercheng</span>
+    <AppBar className={classes.header} color="transparent">
+      <Toolbar className={classes.toolbar}>
+        {ScreenUtil.isMobile() && <div />}
+        <span className={classes.title}>petercheng</span>
+        {ScreenUtil.isMobile() ? (
+          <IconButton onClick={() => onOpenMenu()}>
+            <MenuIcon />
+          </IconButton>
+        ) : (
           <div className={classes.menuList}>
             {menuOptionList.map(({ id, link, display }) => {
               return (
@@ -39,9 +32,9 @@ const Header = ({ menuOptionList }: { menuOptionList: option[] }) => {
               );
             })}
           </div>
-        </Toolbar>
-      </AppBar>
-    </HideOnScroll>
+        )}
+      </Toolbar>
+    </AppBar>
   );
 };
 

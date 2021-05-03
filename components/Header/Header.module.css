@@ -2,7 +2,7 @@
     @apply h-20 
 }
 .toolbar{
-    @apply flex flex-row items-center justify-between  mx-4
+    @apply flex flex-row items-center justify-between 
 }
 
 .menuList{
@@ -11,7 +11,7 @@
 
 .title{
     font-family: 'Pacifico', cursive;
-    @apply  text-2xl
+    @apply  text-2xl pl-12 md:pl-0
 }
 
 .option{
