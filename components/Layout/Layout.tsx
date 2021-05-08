@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { option } from "../../utils/globalInterface";
 import Header from "../Header/Header";
 import Sidebar from "../Sidebar/Sidebar";
-import classes from "./Layout.module.css";
+import classes from "./Layout.module.scss";
+import ClassName from "classnames";
 
 interface Props {
   menuOptionList: option[];
@@ -22,7 +23,7 @@ const Layout = (props: Props) => {
   return (
     <>
       <Header menuOptionList={props.menuOptionList} onOpenMenu={onOpenMenu} />
-      <div className={classes.wrapper}>
+      <div className={ClassName(classes.wrapper)}>
         <Sidebar
           menuOptionList={props.menuOptionList}
           onCloseMenu={onCloseMenu}

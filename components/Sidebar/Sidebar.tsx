@@ -1,8 +1,9 @@
 import Drawer from "@material-ui/core/Drawer";
 import ListItem from "@material-ui/core/ListItem";
 import { option } from "../../utils/globalInterface";
-import classes from "./Sidebar.module.css";
+import classes from "./Sidebar.module.scss";
 import Link from "next/link";
+import ClassName from "classnames";
 interface Props {
   onCloseMenu: () => void;
   isMenuOpen: boolean;
@@ -11,7 +12,7 @@ interface Props {
 const sidebar = ({ onCloseMenu, isMenuOpen, menuOptionList }: Props) => {
   return (
     <Drawer anchor="right" open={isMenuOpen} onClose={onCloseMenu}>
-      <div onKeyDown={onCloseMenu} className={classes.sideBar}>
+      <div onKeyDown={onCloseMenu} className={ClassName(classes.sideBar)}>
         {menuOptionList.map(({ id, link, display }) => {
           return (
             <ListItem key={id}>

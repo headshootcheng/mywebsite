@@ -3,10 +3,11 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import classes from "./Header.module.css";
+import classes from "./Header.module.scss";
 import Link from "next/link";
 import * as ScreenUtil from "../../utils/screenUtil";
 import { option } from "../../utils/globalInterface";
+import ClassName from "classnames";
 
 interface Props {
   menuOptionList: option[];
@@ -27,7 +28,7 @@ const Header = ({ menuOptionList, onOpenMenu }: Props) => {
             {menuOptionList.map(({ id, link, display }) => {
               return (
                 <Link href={link} key={id}>
-                  <a className={classes.option}>{display}</a>
+                  <a className={ClassName(classes.option)}>{display}</a>
                 </Link>
               );
             })}
