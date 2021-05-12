@@ -29,7 +29,7 @@ const Home = () => {
       <div className={ClassName(styles.wrapper)}>
         <div className={ClassName(styles.img)}>
           <Image
-            src="/personalphoto.jpg"
+            src="/profile/personalphoto.jpg"
             alt="Picture of the author"
             width={ScreenUtil.isMobile() ? 250 : 400}
             height={ScreenUtil.isMobile() ? 300 : 500}

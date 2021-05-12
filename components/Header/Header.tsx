@@ -15,7 +15,7 @@ interface Props {
 }
 const Header = ({ menuOptionList, onOpenMenu }: Props) => {
   return (
-    <AppBar className={classes.header} color="transparent">
+    <AppBar className={classes.header} color="transparent" position="sticky">
       <Toolbar className={classes.toolbar}>
         {ScreenUtil.isMobile() && <div />}
         <span className={classes.title}>petercheng</span>
