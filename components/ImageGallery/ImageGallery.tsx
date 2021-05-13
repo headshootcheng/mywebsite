@@ -4,7 +4,20 @@ import SwiperCore, { Navigation, Pagination } from "swiper";
 SwiperCore.use([Navigation, Pagination]);
 import styles from "./ImageGallery.module.scss";
 import Image from "next/image";
-const ImageGallery = () => {
+import { useRouter } from "next/router";
+interface Project {
+  id: string;
+  image: string;
+  title: string;
+}
+interface Props {
+  projectList: Project[];
+}
+const ImageGallery = ({ projectList }: Props) => {
+  const router = useRouter();
+  const handleProjectClick = (id) => {
+    router.push("/project/" + id);
+  };
   return (
     <Swiper
       className={styles.swiper}
@@ -20,32 +33,25 @@ const ImageGallery = () => {
       }}
       pagination={{ clickable: true }}
       // onSlideChange={() => console.log("slide change")}
-      // onSwiper={(swiper) => console.log(swiper)}
+      //onSwiper={(swiper) => console.log("swiper", swiper)}
     >
-      <SwiperSlide className={styles.swiperSlide}>
-        <Image src="/superwhackamole/game.jpg" layout="fill" />
-        <div className={styles.textBlock}>
-          <div className={styles.textArea}>
-            <span className={styles.text}>Super Whack A Mole</span>
-          </div>
-        </div>
-      </SwiperSlide>
-      <SwiperSlide className={styles.swiperSlide}>
-        <Image src="/iefyp/app.jpg" layout="fill" />
-        <div className={styles.textBlock}>
-          <div className={styles.textArea}>
-            <span className={styles.text}>Final Year Project</span>
-          </div>
-        </div>
-      </SwiperSlide>
-      <SwiperSlide className={styles.swiperSlide}>
-        <Image src="/friendchat/dashboard.jpg" layout="fill" />
-        <div className={styles.textBlock}>
-          <div className={styles.textArea}>
-            <span className={styles.text}>Friend Chat</span>
-          </div>
-        </div>
-      </SwiperSlide>
+      {(projectList || []).map(({ image, title, id }) => {
+        return (
+          <SwiperSlide className={styles.swiperSlide} key={id}>
+            <Image src={image} layout="fill" />
+            <div className={styles.textBlock}>
+              <div className={styles.textArea}>
+                <button
+                  className={styles.text}
+                  onClick={() => handleProjectClick(id)}
+                >
+                  {title}
+                </button>
+              </div>
+            </div>
+          </SwiperSlide>
+        );
+      })}
     </Swiper>
   );
 };
