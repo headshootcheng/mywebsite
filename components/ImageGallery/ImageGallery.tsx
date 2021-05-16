@@ -5,13 +5,9 @@ SwiperCore.use([Navigation, Pagination]);
 import styles from "./ImageGallery.module.scss";
 import Image from "next/image";
 import { useRouter } from "next/router";
-interface Project {
-  id: string;
-  image: string;
-  title: string;
-}
+import { projectdata } from "../../utils/globalInterface";
 interface Props {
-  projectList: Project[];
+  projectList: projectdata[];
 }
 const ImageGallery = ({ projectList }: Props) => {
   const router = useRouter();

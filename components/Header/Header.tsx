@@ -10,15 +10,16 @@ import { option } from "../../utils/globalInterface";
 import ClassName from "classnames";
 
 interface Props {
+  title: string;
   menuOptionList: option[];
   onOpenMenu: () => void;
 }
-const Header = ({ menuOptionList, onOpenMenu }: Props) => {
+const Header = ({ title, menuOptionList, onOpenMenu }: Props) => {
   return (
     <AppBar className={classes.header} color="transparent" position="sticky">
       <Toolbar className={classes.toolbar}>
         {ScreenUtil.isMobile() && <div />}
-        <span className={classes.title}>petercheng</span>
+        <span className={classes.title}>{title || ""}</span>
         {ScreenUtil.isMobile() ? (
           <IconButton onClick={() => onOpenMenu()}>
             <MenuIcon />

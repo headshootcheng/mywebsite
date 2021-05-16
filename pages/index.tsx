@@ -1,7 +1,6 @@
 import React from "react";
 import Head from "next/head";
 import Image from "next/image";
-
 import ClassName from "classnames";
 import styles from "./main.module.scss";
 import * as ScreenUtil from "../utils/screenUtil";
@@ -9,17 +8,24 @@ import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import IconButton from "@material-ui/core/IconButton";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
-const Home = () => {
+import { GetStaticProps } from "next";
+import { homedata } from "../utils/globalInterface";
+
+interface Props {
+  homeData: homedata;
+  error: string;
+}
+const Home = ({ homeData, error }: Props) => {
   const goToLinkedin = () => {
-    window.open("https://www.linkedin.com/in/peter-cheng-56146814a/");
+    if (homeData) window.open(homeData.linkedin);
   };
 
   const goToGitHub = () => {
-    window.open("https://github.com/headshootcheng");
+    if (homeData) window.open(homeData.github);
   };
 
   const goToGitbook = () => {
-    window.open("https://petercheng7788.gitbook.io/developer-note/");
+    if (homeData) window.open(homeData.gitbook);
   };
   return (
     <>
@@ -29,7 +35,7 @@ const Home = () => {
       <div className={ClassName(styles.wrapper)}>
         <div className={ClassName(styles.img)}>
           <Image
-            src="/profile/personalphoto.jpg"
+            src={homeData?.icon || ""}
             alt="Picture of the author"
             width={ScreenUtil.isMobile() ? 250 : 400}
             height={ScreenUtil.isMobile() ? 300 : 500}
@@ -37,15 +43,7 @@ const Home = () => {
         </div>
         <div className={ClassName(styles.textbox)}>
           <span className={ClassName(styles.introText)}>
-            Hi! I am Peter Cheng! I graduate in the Chinese University of Hong
-            Kong and currently act as a software developer. I love to explore
-            new thing and accept different challenges. In my short term of goal,
-            I would like to grow up, develop different projects by using new
-            technology, but also communicate more with other developers so as to
-            understand my weakness and improve my coding skill and communication
-            skill. Ultimatly, I would like to make some contribution to the
-            society with help of technology and organize my own startup company
-            !!!
+            {homeData?.intro || ""}
           </span>
           <div className={ClassName(styles.iconRow)}>
             <IconButton style={{ outline: "none" }} onClick={goToLinkedin}>
@@ -62,6 +60,18 @@ const Home = () => {
       </div>
     </>
   );
+};
+export const getStaticProps: GetStaticProps = async () => {
+  try {
+    const { homeData } = await await import("../data/home.js");
+    return {
+      props: { homeData, error: "hi" },
+    };
+  } catch (error) {
+    return {
+      props: { error: error.message },
+    };
+  }
 };
 
 export default Home;

@@ -22,7 +22,11 @@ const Layout = (props: Props) => {
 
   return (
     <>
-      <Header menuOptionList={props.menuOptionList} onOpenMenu={onOpenMenu} />
+      <Header
+        title="petercheng"
+        menuOptionList={props.menuOptionList}
+        onOpenMenu={onOpenMenu}
+      />
       <div className={ClassName(classes.wrapper)}>
         <Sidebar
           menuOptionList={props.menuOptionList}
