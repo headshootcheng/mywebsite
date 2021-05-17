@@ -17,3 +17,12 @@ export interface projectdata {
   image: string;
   title: string;
 }
+
+export interface projectdetail {
+  title: string;
+  gitHub: string;
+  detail: projectdata[];
+  date: string;
+  explanation: string[];
+  tech: string[];
+}

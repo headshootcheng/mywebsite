@@ -1,3 +1,37 @@
 .wrapper{
     @apply flex items-center justify-center h-full overflow-auto
 }
+
+.projectDetailWrapper{
+    @apply pt-20 pb-10 h-full overflow-auto 
+}
+
+.projectContent{
+    @apply my-10 px-[17%] ;
+}
+.projectContentRow{
+    @apply flex flex-row items-center my-2;
+    >*:last-child{
+        @apply ml-4
+    } 
+}
+.projectContentTitle{
+    @apply text-lg md:text-3xl text-white; 
+    font-family: 'Varela Round', sans-serif;
+}
+
+.projectContentText{
+    @apply text-lg md:text-3xl text-white;
+}
+
+.githubIcon{
+    @apply cursor-pointer;
+}
+
+.projectContentPointList{
+    list-style-type: square;
+    @apply text-white text-lg md:text-3xl text-white px-5;
+    *{
+        @apply my-2
+    }
+}

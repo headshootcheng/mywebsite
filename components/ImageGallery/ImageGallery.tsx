@@ -4,16 +4,12 @@ import SwiperCore, { Navigation, Pagination } from "swiper";
 SwiperCore.use([Navigation, Pagination]);
 import styles from "./ImageGallery.module.scss";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import { projectdata } from "../../utils/globalInterface";
 interface Props {
   projectList: projectdata[];
+  onClickSlide: (id: string) => void;
 }
-const ImageGallery = ({ projectList }: Props) => {
-  const router = useRouter();
-  const handleProjectClick = (id) => {
-    router.push("/project/" + id);
-  };
+const ImageGallery = ({ projectList, onClickSlide = () => {} }: Props) => {
   return (
     <Swiper
       className={styles.swiper}
@@ -33,16 +29,15 @@ const ImageGallery = ({ projectList }: Props) => {
     >
       {(projectList || []).map(({ image, title, id }) => {
         return (
-          <SwiperSlide className={styles.swiperSlide} key={id}>
+          <SwiperSlide
+            className={styles.swiperSlide}
+            key={id}
+            onClick={() => onClickSlide(id)}
+          >
             <Image src={image} layout="fill" />
             <div className={styles.textBlock}>
               <div className={styles.textArea}>
-                <button
-                  className={styles.text}
-                  onClick={() => handleProjectClick(id)}
-                >
-                  {title}
-                </button>
+                <span className={styles.text}>{title}</span>
               </div>
             </div>
           </SwiperSlide>

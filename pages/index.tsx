@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import ClassName from "classnames";
@@ -15,17 +15,18 @@ interface Props {
   homeData: homedata;
   error: string;
 }
-const Home = ({ homeData, error }: Props) => {
+const Home = (props: Props) => {
+  const [homeData, setHomeData] = useState<homedata>(props?.homeData || {});
   const goToLinkedin = () => {
-    if (homeData) window.open(homeData.linkedin);
+    if (homeData?.linkedin) window.open(homeData.linkedin);
   };
 
   const goToGitHub = () => {
-    if (homeData) window.open(homeData.github);
+    if (homeData?.github) window.open(homeData.github);
   };
 
   const goToGitbook = () => {
-    if (homeData) window.open(homeData.gitbook);
+    if (homeData?.gitbook) window.open(homeData.gitbook);
   };
   return (
     <>
