@@ -1,0 +1,24 @@
+.navBar{
+    @apply fixed right-20  top-1/3  h-3/5 w-28
+}
+
+.navButtonWrapper{
+    @apply bg-black ;
+}
+
+.navButton{
+    @apply w-full h-10 ;
+}
+
+.navBox{
+    @apply w-full h-20 flex items-center justify-center bg-gray-600;
+}
+
+.navBoxActive{
+    @apply w-full h-20 flex items-center justify-center bg-green-400;
+}
+
+.navBoxText{
+    @apply text-white text-lg ;
+    font-family: 'Varela Round', sans-serif;
+}

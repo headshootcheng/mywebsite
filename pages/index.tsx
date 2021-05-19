@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import Head from "next/head";
-import Image from "next/image";
-import ClassName from "classnames";
 import styles from "./main.module.scss";
-import * as ScreenUtil from "../utils/screenUtil";
-import LinkedInIcon from "@material-ui/icons/LinkedIn";
-import IconButton from "@material-ui/core/IconButton";
-import GitHubIcon from "@material-ui/icons/GitHub";
-import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 import { GetStaticProps } from "next";
 import { homedata } from "../utils/globalInterface";
+import Welcome from "../components/Welcome/Welcome";
+import Profile from "../components/Profile/Profile";
+import Experience from "../components/Experience/Experience";
+import Skill from "../components/Skill/Skill";
+import Project from "../components/Project/Project";
+import Contact from "../components/Contact/Contact";
+import MobileNavBar from "../components/MobileNavBar/MobileNavBar";
+import { isMobile } from "../utils/screenUtil";
+import NavBar from "../components/NavBar/NavBar";
 
 interface Props {
   homeData: homedata;
@@ -28,36 +30,20 @@ const Home = (props: Props) => {
   const goToGitbook = () => {
     if (homeData?.gitbook) window.open(homeData.gitbook);
   };
+
   return (
     <>
       <Head>
         <title>Home</title>
       </Head>
-      <div className={ClassName(styles.wrapper)}>
-        <div className={ClassName(styles.img)}>
-          <Image
-            src={homeData?.icon || ""}
-            alt="Picture of the author"
-            width={ScreenUtil.isMobile() ? 250 : 400}
-            height={ScreenUtil.isMobile() ? 300 : 500}
-          />
-        </div>
-        <div className={ClassName(styles.textbox)}>
-          <span className={ClassName(styles.introText)}>
-            {homeData?.intro || ""}
-          </span>
-          <div className={ClassName(styles.iconRow)}>
-            <IconButton style={{ outline: "none" }} onClick={goToLinkedin}>
-              <LinkedInIcon style={{ fontSize: 50, color: "white" }} />
-            </IconButton>
-            <IconButton style={{ outline: "none" }} onClick={goToGitHub}>
-              <GitHubIcon style={{ fontSize: 50, color: "white" }} />
-            </IconButton>
-            <IconButton style={{ outline: "none" }} onClick={goToGitbook}>
-              <LibraryBooksIcon style={{ fontSize: 50, color: "white" }} />
-            </IconButton>
-          </div>
-        </div>
+      <div className={styles.wrapper}>
+        {isMobile() ? <MobileNavBar /> : <NavBar />}
+        <Welcome />
+        <Profile />
+        <Experience />
+        <Skill />
+        <Project />
+        <Contact />
       </div>
     </>
   );
@@ -66,7 +52,7 @@ export const getStaticProps: GetStaticProps = async () => {
   try {
     const { homeData } = await await import("../data/home.js");
     return {
-      props: { homeData, error: "hi" },
+      props: { homeData },
     };
   } catch (error) {
     return {

@@ -1,26 +1,25 @@
 .wrapper{
-    @apply flex flex-col  items-center md:flex-row  px-3 md:px-20 py-5 md:py-0  h-full overflow-auto;
-    >*:not(:first-child){
-        @apply md:ml-5 mt-5 md:mt-0 
-    } 
+    @apply overflow-auto;
 }
 
-.img{
-    @apply flex-shrink-0 flex justify-center;
-}
-.textbox{
-    @apply  md:w-4/6 text-center md:text-left
-}
 
-.introText{
-    @apply text-white  text-xl md:text-3xl;
-    font-family: 'Varela Round', sans-serif;
-}
 
-.iconRow{
-    @apply mt-2 flex justify-center flex-row;
-    *{
-        @apply mx-2;
-    }
-}
+// .img{
+//     @apply flex-shrink-0 flex justify-center;
+// }
+// .textbox{
+//     @apply  md:w-4/6 text-center md:text-left
+// }
+
+// .introText{
+//     @apply text-white  text-xl md:text-3xl;
+//     font-family: 'Varela Round', sans-serif;
+// }
+
+// .iconRow{
+//     @apply mt-2 flex justify-center flex-row;
+//     *{
+//         @apply mx-2;
+//     }
+// }
 
