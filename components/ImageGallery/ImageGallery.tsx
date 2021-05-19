@@ -34,7 +34,7 @@ const ImageGallery = ({ projectList, onClickSlide = () => {} }: Props) => {
             key={id}
             onClick={() => onClickSlide(id)}
           >
-            <Image src={image} layout="fill" />
+            <Image src={image} layout="fill" objectFit="contain" />
             <div className={styles.textBlock}>
               <div className={styles.textArea}>
                 <span className={styles.text}>{title}</span>
