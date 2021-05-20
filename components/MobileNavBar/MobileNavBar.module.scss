@@ -4,11 +4,11 @@
 }
 
 .topbarRow{
-    @apply flex flex-row items-center h-full flex-wrap ;
+    @apply flex flex-row items-center  justify-around h-full flex-wrap ;
 }
 
 .topbarOptionBox{
-    @apply mx-2 w-20 flex justify-center
+    @apply mx-2 w-1/4 flex justify-center
 }
 
 .topbarOptionBoxActive{
