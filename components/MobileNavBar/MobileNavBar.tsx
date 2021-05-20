@@ -1,24 +1,28 @@
 import React from "react";
 import styles from "./MobileNavBar.module.scss";
-const MobileNavBar = () => {
+import { nav } from "../../utils/globalInterface";
+import ClassName from "classnames";
+interface Props {
+  navList: nav[];
+  currentPage: string;
+}
+const MobileNavBar = ({ navList, currentPage }: Props) => {
   return (
     <div className={styles.topbar}>
       <div className={styles.topbarRow}>
-        <div>
-          <span className={styles.topbarOptionText}>Profile</span>
-        </div>
-        <div>
-          <span className={styles.topbarOptionText}>Experience</span>
-        </div>
-        <div>
-          <span className={styles.topbarOptionText}>Skill</span>
-        </div>
-        <div>
-          <span className={styles.topbarOptionText}>Project</span>
-        </div>
-        <div>
-          <span className={styles.topbarOptionText}>Contact</span>
-        </div>
+        {navList.map(({ title, onPress }) => {
+          return (
+            <div
+              className={ClassName(styles.topbarOptionBox, {
+                [styles.topbarOptionBoxActive]: title === currentPage,
+              })}
+              onClick={onPress}
+              key={title}
+            >
+              <span className={styles.topbarOptionText}>{title}</span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

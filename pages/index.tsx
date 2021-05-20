@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState, useMemo, useEffect } from "react";
 import Head from "next/head";
 import styles from "./main.module.scss";
 import { GetStaticProps } from "next";
@@ -18,18 +18,117 @@ interface Props {
   error: string;
 }
 const Home = (props: Props) => {
-  const [homeData, setHomeData] = useState<homedata>(props?.homeData || {});
-  const goToLinkedin = () => {
-    if (homeData?.linkedin) window.open(homeData.linkedin);
+  const welcomeRef = useRef<HTMLDivElement>(null);
+  const profileRef = useRef<HTMLDivElement>(null);
+  const experienceRef = useRef<HTMLDivElement>(null);
+  const skillRef = useRef<HTMLDivElement>(null);
+  const projectRef = useRef<HTMLDivElement>(null);
+  const contactRef = useRef<HTMLDivElement>(null);
+  // const [homeData, setHomeData] = useState<homedata>(props?.homeData || {});
+  // const goToLinkedin = () => {
+  //   if (homeData?.linkedin) window.open(homeData.linkedin);
+  // };
+
+  // const goToGitHub = () => {
+  //   if (homeData?.github) window.open(homeData.github);
+  // };
+
+  // const goToGitbook = () => {
+  //   if (homeData?.gitbook) window.open(homeData.gitbook);
+  // };
+
+  const navList = useMemo(
+    () => [
+      {
+        title: "Welcome",
+        onPress: () => {
+          window.scrollTo(0, welcomeRef.current.offsetTop);
+        },
+      },
+      {
+        title: "Profile",
+        onPress: () => {
+          window.scrollTo(0, profileRef.current.offsetTop);
+        },
+      },
+      {
+        title: "Experience",
+        onPress: () => {
+          window.scrollTo(0, experienceRef.current.offsetTop);
+        },
+      },
+      {
+        title: "Skill",
+        onPress: () => {
+          window.scrollTo(0, skillRef.current.offsetTop);
+        },
+      },
+      {
+        title: "Project",
+        onPress: () => {
+          window.scrollTo(0, projectRef.current.offsetTop);
+        },
+      },
+      {
+        title: "Contact",
+        onPress: () => {
+          window.scrollTo(0, contactRef.current.offsetTop);
+        },
+      },
+    ],
+    []
+  );
+
+  const [currentPage, setCurrentPage] = useState(navList[0].title || "Welcome");
+
+  const updatePostion = () => {
+    if (
+      window.pageYOffset >= welcomeRef.current.offsetTop &&
+      window.pageYOffset < profileRef.current.offsetTop
+    ) {
+      setCurrentPage(navList[0].title);
+      return;
+    }
+    if (
+      window.pageYOffset >= profileRef.current.offsetTop &&
+      window.pageYOffset < experienceRef.current.offsetTop
+    ) {
+      setCurrentPage(navList[1].title);
+      return;
+    }
+    if (
+      window.pageYOffset >= experienceRef.current.offsetTop &&
+      window.pageYOffset < skillRef.current.offsetTop
+    ) {
+      setCurrentPage(navList[2].title);
+      return;
+    }
+    if (
+      window.pageYOffset >= skillRef.current.offsetTop &&
+      window.pageYOffset < projectRef.current.offsetTop
+    ) {
+      setCurrentPage(navList[3].title);
+      return;
+    }
+    if (
+      window.pageYOffset >= projectRef.current.offsetTop &&
+      window.pageYOffset < contactRef.current.offsetTop
+    ) {
+      setCurrentPage(navList[4].title);
+      return;
+    }
+    if (window.pageYOffset >= contactRef.current.offsetTop) {
+      setCurrentPage(navList[5].title);
+      return;
+    }
   };
 
-  const goToGitHub = () => {
-    if (homeData?.github) window.open(homeData.github);
-  };
-
-  const goToGitbook = () => {
-    if (homeData?.gitbook) window.open(homeData.gitbook);
-  };
+  useEffect(() => {
+    window.addEventListener("scroll", updatePostion);
+    return () => {
+      window.removeEventListener("scroll", updatePostion);
+    };
+  }, []);
 
   return (
     <>
@@ -37,13 +136,17 @@ const Home = (props: Props) => {
         <title>Home</title>
       </Head>
       <div className={styles.wrapper}>
-        {isMobile() ? <MobileNavBar /> : <NavBar />}
-        <Welcome />
-        <Profile />
-        <Experience />
-        <Skill />
-        <Project />
-        <Contact />
+        {isMobile() ? (
+          <MobileNavBar navList={navList} currentPage={currentPage} />
+        ) : (
+          <NavBar navList={navList} currentPage={currentPage} />
+        )}
+        <Welcome ref={welcomeRef} />
+        <Profile ref={profileRef} />
+        <Experience ref={experienceRef} />
+        <Skill ref={skillRef} />
+        <Project ref={projectRef} />
+        <Contact ref={contactRef} />
       </div>
     </>
   );

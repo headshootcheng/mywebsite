@@ -5,9 +5,14 @@
 
 .topbarRow{
     @apply flex flex-row items-center h-full flex-wrap ;
-    *{
-        @apply mx-4 
-    }
+}
+
+.topbarOptionBox{
+    @apply mx-2 w-20 flex justify-center
+}
+
+.topbarOptionBoxActive{
+    @apply border-b-4 border-yellow-600;
 }
 
 .topbarOptionText{

@@ -3,8 +3,14 @@ import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import IconButton from "@material-ui/core/IconButton";
 import styles from "./NavBar.module.scss";
+import { nav } from "../../utils/globalInterface";
+import ClassName from "classnames";
+interface Props {
+  navList: nav[];
+  currentPage: string;
+}
 
-const NavBar = () => {
+const NavBar = ({ navList, currentPage }: Props) => {
   return (
     <div className={styles.navBar}>
       <div className={styles.navButtonWrapper}>
@@ -17,12 +23,19 @@ const NavBar = () => {
           <KeyboardArrowUpIcon style={{ color: "white" }} fontSize="large" />
         </IconButton>
       </div>
-      <div className={styles.navBox}>
-        <span className={styles.navBoxText}>Profile</span>
-      </div>
-      <div className={styles.navBoxActive}>
-        <span className={styles.navBoxText}>Experience</span>
-      </div>
+      {navList.map(({ title, onPress }) => {
+        return (
+          <div
+            className={ClassName(styles.navBox, {
+              [styles.navBoxActive]: title === currentPage,
+            })}
+            key={title}
+            onClick={onPress}
+          >
+            <span className={styles.navBoxText}>{title}</span>
+          </div>
+        );
+      })}
       <div className={styles.navButtonWrapper}>
         <IconButton
           style={{ outline: "none" }}

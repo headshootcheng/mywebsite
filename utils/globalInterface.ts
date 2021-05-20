@@ -12,6 +12,11 @@ export interface homedata {
   github: string;
 }
 
+export interface nav {
+  title: string;
+  onPress: () => void;
+}
+
 export interface projectdata {
   id: string;
   image: string;
