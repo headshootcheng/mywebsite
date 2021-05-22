@@ -24,7 +24,7 @@ const Home = (props: Props) => {
   const skillRef = useRef<HTMLDivElement>(null);
   const projectRef = useRef<HTMLDivElement>(null);
   const contactRef = useRef<HTMLDivElement>(null);
-  // const [homeData, setHomeData] = useState<homedata>(props?.homeData || {});
+  const [homeData, setHomeData] = useState<homedata>(props?.homeData || {});
   // const goToLinkedin = () => {
   //   if (homeData?.linkedin) window.open(homeData.linkedin);
   // };
@@ -42,37 +42,55 @@ const Home = (props: Props) => {
       {
         title: "Welcome",
         onPress: () => {
-          window.scrollTo(0, welcomeRef.current.offsetTop);
+          window.scrollTo({
+            top: welcomeRef.current.offsetTop,
+            behavior: "smooth",
+          });
         },
       },
       {
         title: "Profile",
         onPress: () => {
-          window.scrollTo(0, profileRef.current.offsetTop);
+          window.scrollTo({
+            top: profileRef.current.offsetTop,
+            behavior: "smooth",
+          });
         },
       },
       {
         title: "Experience",
         onPress: () => {
-          window.scrollTo(0, experienceRef.current.offsetTop);
+          window.scrollTo({
+            top: experienceRef.current.offsetTop,
+            behavior: "smooth",
+          });
         },
       },
       {
         title: "Skill",
         onPress: () => {
-          window.scrollTo(0, skillRef.current.offsetTop);
+          window.scrollTo({
+            top: skillRef.current.offsetTop,
+            behavior: "smooth",
+          });
         },
       },
       {
         title: "Project",
         onPress: () => {
-          window.scrollTo(0, projectRef.current.offsetTop);
+          window.scrollTo({
+            top: projectRef.current.offsetTop,
+            behavior: "smooth",
+          });
         },
       },
       {
         title: "Contact",
         onPress: () => {
-          window.scrollTo(0, contactRef.current.offsetTop);
+          window.scrollTo({
+            top: contactRef.current.offsetTop,
+            behavior: "smooth",
+          });
         },
       },
     ],
@@ -80,8 +98,9 @@ const Home = (props: Props) => {
   );
 
   const [currentPage, setCurrentPage] = useState(navList[0].title || "Welcome");
-
-  const updatePostion = () => {
+  const [showMenu, setShowMenu] = useState(false);
+  const [mobileNavHeight, setHeight] = useState(0);
+  const updatePosition = () => {
     if (
       window.pageYOffset >= welcomeRef.current.offsetTop &&
       window.pageYOffset < profileRef.current.offsetTop
@@ -123,10 +142,29 @@ const Home = (props: Props) => {
     }
   };
 
+  const handleMenuOpen = () => {
+    // Manipulate the appearance of desktop menu
+    if (window.pageYOffset > profileRef.current.offsetTop) setShowMenu(true);
+    else setShowMenu(false);
+
+    // Manipulate the height of mobile menu
+    const heightRatio =
+      (window.pageYOffset - profileRef.current.offsetTop) / 300;
+    if (heightRatio > 1) setHeight(80);
+    else if (heightRatio < 0) setHeight(0);
+    else setHeight(80 * heightRatio);
+  };
+
   useEffect(() => {
-    window.addEventListener("scroll", updatePostion);
+    window.addEventListener("scroll", () => {
+      updatePosition();
+      handleMenuOpen();
+    });
     return () => {
-      window.removeEventListener("scroll", updatePostion);
+      window.removeEventListener("scroll", () => {
+        updatePosition();
+        handleMenuOpen();
+      });
     };
   }, []);
 
@@ -137,12 +175,20 @@ const Home = (props: Props) => {
       </Head>
       <div className={styles.wrapper}>
         {isMobile() ? (
-          <MobileNavBar navList={navList} currentPage={currentPage} />
+          <MobileNavBar
+            navList={navList}
+            currentPage={currentPage}
+            height={mobileNavHeight}
+          />
         ) : (
-          <NavBar navList={navList} currentPage={currentPage} />
+          showMenu && <NavBar navList={navList} currentPage={currentPage} />
         )}
         <Welcome ref={welcomeRef} />
-        <Profile ref={profileRef} />
+        <Profile
+          image={homeData?.icon || ""}
+          introText={homeData?.intro || ""}
+          ref={profileRef}
+        />
         <Experience ref={experienceRef} />
         <Skill ref={skillRef} />
         <Project ref={projectRef} />

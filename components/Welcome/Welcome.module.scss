@@ -1,3 +1,27 @@
 .welcomeWrapper{
-    @apply h-screen w-full bg-yellow-300
+    background-image: url("../../public/background/welcome.jpg");
+    background-size: auto;
+    color: inherit;
+    @apply h-screen w-full ;
+    
 }
+
+.colorWrapper{
+    opacity: 0.75;
+    @apply w-full h-full bg-gray-800 flex flex-col items-center justify-center;
+}
+.titleArea{
+    @apply flex items-end md:items-center justify-center  pb-5 md:pb-0 h-1/4  w-3/4 md:w-1/2 border-white border-b-2
+}
+.title{
+    @apply  text-3xl md:text-8xl text-white ;
+    font-family: 'Pacifico', cursive;
+}
+
+.subtitleArea{
+    @apply flex justify-center h-1/4  w-3/4 md:w-1/2 mt-2  pt-5
+}
+.subtitle{
+    @apply text-base text-white font-mono italic;
+}
+

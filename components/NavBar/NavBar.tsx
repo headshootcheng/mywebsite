@@ -11,10 +11,27 @@ interface Props {
 }
 
 const NavBar = ({ navList, currentPage }: Props) => {
+  const scrollToNextItem = () => {
+    const currentIndex = navList.findIndex(
+      ({ title }) => title === currentPage
+    );
+    if (currentIndex >= 0 && currentIndex < navList.length - 1)
+      navList[currentIndex + 1].onPress();
+  };
+
+  const scrollToPrevItem = () => {
+    const currentIndex = navList.findIndex(
+      ({ title }) => title === currentPage
+    );
+    if (currentIndex > 0 && currentIndex <= navList.length - 1)
+      navList[currentIndex - 1].onPress();
+  };
+
   return (
     <div className={styles.navBar}>
       <div className={styles.navButtonWrapper}>
         <IconButton
+          onClick={scrollToPrevItem}
           style={{ outline: "none" }}
           className={styles.navButton}
           disableFocusRipple={true}
@@ -39,6 +56,7 @@ const NavBar = ({ navList, currentPage }: Props) => {
       <div className={styles.navButtonWrapper}>
         <IconButton
           style={{ outline: "none" }}
+          onClick={scrollToNextItem}
           className={styles.navButton}
           disableFocusRipple={true}
           disableRipple
