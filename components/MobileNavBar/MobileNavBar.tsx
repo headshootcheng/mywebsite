@@ -9,10 +9,7 @@ interface Props {
 }
 const MobileNavBar = ({ navList, currentPage, height = 80 }: Props) => {
   return (
-    <div
-      className={styles.topbar}
-      style={{ top: `calc(${height}px - 80px)`, maxHeight: "80px" }}
-    >
+    <div className={styles.topbar} style={{ top: `calc(${height}px - 80px)` }}>
       <div className={styles.topbarRow}>
         {navList.map(({ title, onPress }) => {
           return (

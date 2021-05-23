@@ -5,7 +5,7 @@ import { GetStaticProps } from "next";
 import { homedata } from "../utils/globalInterface";
 import Welcome from "../components/Welcome/Welcome";
 import Profile from "../components/Profile/Profile";
-import Experience from "../components/Experience/Experience";
+import Career from "../components/Career/Career";
 import Skill from "../components/Skill/Skill";
 import Project from "../components/Project/Project";
 import Contact from "../components/Contact/Contact";
@@ -20,7 +20,7 @@ interface Props {
 const Home = (props: Props) => {
   const welcomeRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
-  const experienceRef = useRef<HTMLDivElement>(null);
+  const careerRef = useRef<HTMLDivElement>(null);
   const skillRef = useRef<HTMLDivElement>(null);
   const projectRef = useRef<HTMLDivElement>(null);
   const contactRef = useRef<HTMLDivElement>(null);
@@ -58,10 +58,10 @@ const Home = (props: Props) => {
         },
       },
       {
-        title: "Experience",
+        title: "Career",
         onPress: () => {
           window.scrollTo({
-            top: experienceRef.current.offsetTop,
+            top: careerRef.current.offsetTop,
             behavior: "smooth",
           });
         },
@@ -110,13 +110,13 @@ const Home = (props: Props) => {
     }
     if (
       window.pageYOffset >= profileRef.current.offsetTop &&
-      window.pageYOffset < experienceRef.current.offsetTop
+      window.pageYOffset < careerRef.current.offsetTop
     ) {
       setCurrentPage(navList[1].title);
       return;
     }
     if (
-      window.pageYOffset >= experienceRef.current.offsetTop &&
+      window.pageYOffset >= careerRef.current.offsetTop &&
       window.pageYOffset < skillRef.current.offsetTop
     ) {
       setCurrentPage(navList[2].title);
@@ -189,7 +189,7 @@ const Home = (props: Props) => {
           introText={homeData?.intro || ""}
           ref={profileRef}
         />
-        <Experience ref={experienceRef} />
+        <Career ref={careerRef} careerList={homeData?.career || []} />
         <Skill ref={skillRef} />
         <Project ref={projectRef} />
         <Contact ref={contactRef} />
