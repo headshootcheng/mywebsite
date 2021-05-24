@@ -28,4 +28,51 @@ export const homeData = {
       ],
     },
   ],
+  skill: [
+    {
+      type: "Front-End",
+      detail: [
+        { name: "React JS", rating: 3 },
+        { name: "Next JS", rating: 2 },
+        { name: "Tailwind CSS", rating: 3 },
+        { name: "React Native", rating: 2 },
+        { name: "Angular JS", rating: 1 },
+        { name: "Redux", rating: 3 },
+      ],
+    },
+    {
+      type: "Back-End",
+      detail: [
+        { name: "Java Spring", rating: 2 },
+        { name: "Redis", rating: 1 },
+        { name: "MYSQL", rating: 2 },
+        { name: "MongoDB", rating: 1 },
+        { name: "NodeJS Express", rating: 2 },
+        { name: "GraphQL", rating: 1 },
+        { name: "Micro-Service", rating: 1 },
+        { name: "JSON Web Token", rating: 2 },
+        { name: "Web Socket", rating: 1 },
+      ],
+    },
+    {
+      type: "Developing Tools",
+      detail: [
+        { name: "GitHub", rating: 3 },
+        { name: "SourceTree", rating: 3 },
+        { name: "Docker", rating: 2 },
+        { name: "Firebase", rating: 1 },
+        { name: "Azure", rating: 1 },
+      ],
+    },
+    {
+      type: "Hobbies",
+      detail: [
+        { name: "Running", rating: 3 },
+        { name: "Diving", rating: 1 },
+        { name: "Drumming", rating: 2 },
+        { name: "Hiking", rating: 4 },
+        { name: "Coding", rating: 2 },
+      ],
+    },
+  ],
 };

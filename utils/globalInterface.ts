@@ -11,6 +11,7 @@ export interface homedata {
   gitbook: string;
   github: string;
   career: careerinfo[];
+  skill: skillinfo[];
 }
 
 export interface nav {
@@ -38,4 +39,14 @@ export interface projectdetail {
   date: string;
   explanation: string[];
   tech: string[];
+}
+
+export interface skilldetail {
+  name: string;
+  rating: number;
+}
+
+export interface skillinfo {
+  type: string;
+  detail: skilldetail[];
 }

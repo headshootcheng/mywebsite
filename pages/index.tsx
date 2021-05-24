@@ -171,7 +171,7 @@ const Home = (props: Props) => {
   return (
     <>
       <Head>
-        <title>Home</title>
+        <title>Peter Cheng - My Personal Profilio</title>
       </Head>
       <div className={styles.wrapper}>
         {isMobile() ? (
@@ -190,7 +190,7 @@ const Home = (props: Props) => {
           ref={profileRef}
         />
         <Career ref={careerRef} careerList={homeData?.career || []} />
-        <Skill ref={skillRef} />
+        <Skill ref={skillRef} skillList={homeData?.skill || []} />
         <Project ref={projectRef} />
         <Contact ref={contactRef} />
       </div>
