@@ -12,7 +12,9 @@ import Contact from "../components/Contact/Contact";
 import MobileNavBar from "../components/MobileNavBar/MobileNavBar";
 import { isMobile } from "../utils/screenUtil";
 import NavBar from "../components/NavBar/NavBar";
-
+import LinkedInIcon from "@material-ui/icons/LinkedIn";
+import GitHubIcon from "@material-ui/icons/GitHub";
+import NoteIcon from "@material-ui/icons/Note";
 interface Props {
   homeData: homedata;
   error: string;
@@ -25,17 +27,63 @@ const Home = (props: Props) => {
   const projectRef = useRef<HTMLDivElement>(null);
   const contactRef = useRef<HTMLDivElement>(null);
   const [homeData, setHomeData] = useState<homedata>(props?.homeData || {});
-  // const goToLinkedin = () => {
-  //   if (homeData?.linkedin) window.open(homeData.linkedin);
-  // };
 
-  // const goToGitHub = () => {
-  //   if (homeData?.github) window.open(homeData.github);
-  // };
-
-  // const goToGitbook = () => {
-  //   if (homeData?.gitbook) window.open(homeData.gitbook);
-  // };
+  const contactList = [
+    {
+      type: "linkedin",
+      icon: (
+        <LinkedInIcon
+          fontSize="large"
+          style={{
+            height: isMobile() ? 40 : 50,
+            width: isMobile() ? 40 : 50,
+            margin: 0,
+            color: "white",
+          }}
+        />
+      ),
+      link: homeData?.linkedin || "",
+      onPress: () => {
+        if (homeData?.linkedin) window.open(homeData.linkedin);
+      },
+    },
+    {
+      type: "github",
+      icon: (
+        <GitHubIcon
+          fontSize="large"
+          style={{
+            height: isMobile() ? 40 : 50,
+            width: isMobile() ? 40 : 50,
+            margin: 0,
+            color: "white",
+          }}
+        />
+      ),
+      link: homeData?.github || "",
+      onPress: () => {
+        if (homeData?.github) window.open(homeData.github);
+      },
+    },
+    {
+      type: "gitbook",
+      icon: (
+        <NoteIcon
+          fontSize="large"
+          style={{
+            height: isMobile() ? 40 : 50,
+            width: isMobile() ? 40 : 50,
+            margin: 0,
+            color: "white",
+          }}
+        />
+      ),
+      link: homeData?.gitbook || "",
+      onPress: () => {
+        if (homeData?.linkedin) window.open(homeData.gitbook);
+      },
+    },
+  ];
 
   const navList = useMemo(
     () => [
@@ -191,8 +239,8 @@ const Home = (props: Props) => {
         />
         <Career ref={careerRef} careerList={homeData?.career || []} />
         <Skill ref={skillRef} skillList={homeData?.skill || []} />
-        <Project ref={projectRef} />
-        <Contact ref={contactRef} />
+        <Project ref={projectRef} projectList={homeData?.project || []} />
+        <Contact ref={contactRef} contactList={contactList} />
       </div>
     </>
   );

@@ -12,6 +12,7 @@ export interface homedata {
   github: string;
   career: careerinfo[];
   skill: skillinfo[];
+  project: projectdata[];
 }
 
 export interface nav {

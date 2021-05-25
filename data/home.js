@@ -75,4 +75,21 @@ export const homeData = {
       ],
     },
   ],
+  project: [
+    {
+      id: "superwhackamole",
+      image: "/superwhackamole/game.jpg",
+      title: "Super Whack A Mole",
+    },
+    {
+      id: "iefyp",
+      image: "/iefyp/cruthLight.jpg",
+      title: "Final Year Project",
+    },
+    {
+      id: "friendchat",
+      image: "/friendchat/dashboard.jpg",
+      title: "Friend Chat",
+    },
+  ],
 };

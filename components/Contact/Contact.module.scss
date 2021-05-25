@@ -1,3 +1,23 @@
 .contactWrapper{
-    @apply h-screen w-full bg-purple-700
+    @apply h-screen w-full bg-black md:px-10 py-20 flex  flex-col items-center md:items-start 
+}
+
+.header{
+    @apply text-5xl md:text-7xl  text-white ;
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+.contactRow{
+    @apply mt-20  px-0 w-full  flex flex-row  items-center  justify-center md:justify-between flex-wrap;
+    *{
+        @apply m-5;
+    }
+}
+
+.contactItem{
+    @apply flex flex-row items-center  w-full  md:w-2/5 cursor-pointer ;
+}
+
+.contactLink{
+    @apply text-xs md:text-xl text-white
 }
