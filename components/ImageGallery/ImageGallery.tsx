@@ -3,16 +3,21 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination } from "swiper";
 SwiperCore.use([Navigation, Pagination]);
 import styles from "./ImageGallery.module.scss";
-import Image from "next/image";
 import { projectdata } from "../../utils/globalInterface";
+import Classnames from "classnames";
 interface Props {
+  parentStyle: Object;
   projectList: projectdata[];
   onClickSlide: (id: string) => void;
 }
-const ImageGallery = ({ projectList, onClickSlide = () => {} }: Props) => {
+const ImageGallery = ({
+  projectList = [],
+  onClickSlide = () => {},
+  parentStyle = styles.swiper,
+}: Props) => {
   return (
     <Swiper
-      className={styles.swiper}
+      className={Classnames(parentStyle)}
       breakpoints={{
         "375": {
           slidesPerView: 1,
@@ -24,8 +29,6 @@ const ImageGallery = ({ projectList, onClickSlide = () => {} }: Props) => {
         },
       }}
       pagination={{ clickable: true }}
-      // onSlideChange={() => console.log("slide change")}
-      //onSwiper={(swiper) => console.log("swiper", swiper)}
     >
       {(projectList || []).map(({ image, title, id }) => {
         return (
@@ -34,7 +37,7 @@ const ImageGallery = ({ projectList, onClickSlide = () => {} }: Props) => {
             key={id}
             onClick={() => onClickSlide(id)}
           >
-            <Image src={image} layout="fill" objectFit="contain" />
+            <img src={image} className={styles.imgArea} />
             <div className={styles.textBlock}>
               <div className={styles.textArea}>
                 <span className={styles.text}>{title}</span>

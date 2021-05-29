@@ -1,37 +1,63 @@
 .wrapper{
-    @apply flex items-center justify-center h-full overflow-auto
+    @apply bg-black md:h-screen w-full p-5 md:p-10
 }
 
-.projectDetailWrapper{
-    @apply pt-20 pb-10 h-full overflow-auto 
+.backButton{
+    @apply outline-none;
+}
+.backIcon{
+    @apply text-white ;
 }
 
-.projectContent{
-    @apply my-10 px-[17%] ;
-}
-.projectContentRow{
-    @apply flex flex-row items-center my-2;
-    >*:last-child{
-        @apply ml-4
-    } 
-}
-.projectContentTitle{
-    @apply text-lg md:text-3xl text-white; 
-    font-family: 'Varela Round', sans-serif;
+.backText{
+    @apply text-white text-xl;
 }
 
-.projectContentText{
-    @apply text-lg md:text-3xl text-white;
+.mainArea{
+    @apply  md:m-10  px-10 md:px-5 flex flex-col md:flex-row  md:h-[80%] w-full  justify-center  md:justify-between
 }
 
-.githubIcon{
-    @apply cursor-pointer;
+.projectIntroArea{
+    @apply py-10;
+    >*{
+        @apply md:my-5;
+    }
 }
 
-.projectContentPointList{
+.projectTitle{
+    @apply  text-2xl  md:text-6xl text-red-600;
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+.explanationPointList{
     list-style-type: square;
-    @apply text-white text-lg md:text-3xl text-white px-5;
+    @apply text-base md:text-lg px-5 text-white;
     *{
         @apply my-2
     }
+}
+
+.projectField{
+    @apply flex flex-col;
+    >*{
+        @apply my-2;
+    }
+}
+
+.projectFieldName{
+    @apply  text-lg md:text-3xl text-red-600  w-14 md:w-24 border-white border-b-2 ;
+    font-family: 'Nunito Sans', sans-serif; 
+}
+
+
+.projectFieldValue{
+    @apply  text-base md:text-lg  text-white ;
+}
+
+.imageGallery{
+    @apply  flex  h-[200px]  md:h-full  w-[90%] md:w-[60%] m-0  ;
+}
+
+.codeButton{
+    @apply w-20 h-20 ;
 }

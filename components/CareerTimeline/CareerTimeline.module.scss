@@ -3,7 +3,7 @@
 }
 
 .contentBox{
-    @apply  w-72 md:w-[500px] py-3 md:py-5 px-5 flex flex-col;
+    @apply  w-60 md:w-[500px] py-3 md:py-5 px-5 flex flex-col;
     *{
         @apply my-2
     }
@@ -20,7 +20,7 @@
     }
 }
 .companyName{
-    @apply  text-sm md:text-xl 
+    @apply  text-xs md:text-xl 
 }
 
 .date{

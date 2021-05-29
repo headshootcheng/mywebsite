@@ -190,6 +190,7 @@ const Home = (props: Props) => {
     }
   };
 
+  let isScrolling;
   const handleMenuOpen = () => {
     // Manipulate the appearance of desktop menu
     if (window.pageYOffset > profileRef.current.offsetTop) setShowMenu(true);
@@ -202,17 +203,20 @@ const Home = (props: Props) => {
     else if (heightRatio < 0) setHeight(0);
     else setHeight(80 * heightRatio);
   };
-
+  const scrollHandler = () => {
+    window.clearTimeout(isScrolling);
+    updatePosition();
+    handleMenuOpen();
+    // If user stop scrolling over 1 seconds, hide the desktop menu
+    isScrolling = setTimeout(() => {
+      setShowMenu(false);
+    }, 1000);
+  };
   useEffect(() => {
-    window.addEventListener("scroll", () => {
-      updatePosition();
-      handleMenuOpen();
-    });
+    window.addEventListener("scroll", scrollHandler);
+
     return () => {
-      window.removeEventListener("scroll", () => {
-        updatePosition();
-        handleMenuOpen();
-      });
+      window.removeEventListener("scroll", scrollHandler);
     };
   }, []);
 

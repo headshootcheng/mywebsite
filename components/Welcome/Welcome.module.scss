@@ -1,9 +1,9 @@
 .welcomeWrapper{
     background-image: url("../../public/background/welcome.jpg");
-    background-size: auto;
+    background-size: cover;
+    background-repeat: no-repeat;
     color: inherit;
     @apply h-screen w-full ;
-    
 }
 
 .colorWrapper{

@@ -3,15 +3,18 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import { projectdetail } from "../../utils/globalInterface";
 import Head from "next/head";
 import styles from "./project.module.scss";
+import Button from "@material-ui/core/Button";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import { useRouter } from "next/router";
 import ImageGallery from "../../components/ImageGallery/ImageGallery";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import IconButton from "@material-ui/core/IconButton";
-
 interface Props {
   data: projectdetail;
   error: string;
 }
 const ProjectDetail = (props: Props) => {
+  const router = useRouter();
   const myGitHubLink = "https://github.com/headshootcheng";
   const [projectDetail, setProjectDetail] = useState<projectdetail>(
     props.data || {}
@@ -20,49 +23,78 @@ const ProjectDetail = (props: Props) => {
     window.open(projectDetail?.gitHub || myGitHubLink);
   };
 
+  const goBackToPrevPage = () => {
+    router.back();
+  };
+
   return (
     <>
       <Head>
         <title>{projectDetail?.title || "Updating"}</title>
       </Head>
-      <div className={styles.projectDetailWrapper}>
-        <ImageGallery
-          projectList={projectDetail?.detail || []}
-          onClickSlide={() => {}}
-        />
-        <div className={styles.projectContent}>
-          {/* Date */}
-          <div className={styles.projectContentRow}>
-            <span className={styles.projectContentTitle}>Date :</span>
-            <span className={styles.projectContentText}>
-              {projectDetail?.date || ""}
+      <div className={styles.wrapper}>
+        <Button
+          style={{
+            outline: "none",
+          }}
+          color="inherit"
+          startIcon={
+            <ArrowBackIcon fontSize="large" className={styles.backIcon} />
+          }
+          onClick={goBackToPrevPage}
+        >
+          <span className={styles.backText}>Back</span>
+        </Button>
+        <div className={styles.mainArea}>
+          <div className={styles.projectIntroArea}>
+            <span className={styles.projectTitle}>
+              {projectDetail?.title || ""}
             </span>
-          </div>
-          {/* Code Link */}
-          <div className={styles.projectContentRow}>
-            <span className={styles.projectContentTitle}>Code :</span>
-            <IconButton style={{ outline: "none" }} onClick={goToCodeLink}>
-              <GitHubIcon
-                className={styles.githubIcon}
-                style={{ fontSize: 50, color: "white" }}
-              />
-            </IconButton>
-          </div>
-          {/* Explanation  */}
-          <div className={styles.projectContentRow}>
-            <ul className={styles.projectContentPointList}>
+            <ul className={styles.explanationPointList}>
               {(projectDetail?.explanation || []).map((item) => {
                 return <li key={item}>{item}</li>;
               })}
             </ul>
+
+            <div className={styles.projectField}>
+              <span className={styles.projectFieldName}>Date :</span>
+              <span className={styles.projectFieldValue}>
+                {projectDetail?.date || ""}
+              </span>
+            </div>
+
+            <div className={styles.projectField}>
+              <span className={styles.projectFieldName}>Tech :</span>
+              <span className={styles.projectFieldValue}>
+                {projectDetail?.tech.join(" , ") || ""}
+              </span>
+            </div>
+
+            <div className={styles.projectField}>
+              <span className={styles.projectFieldName}>Code :</span>
+              <IconButton
+                style={{
+                  outline: "none",
+                }}
+                className={styles.codeButton}
+                onClick={goToCodeLink}
+              >
+                <GitHubIcon
+                  fontSize="large"
+                  style={{
+                    height: 40,
+                    width: 40,
+                    color: "white",
+                  }}
+                />
+              </IconButton>
+            </div>
           </div>
-          {/* Technology */}
-          <div className={styles.projectContentRow}>
-            <span className={styles.projectContentTitle}>Technology :</span>
-            <span className={styles.projectContentText}>
-              {projectDetail?.tech.join(" , ") || ""}
-            </span>
-          </div>
+          <ImageGallery
+            onClickSlide={() => {}}
+            projectList={projectDetail?.detail}
+            parentStyle={styles.imageGallery}
+          />
         </div>
       </div>
     </>

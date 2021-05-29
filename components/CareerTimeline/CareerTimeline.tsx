@@ -31,7 +31,7 @@ const CareerTimeline = ({ careerList = [] }: Props) => {
                 <span className={style.jobTitle}>{title}</span>
                 <div className={style.companyRow}>
                   <WorkIcon />
-                  <span className={style.subtitle}>{company}</span>
+                  <span className={style.companyName}>{company}</span>
                 </div>
                 <span className={style.date}>{date}</span>
                 <ul className={style.explanationPointList}>

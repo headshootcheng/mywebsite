@@ -30,5 +30,5 @@ export const data = {
     "Developed Responsive layout by using tailwind CSS, ReactJS and TypeScript",
     "Developed API endpoint by using NodeJS Express",
   ],
-  tech: ["React", "MYSQL", "SocketIO", "NodeJS"],
+  tech: ["React", "MYSQL", "Socket IO", "NodeJS"],
 };
