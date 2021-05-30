@@ -16,9 +16,7 @@ interface Props {
 const ProjectDetail = (props: Props) => {
   const router = useRouter();
   const myGitHubLink = "https://github.com/headshootcheng";
-  const [projectDetail, setProjectDetail] = useState<projectdetail>(
-    props.data || {}
-  );
+  const [projectDetail, setProjectDetail] = useState<projectdetail>(props.data);
   const goToCodeLink = () => {
     window.open(projectDetail?.gitHub || myGitHubLink);
   };

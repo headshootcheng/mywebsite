@@ -26,7 +26,7 @@ const Home = (props: Props) => {
   const skillRef = useRef<HTMLDivElement>(null);
   const projectRef = useRef<HTMLDivElement>(null);
   const contactRef = useRef<HTMLDivElement>(null);
-  const [homeData, setHomeData] = useState<homedata>(props?.homeData || {});
+  const [homeData, setHomeData] = useState<homedata>(props?.homeData);
 
   const contactList = [
     {

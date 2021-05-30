@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 interface Props {
   projectData: projectdata;
 }
-const ProjectCard = ({ projectData = {} }: Props) => {
+const ProjectCard = ({ projectData }: Props) => {
   const router = useRouter();
   const handleProjectClick = (id) => {
     router.push("/project/" + id);
