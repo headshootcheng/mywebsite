@@ -18,7 +18,7 @@
 }
 
 .projectIntroArea{
-    @apply py-10;
+    @apply py-5 md:py-0;
     >*{
         @apply md:my-5;
     }
