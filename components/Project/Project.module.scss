@@ -1,16 +1,16 @@
-.projectWrapper{
-    @apply w-full bg-yellow-700 md:px-10 py-20 flex  flex-col items-center md:items-start 
+.projectWrapper {
+	@apply w-full bg-yellow-700 md:px-10 py-20 flex  flex-col items-center md:items-start;
 }
 
-.header{
-    @apply text-5xl md:text-7xl  text-white ;
-    font-family: 'Nunito Sans', sans-serif;
+.header {
+	@apply text-5xl md:text-7xl  text-white ;
+	font-family: 'Nunito Sans', sans-serif;
 }
 
-.projectListWrapper{
-    @apply mt-20 flex flex-row  items-center   justify-center md:justify-between flex-wrap w-full ;
-    *{
-        @apply m-5;
-    }
-}
+.projectListWrapper {
+	@apply mt-20 flex flex-row  items-center   justify-center md:justify-between flex-wrap w-full ;
 
+	* {
+		@apply m-5;
+	}
+}

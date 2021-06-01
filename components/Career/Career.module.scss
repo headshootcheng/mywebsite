@@ -1,12 +1,12 @@
-.careerWrapper{
-    @apply  w-full bg-yellow-700 md:px-10 py-20 flex  flex-col items-center md:items-start 
+.careerWrapper {
+	@apply w-full bg-yellow-700 md:px-10 py-20 flex  flex-col items-center md:items-start;
 }
 
-.header{
-    @apply text-5xl md:text-7xl  text-white ;
-    font-family: 'Nunito Sans', sans-serif;
+.header {
+	@apply text-5xl md:text-7xl  text-white ;
+	font-family: 'Nunito Sans', sans-serif;
 }
 
-.timelineContainer{
-    @apply mt-5
+.timelineContainer {
+	@apply mt-5;
 }

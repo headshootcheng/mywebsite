@@ -1,24 +1,24 @@
-.navBar{
-    @apply fixed right-10  top-20 h-3/5 w-28 z-10
+.navBar {
+	@apply fixed right-10  top-20 h-3/5 w-28 z-10;
 }
 
-.navButtonWrapper{
-    @apply bg-black ;
+.navButtonWrapper {
+	@apply bg-black ;
 }
 
-.navButton{
-    @apply w-full h-10 ;
+.navButton {
+	@apply w-full h-10 ;
 }
 
-.navBox{
-    @apply w-full h-20 flex items-center justify-center bg-gray-500  cursor-pointer;
+.navBox {
+	@apply w-full h-20 flex items-center justify-center bg-gray-500  cursor-pointer;
 }
 
-.navBoxActive{
-    @apply  bg-green-400;
+.navBoxActive {
+	@apply bg-green-400;
 }
 
-.navBoxText{
-    @apply text-white text-lg ;
-    font-family: 'Varela Round', sans-serif;
+.navBoxText {
+	@apply text-white text-lg ;
+	font-family: 'Varela Round', sans-serif;
 }

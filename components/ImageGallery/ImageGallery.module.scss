@@ -1,24 +1,24 @@
-.swiper{
-    @apply  w-5/6 h-[300px] md:w-4/6 md:h-5/6
-}
-.swiperSlide{
-  @apply   bg-gray-400 h-full w-full;
+.swiper {
+	@apply w-5/6 h-[300px] md:w-4/6 md:h-5/6;
 }
 
-.imgArea{
-    @apply w-full h-full object-contain;
+.swiperSlide {
+	@apply bg-gray-400 h-full w-full;
 }
 
-.textBlock{
-    @apply absolute bottom-0 w-full h-1/4 bg-opacity-20 bg-black;
+.imgArea {
+	@apply w-full h-full object-contain;
 }
 
-.textArea{
-   @apply h-full  flex items-center justify-center;
+.textBlock {
+	@apply absolute bottom-0 w-full h-1/4 bg-opacity-20 bg-black;
 }
 
-.text{
-    @apply text-black  text-lg md:text-3xl;
-    font-family: 'Nunito Sans', sans-serif;
+.textArea {
+	@apply h-full  flex items-center justify-center;
 }
 
+.text {
+	@apply text-black  text-lg md:text-3xl;
+	font-family: 'Nunito Sans', sans-serif;
+}

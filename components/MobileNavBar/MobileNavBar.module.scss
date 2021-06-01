@@ -1,20 +1,20 @@
-.topbar{
-    @apply fixed  h-20 w-full z-10; 
-    background-color: rgba(186, 186, 186, 0.3)
+.topbar {
+	@apply fixed  h-20 w-full z-10;
+	background-color: rgba(186, 186, 186, 0.3);
 }
 
-.topbarRow{
-    @apply flex flex-row items-center  justify-around h-full flex-wrap ;
+.topbarRow {
+	@apply flex flex-row items-center  justify-around h-full flex-wrap ;
 }
 
-.topbarOptionBox{
-    @apply mx-2 w-1/4 flex justify-center
+.topbarOptionBox {
+	@apply mx-2 w-1/4 flex justify-center;
 }
 
-.topbarOptionBoxActive{
-    @apply border-b-4 border-yellow-600;
+.topbarOptionBoxActive {
+	@apply border-b-4 border-yellow-600;
 }
 
-.topbarOptionText{
-    @apply text-black ;
+.topbarOptionText {
+	@apply text-black ;
 }
