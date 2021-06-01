@@ -19,8 +19,6 @@ module.exports = {
         "declaration-empty-line-before": "never",
         "indentation": "tab",
         "max-empty-lines": 1,
-        "no-eol-whitespace" : true,
-        "rule-empty-line-before": "always",
         "order/properties-order": [ 
           "position",
           "top",
