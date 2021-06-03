@@ -12,6 +12,11 @@
     "lint": "eslint --fix --ext .ts,.tsx .",
     "lint:style": "stylelint --fix '**/*.scss'"
   },
+  "husky":{
+    "hooks":{
+      "pre-commit": "echo 'hello' "
+    }
+  }
   "dependencies": {
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
