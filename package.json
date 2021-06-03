@@ -13,7 +13,7 @@
     "lint:style": "npx stylelint --fix **/*.scss"
   },
   "lint-staged":{
-    "*.tsx": "eslint --fix --ext .ts,.tsx ."
+    "**/*.{ts,tsx}": "eslint --fix --ext .ts,.tsx ."
   },
   "dependencies": {
     "@material-ui/core": "^4.11.4",
