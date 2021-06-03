@@ -12,8 +12,8 @@
     "lint": "eslint --fix --ext .ts,.tsx .",
     "lint:style": "stylelint --fix '**/*.scss'"
   },
-  "husky":{
-    "hooks":{
+  "husky": {
+    "hooks": {
       "pre-commit": "echo 'hello' "
     }
   },
