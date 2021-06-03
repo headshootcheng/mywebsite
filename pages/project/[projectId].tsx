@@ -14,7 +14,7 @@ interface Props {
   error: string;
 }
 const ProjectDetail = (props: Props) => {
-        const router =     useRouter();
+  const router = useRouter();
   const myGitHubLink = "https://github.com/headshootcheng";
   const [projectDetail, setProjectDetail] = useState<projectdetail>(props.data);
   const goToCodeLink = () => {

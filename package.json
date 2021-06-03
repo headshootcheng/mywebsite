@@ -12,6 +12,9 @@
     "lint": "eslint --fix --ext .ts,.tsx .",
     "lint:style": "npx stylelint --fix **/*.scss"
   },
+  "lint-staged":{
+    "*.tsx": "eslint --fix --ext .ts,.tsx ."
+  },
   "dependencies": {
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
