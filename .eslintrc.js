@@ -33,6 +33,7 @@ module.exports = {
     "jsx-a11y/anchor-is-valid": "off",
     "unused-imports/no-unused-imports": "warn",
     "unused-imports/no-unused-vars": "warn",
+    "react-hooks/exhaustive-deps": "error",
   },
   ignorePatterns: ["generated*"],
 };

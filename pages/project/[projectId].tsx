@@ -11,7 +11,7 @@ import GitHubIcon from "@material-ui/icons/GitHub";
 import IconButton from "@material-ui/core/IconButton";
 interface Props {
   data: projectdetail;
-  error: string;
+     error: string;
 }
 const ProjectDetail = (props: Props) => {
   const router = useRouter();
