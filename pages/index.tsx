@@ -85,7 +85,11 @@ const Home = (props: Props) => {
     },
   ];
 
-  const navList = useMemo(
+  interface nav {
+    title: string;
+    onPress: () => void;
+  }
+  const navList = useMemo<nav[]>(
     () => [
       {
         title: "Welcome",
@@ -145,9 +149,11 @@ const Home = (props: Props) => {
     []
   );
 
-  const [currentPage, setCurrentPage] = useState(navList[0].title || "Welcome");
-  const [showMenu, setShowMenu] = useState(false);
-  const [mobileNavHeight, setHeight] = useState(0);
+  const [currentPage, setCurrentPage] = useState<string>(
+    navList[0].title || "Welcome"
+  );
+  const [showMenu, setShowMenu] = useState<boolean>(false);
+  const [mobileNavHeight, setHeight] = useState<number>(0);
   const updatePosition = () => {
     if (
       window.pageYOffset >= (welcomeRef?.current?.offsetTop || 0) &&
@@ -250,7 +256,9 @@ const Home = (props: Props) => {
     </>
   );
 };
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps<
+  { homeData: homedata } | { error: string }
+> = async () => {
   try {
     const { homeData } = await import("../data/home.js");
     return {
