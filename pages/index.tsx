@@ -91,7 +91,7 @@ const Home = (props: Props) => {
         title: "Welcome",
         onPress: () => {
           window.scrollTo({
-            top: welcomeRef.current.offsetTop,
+            top: welcomeRef?.current?.offsetTop || 0,
             behavior: "smooth",
           });
         },
@@ -100,7 +100,7 @@ const Home = (props: Props) => {
         title: "Profile",
         onPress: () => {
           window.scrollTo({
-            top: profileRef.current.offsetTop,
+            top: profileRef?.current?.offsetTop || 0,
             behavior: "smooth",
           });
         },
@@ -109,7 +109,7 @@ const Home = (props: Props) => {
         title: "Career",
         onPress: () => {
           window.scrollTo({
-            top: careerRef.current.offsetTop,
+            top: careerRef?.current?.offsetTop || 0,
             behavior: "smooth",
           });
         },
@@ -118,7 +118,7 @@ const Home = (props: Props) => {
         title: "Skill",
         onPress: () => {
           window.scrollTo({
-            top: skillRef.current.offsetTop,
+            top: skillRef?.current?.offsetTop || 0,
             behavior: "smooth",
           });
         },
@@ -127,7 +127,7 @@ const Home = (props: Props) => {
         title: "Project",
         onPress: () => {
           window.scrollTo({
-            top: projectRef.current.offsetTop,
+            top: projectRef?.current?.offsetTop || 0,
             behavior: "smooth",
           });
         },
@@ -136,7 +136,7 @@ const Home = (props: Props) => {
         title: "Contact",
         onPress: () => {
           window.scrollTo({
-            top: contactRef.current.offsetTop,
+            top: contactRef?.current?.offsetTop || 0,
             behavior: "smooth",
           });
         },
@@ -150,55 +150,56 @@ const Home = (props: Props) => {
   const [mobileNavHeight, setHeight] = useState(0);
   const updatePosition = () => {
     if (
-      window.pageYOffset >= welcomeRef.current.offsetTop &&
-      window.pageYOffset < profileRef.current.offsetTop
+      window.pageYOffset >= (welcomeRef?.current?.offsetTop || 0) &&
+      window.pageYOffset < (profileRef?.current?.offsetTop || 0)
     ) {
       setCurrentPage(navList[0].title);
       return;
     }
     if (
-      window.pageYOffset >= profileRef.current.offsetTop &&
-      window.pageYOffset < careerRef.current.offsetTop
+      window.pageYOffset >= (profileRef?.current?.offsetTop || 0) &&
+      window.pageYOffset < (careerRef?.current?.offsetTop || 0)
     ) {
       setCurrentPage(navList[1].title);
       return;
     }
     if (
-      window.pageYOffset >= careerRef.current.offsetTop &&
-      window.pageYOffset < skillRef.current.offsetTop
+      window.pageYOffset >= (careerRef?.current?.offsetTop || 0) &&
+      window.pageYOffset < (skillRef?.current?.offsetTop || 0)
     ) {
       setCurrentPage(navList[2].title);
       return;
     }
     if (
-      window.pageYOffset >= skillRef.current.offsetTop &&
-      window.pageYOffset < projectRef.current.offsetTop
+      window.pageYOffset >= (skillRef?.current?.offsetTop || 0) &&
+      window.pageYOffset < (projectRef?.current?.offsetTop || 0)
     ) {
       setCurrentPage(navList[3].title);
       return;
     }
     if (
-      window.pageYOffset >= projectRef.current.offsetTop &&
-      window.pageYOffset < contactRef.current.offsetTop
+      window.pageYOffset >= (projectRef?.current?.offsetTop || 0) &&
+      window.pageYOffset < (contactRef?.current?.offsetTop || 0)
     ) {
       setCurrentPage(navList[4].title);
       return;
     }
-    if (window.pageYOffset >= contactRef.current.offsetTop) {
+    if (window.pageYOffset >= (contactRef?.current?.offsetTop || 0)) {
       setCurrentPage(navList[5].title);
       return;
     }
   };
 
-  let isScrolling;
+  let isScrolling: NodeJS.Timeout;
   const handleMenuOpen = () => {
     // Manipulate the appearance of desktop menu
-    if (window.pageYOffset > profileRef.current.offsetTop) setShowMenu(true);
+    if (window.pageYOffset > (profileRef?.current?.offsetTop || 0))
+      setShowMenu(true);
     else setShowMenu(false);
 
     // Manipulate the height of mobile menu
     const heightRatio =
-      (window.pageYOffset - profileRef.current.offsetTop) / 300;
+      (window.pageYOffset - (profileRef?.current?.offsetTop || 0)) / 300;
     if (heightRatio > 1) setHeight(80);
     else if (heightRatio < 0) setHeight(0);
     else setHeight(80 * heightRatio);
@@ -251,7 +252,7 @@ const Home = (props: Props) => {
 };
 export const getStaticProps: GetStaticProps = async () => {
   try {
-    const { homeData } = await await import("../data/home.js");
+    const { homeData } = await import("../data/home.js");
     return {
       props: { homeData },
     };

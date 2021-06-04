@@ -9,11 +9,12 @@ import { useRouter } from "next/router";
 import ImageGallery from "../../components/ImageGallery/ImageGallery";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import IconButton from "@material-ui/core/IconButton";
+import { ParsedUrlQuery } from "node:querystring";
 interface Props {
   data: projectdetail;
   error: string;
 }
-const ProjectDetail = (props: Props) => {
+const ProjectDetail: React.FC<Props> = (props) => {
   const router = useRouter();
   const myGitHubLink = "https://github.com/headshootcheng";
   const [projectDetail, setProjectDetail] = useState<projectdetail>(props.data);
@@ -119,8 +120,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 };
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  const { projectId } = context.params;
+interface Params extends ParsedUrlQuery {
+  projectId: string;
+}
+
+export const getStaticProps: GetStaticProps<
+  { data: projectdetail } | { error: string },
+  Params
+> = async (context) => {
+  const { projectId } = context.params || { projectId: "" };
   try {
     const { data } = await import(`../../data/${projectId}`);
     return {

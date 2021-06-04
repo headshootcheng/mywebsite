@@ -19,6 +19,7 @@ module.exports = {
         "declaration-empty-line-before": "never",
         "indentation": "tab",
         "max-empty-lines": 1,
+        "function-name-case": null,
         "order/properties-order": [ 
           "position",
           "top",
