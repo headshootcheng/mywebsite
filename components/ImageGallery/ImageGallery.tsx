@@ -4,7 +4,7 @@ import SwiperCore, { Navigation, Pagination } from "swiper";
 SwiperCore.use([Navigation, Pagination]);
 import styles from "./ImageGallery.module.scss";
 import projectdata from "../../model/ProjectData";
-import Classnames from "classnames";
+import classnames from "classnames";
 interface Props {
   parentStyle: Object;
   projectList: projectdata[];
@@ -17,7 +17,7 @@ const ImageGallery: React.FC<Props> = ({
 }) => {
   return (
     <Swiper
-      className={Classnames(parentStyle)}
+      className={classnames(parentStyle)}
       breakpoints={{
         "375": {
           slidesPerView: 1,
