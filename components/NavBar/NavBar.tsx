@@ -10,7 +10,7 @@ interface Props {
   currentPage: string;
 }
 
-const NavBar = ({ navList, currentPage }: Props) => {
+const NavBar: React.FC<Props> = ({ navList, currentPage }) => {
   const scrollToNextItem = () => {
     const currentIndex = navList.findIndex(
       ({ title }) => title === currentPage

@@ -7,7 +7,11 @@ interface Props {
   currentPage: string;
   height: number;
 }
-const MobileNavBar = ({ navList, currentPage, height = 80 }: Props) => {
+const MobileNavBar: React.FC<Props> = ({
+  navList,
+  currentPage,
+  height = 80,
+}) => {
   return (
     <div className={styles.topbar} style={{ top: `calc(${height}px - 80px)` }}>
       <div className={styles.topbarRow}>

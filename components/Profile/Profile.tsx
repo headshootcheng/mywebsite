@@ -6,11 +6,8 @@ interface Props {
   image: string;
   introText: string;
 }
-const Profile = forwardRef(
-  (
-    { image = "", introText = "" }: Props,
-    ref: React.ForwardedRef<HTMLDivElement>
-  ) => {
+const Profile = forwardRef<HTMLDivElement, Props>(
+  ({ image = "", introText = "" }, ref) => {
     return (
       <div className={styles.profileWrapper} ref={ref}>
         <span className={styles.header}>Profile</span>

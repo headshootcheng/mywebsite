@@ -19,7 +19,7 @@ interface Props {
   homeData: homedata;
   error: string;
 }
-const Home = (props: Props) => {
+const Home: React.FC<Props> = (props) => {
   const welcomeRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
   const careerRef = useRef<HTMLDivElement>(null);

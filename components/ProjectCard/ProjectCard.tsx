@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 interface Props {
   projectData: projectdata;
 }
-const ProjectCard = ({ projectData }: Props) => {
+const ProjectCard: React.FC<Props> = ({ projectData }) => {
   const router = useRouter();
   const handleProjectClick = (id: string) => {
     router.push("/project/" + id);

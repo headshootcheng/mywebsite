@@ -10,11 +10,11 @@ interface Props {
   projectList: projectdata[];
   onClickSlide: (id: string) => void;
 }
-const ImageGallery = ({
+const ImageGallery: React.FC<Props> = ({
   projectList = [],
   onClickSlide = () => {},
   parentStyle = styles.swiper,
-}: Props) => {
+}) => {
   return (
     <Swiper
       className={Classnames(parentStyle)}

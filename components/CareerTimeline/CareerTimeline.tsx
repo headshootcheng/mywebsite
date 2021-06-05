@@ -13,7 +13,7 @@ interface Props {
   careerList: careerinfo[];
 }
 
-const CareerTimeline = ({ careerList = [] }: Props) => {
+const CareerTimeline: React.FC<Props> = ({ careerList = [] }) => {
   return (
     <Timeline align="left">
       {careerList.map(({ title, company, date, duties }, index) => {

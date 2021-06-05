@@ -4,7 +4,7 @@ import "swiper/swiper-bundle.min.css";
 
 import type { AppProps } from "next/app";
 
-const App = ({ Component, pageProps }: AppProps) => {
+const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   return <Component {...pageProps} />;
 };
 
