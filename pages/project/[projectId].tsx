@@ -34,8 +34,8 @@ const ProjectDetail: React.FC<Props> = (props) => {
       <div className={styles.wrapper}>
         <Button
           style={{
-						outline: "none",
-					}}
+            outline: "none",
+          }}
           color="inherit"
           startIcon={
             <ArrowBackIcon fontSize="large" className={styles.backIcon} />
@@ -73,18 +73,18 @@ const ProjectDetail: React.FC<Props> = (props) => {
               <span className={styles.projectFieldName}>Code :</span>
               <IconButton
                 style={{
-									outline: "none",
-								}}
+                  outline: "none",
+                }}
                 className={styles.codeButton}
                 onClick={goToCodeLink}
               >
                 <GitHubIcon
                   fontSize="large"
                   style={{
-										height: 40,
-										width: 40,
-										color: "white",
-									}}
+                    height: 40,
+                    width: 40,
+                    color: "white",
+                  }}
                 />
               </IconButton>
             </div>

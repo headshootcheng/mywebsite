@@ -30,8 +30,8 @@ const ProjectCard: React.FC<Props> = ({ projectData }) => {
       <CardActions className={styles.actionWrapper}>
         <Button
           style={{
-						outline: "none",
-					}}
+            outline: "none",
+          }}
           size="small"
           color="primary"
           onClick={() => handleProjectClick(projectData?.id)}

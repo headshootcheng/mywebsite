@@ -35,11 +35,11 @@ const Home: React.FC<Props> = (props) => {
         <LinkedInIcon
           fontSize="large"
           style={{
-						height: isMobile() ? 40 : 50,
-						width: isMobile() ? 40 : 50,
-						margin: 0,
-						color: "white",
-					}}
+            height: isMobile() ? 40 : 50,
+            width: isMobile() ? 40 : 50,
+            margin: 0,
+            color: "white",
+          }}
         />
       ),
       link: homeData?.linkedin || "",
@@ -53,11 +53,11 @@ const Home: React.FC<Props> = (props) => {
         <GitHubIcon
           fontSize="large"
           style={{
-						height: isMobile() ? 40 : 50,
-						width: isMobile() ? 40 : 50,
-						margin: 0,
-						color: "white",
-					}}
+            height: isMobile() ? 40 : 50,
+            width: isMobile() ? 40 : 50,
+            margin: 0,
+            color: "white",
+          }}
         />
       ),
       link: homeData?.github || "",
@@ -71,11 +71,11 @@ const Home: React.FC<Props> = (props) => {
         <NoteIcon
           fontSize="large"
           style={{
-						height: isMobile() ? 40 : 50,
-						width: isMobile() ? 40 : 50,
-						margin: 0,
-						color: "white",
-					}}
+            height: isMobile() ? 40 : 50,
+            width: isMobile() ? 40 : 50,
+            margin: 0,
+            color: "white",
+          }}
         />
       ),
       link: homeData?.gitbook || "",
