@@ -1,11 +1,11 @@
 import React from "react";
 import styles from "./MobileNavBar.module.scss";
-import { nav } from "../../utils/globalInterface";
+import nav from "../../model/Nav";
 import ClassName from "classnames";
 interface Props {
   navList: nav[];
   currentPage: string;
-  height: Number;
+  height: number;
 }
 const MobileNavBar = ({ navList, currentPage, height = 80 }: Props) => {
   return (

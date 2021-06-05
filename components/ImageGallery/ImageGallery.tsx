@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination } from "swiper";
 SwiperCore.use([Navigation, Pagination]);
 import styles from "./ImageGallery.module.scss";
-import { projectdata } from "../../utils/globalInterface";
+import projectdata from "../../model/ProjectData";
 import Classnames from "classnames";
 interface Props {
   parentStyle: Object;

@@ -3,7 +3,7 @@ import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import IconButton from "@material-ui/core/IconButton";
 import styles from "./NavBar.module.scss";
-import { nav } from "../../utils/globalInterface";
+import nav from "../../model/Nav";
 import ClassName from "classnames";
 interface Props {
   navList: nav[];

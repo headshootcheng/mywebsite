@@ -2,7 +2,7 @@
 import React, { ForwardedRef, forwardRef } from "react";
 import ProjectCard from "../ProjectCard/ProjectCard";
 import styles from "./Project.module.scss";
-import { projectdata } from "../../utils/globalInterface";
+import projectdata from "../../model/ProjectData";
 interface Props {
   projectList: projectdata[];
 }

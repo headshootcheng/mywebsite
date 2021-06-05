@@ -3,7 +3,7 @@ import React, { ForwardedRef, forwardRef } from "react";
 import styles from "./Skill.module.scss";
 import Rating from "@material-ui/lab/Rating";
 import Divider from "@material-ui/core/Divider";
-import { skillinfo } from "../../utils/globalInterface";
+import skillinfo from "../../model/SkillInfo";
 interface Props {
   skillList: skillinfo[];
 }

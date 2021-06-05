@@ -8,7 +8,7 @@ import TimelineContent from "@material-ui/lab/TimelineContent";
 import style from "./CareerTimeline.module.scss";
 import Paper from "@material-ui/core/Paper";
 import WorkIcon from "@material-ui/icons/Work";
-import { careerinfo } from "../../utils/globalInterface";
+import careerinfo from "../../model/CareerInfo";
 interface Props {
   careerList: careerinfo[];
 }

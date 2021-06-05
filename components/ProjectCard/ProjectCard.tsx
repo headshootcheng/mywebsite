@@ -5,14 +5,14 @@ import styles from "./ProjectCard.module.scss";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import CardActions from "@material-ui/core/CardActions";
-import { projectdata } from "../../utils/globalInterface";
+import projectdata from "../../model/ProjectData";
 import { useRouter } from "next/router";
 interface Props {
   projectData: projectdata;
 }
 const ProjectCard = ({ projectData }: Props) => {
   const router = useRouter();
-  const handleProjectClick = (id) => {
+  const handleProjectClick = (id: string) => {
     router.push("/project/" + id);
   };
   return (
@@ -30,8 +30,8 @@ const ProjectCard = ({ projectData }: Props) => {
       <CardActions className={styles.actionWrapper}>
         <Button
           style={{
-            outline: "none",
-          }}
+						outline: "none",
+					}}
           size="small"
           color="primary"
           onClick={() => handleProjectClick(projectData?.id)}

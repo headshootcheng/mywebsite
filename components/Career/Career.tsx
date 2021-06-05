@@ -2,7 +2,7 @@
 import React, { ForwardedRef, forwardRef } from "react";
 import CareerTimeline from "../CareerTimeline/CareerTimeline";
 import styles from "./Career.module.scss";
-import { careerinfo } from "../../utils/globalInterface";
+import careerinfo from "../../model/CareerInfo";
 interface Props {
   careerList: careerinfo[];
 }

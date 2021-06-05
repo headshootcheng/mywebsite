@@ -2,7 +2,7 @@ import React, { useRef, useState, useMemo, useEffect } from "react";
 import Head from "next/head";
 import styles from "./main.module.scss";
 import { GetStaticProps } from "next";
-import { homedata } from "../utils/globalInterface";
+import homedata from "../model/HomeData";
 import Welcome from "../components/Welcome/Welcome";
 import Profile from "../components/Profile/Profile";
 import Career from "../components/Career/Career";
@@ -10,7 +10,7 @@ import Skill from "../components/Skill/Skill";
 import Project from "../components/Project/Project";
 import Contact from "../components/Contact/Contact";
 import MobileNavBar from "../components/MobileNavBar/MobileNavBar";
-import { isMobile } from "../utils/screenUtil";
+import { isMobile } from "../utils/ScreenUtil";
 import NavBar from "../components/NavBar/NavBar";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import GitHubIcon from "@material-ui/icons/GitHub";
@@ -35,11 +35,11 @@ const Home = (props: Props) => {
         <LinkedInIcon
           fontSize="large"
           style={{
-            height: isMobile() ? 40 : 50,
-            width: isMobile() ? 40 : 50,
-            margin: 0,
-            color: "white",
-          }}
+						height: isMobile() ? 40 : 50,
+						width: isMobile() ? 40 : 50,
+						margin: 0,
+						color: "white",
+					}}
         />
       ),
       link: homeData?.linkedin || "",
@@ -53,11 +53,11 @@ const Home = (props: Props) => {
         <GitHubIcon
           fontSize="large"
           style={{
-            height: isMobile() ? 40 : 50,
-            width: isMobile() ? 40 : 50,
-            margin: 0,
-            color: "white",
-          }}
+						height: isMobile() ? 40 : 50,
+						width: isMobile() ? 40 : 50,
+						margin: 0,
+						color: "white",
+					}}
         />
       ),
       link: homeData?.github || "",
@@ -71,11 +71,11 @@ const Home = (props: Props) => {
         <NoteIcon
           fontSize="large"
           style={{
-            height: isMobile() ? 40 : 50,
-            width: isMobile() ? 40 : 50,
-            margin: 0,
-            color: "white",
-          }}
+						height: isMobile() ? 40 : 50,
+						width: isMobile() ? 40 : 50,
+						margin: 0,
+						color: "white",
+					}}
         />
       ),
       link: homeData?.gitbook || "",
@@ -85,11 +85,7 @@ const Home = (props: Props) => {
     },
   ];
 
-  interface nav {
-    title: string;
-    onPress: () => void;
-  }
-  const navList = useMemo<nav[]>(
+  const navList = useMemo(
     () => [
       {
         title: "Welcome",
