@@ -256,7 +256,7 @@ export const getStaticProps: GetStaticProps<
   { homeData: homedata } | { error: string }
 > = async () => {
   try {
-    const { homeData } = await import("../data/home.js");
+    const { homeData } = await import("../data/home");
     return {
       props: { homeData },
     };
