@@ -47,7 +47,7 @@
     "react-use": "^17.2.4",
     "sass": "^1.32.12",
     "stylelint": "^13.13.1",
-    "stylelint-config-prettier": "^8.0.2",
+     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-sass-guidelines": "^8.0.0",
     "stylelint-config-standard": "^22.0.0",
     "stylelint-order": "^4.1.0",
