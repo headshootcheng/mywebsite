@@ -10,7 +10,7 @@ import Skill from "../components/Skill/Skill";
 import Project from "../components/Project/Project";
 import Contact from "../components/Contact/Contact";
 import MobileNavBar from "../components/MobileNavBar/MobileNavBar";
-import { isMobile } from "../utils/ScreenUtil";
+import { isMobile } from "../utils/screenUtil";
 import NavBar from "../components/NavBar/NavBar";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import GitHubIcon from "@material-ui/icons/GitHub";
