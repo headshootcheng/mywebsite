@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import ImageGallery from "../../components/ImageGallery/ImageGallery";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import IconButton from "@material-ui/core/IconButton";
-import { ParsedUrlQuery } from "node:querystring";
+import { ParsedUrlQuery } from "querystring";
 interface Props {
   data: projectdetail;
   error: string;
