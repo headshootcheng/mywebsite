@@ -20,10 +20,12 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
-        uses: actions/checkout@v2      
+        uses: actions/checkout@v2     
+             
       # Install NodeJS
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.1.5
+        
       # Install node_modules
       - name: Install Node_modules
         run: npm install
