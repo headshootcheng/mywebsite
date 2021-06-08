@@ -7,7 +7,7 @@ const Welcome = forwardRef<HTMLDivElement, {}>((props, ref) => {
     <div className={styles.welcomeWrapper} ref={ref}>
       <div className={styles.colorWrapper}>
         <div className={styles.titleArea}>
-          <span className={styles.title}>Headshoot Cheng</span>
+          <span className={styles.title}>Peter Cheng</span>
         </div>
         <div className={styles.subtitleArea}>
           <span className={styles.subtitle}>My Personal Profilio</span>
