@@ -227,6 +227,10 @@ const Home: React.FC<Props> = (props) => {
     <>
       <Head>
         <title>Peter Cheng - My Personal Profilio</title>
+        <meta name="description" content="Peter Cheng - My Personal Profilio" />
+        <meta name="author" content="Peter Cheng" />
+        <meta name="keywords" content="Peter Cheng" />
+        <meta name="application-name" content="my-website" />
       </Head>
       <div className={styles.wrapper}>
         {isMobile() ? (
