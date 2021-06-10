@@ -231,6 +231,10 @@ const Home: React.FC<Props> = (props) => {
         <meta name="author" content="Peter Cheng" />
         <meta name="keywords" content="Peter Cheng" />
         <meta name="application-name" content="my-website" />
+        <meta
+          name="google-site-verification"
+          content="aAsoBFo0oI0JbkRF5wcEqVfGlTobRQ_H_EvkH7LU_7A"
+        />
       </Head>
       <div className={styles.wrapper}>
         {isMobile() ? (
