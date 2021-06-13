@@ -7,4 +7,16 @@ xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitem
     <loc>https://petercheng-blog.vercel.app/</loc>
     <lastmod>2021-06-10T18:28:24+00:00</lastmod>
 </url>
+<url>
+    <loc>https://petercheng-blog.vercel.app/project/superwhackamole</loc>
+    <lastmod>2021-06-10T18:28:24+00:00</lastmod>
+</url>
+<url>
+    <loc>https://petercheng-blog.vercel.app/project/iefyp</loc>
+    <lastmod>2021-06-10T18:28:24+00:00</lastmod>
+</url>
+<url>
+    <loc>https://petercheng-blog.vercel.app/project/friendchat</loc>
+    <lastmod>2021-06-10T18:28:24+00:00</lastmod>
+</url>
 </urlset>
