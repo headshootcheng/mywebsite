@@ -134,9 +134,9 @@ export const getStaticProps: GetStaticProps<
     return {
       props: { data },
     };
-  } catch (err) {
+  } catch (error) {
     return {
-      props: { error: err.message },
+      props: { error: "error" },
     };
   }
 };
