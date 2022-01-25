@@ -3,6 +3,7 @@ import Head from "next/head";
 import styles from "./main.module.css";
 import homedata from "../model/HomeData";
 import Loading from "../components/Loading";
+import useSWR from "swr";
 interface Props {
   homeData: homedata;
   error: string;
@@ -210,18 +211,9 @@ const Home: React.FC<Props> = (props) => {
   //   };
   // }, []);
 
-  // useEffect(async () => {
-  //   const { data } = await axios.get(
-  //     "https://my-website-cms.herokuapp.com/api/home-page?populate=*",
-  //     {
-  //       headers: {
-  //         Authorization:
-  //           "Bearer 02d279238aa1bb105ad8033851b3dbce8bfcb7e1c0a44d4da87cc8c1c81a8b252467bca6c88be5c8817d1328a9784c4bd2501450b22ca272345424d468a3c6922653efc13301dcc2b467349d80f72006c752c668020e54038f7200b39fc67f496a12df9ad94be7caaef27ebc59094d7bfafb6eaa676c4f76822d0f3972ff4efb",
-  //       },
-  //     }
-  //   );
-  //   console.log("data", data);
-  // }, []);
+  const { data: page } = useSWR(
+    "https://my-website-cms.herokuapp.com/api/home-page?populate=*"
+  );
 
   return (
     <>
@@ -233,7 +225,7 @@ const Home: React.FC<Props> = (props) => {
         />
       </Head>
       <div className={styles.wrapper}>
-        <Loading />
+        {!page ? <Loading /> : <div>123</div>}
 
         {/* {isMobile() ? (
           <MobileNavBar
