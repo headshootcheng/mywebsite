@@ -10,11 +10,7 @@ import SEO from "../next-seo.config";
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   const fetcher = (url: string) =>
     axios
-      .get(url, {
-        headers: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_TOKEN}`,
-        },
-      })
+      .get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${url}`)
       .then((res) => res.data);
   return (
     <>
