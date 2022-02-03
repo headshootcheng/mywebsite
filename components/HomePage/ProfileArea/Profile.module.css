@@ -1,5 +1,5 @@
 .profileWrapper {
-	@apply w-full bg-white md:px-10 py-20 flex  flex-col items-center md:items-start;
+	@apply w-full md:px-10 py-20 flex flex-col items-center md:items-start;
 }
 
 .header {
@@ -10,13 +10,23 @@
 .introArea {
 	@apply flex flex-col md:flex-row h-4/6 items-center  mt-10 md:mt-20;
 
-	* {
+	>* {
 		@apply mx-4;
+		opacity: 0;
+		transform: translateY(-150px);
+		transition: 1s all ease;
+	}
+	
+	&_active{
+		>*{
+			opacity: 1;
+			transform: translateY(0);
+		}
 	}
 }
 
 .iconArea {
-	@apply border-black  border-2  h-48 w-48 md:h-96 md:w-96  rounded-full flex items-center justify-center;
+	@apply border-black border-2  h-48 w-48 md:h-96 md:w-96  rounded-full flex items-center justify-center;
 }
 
 .icon {

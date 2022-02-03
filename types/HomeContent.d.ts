@@ -1,4 +1,6 @@
-declare interface WelcomeArea {
+import { ContentType } from "./enums/ContentType";
+
+declare interface WelcomeData {
   backgroundImage: BackgroundImage;
   enabled: boolean;
   subtitle: string;
@@ -6,7 +8,17 @@ declare interface WelcomeArea {
   __component: ContentType.Welcome;
 }
 
-declare type Content = WelcomeArea;
+declare interface ProfileData {
+  title: string;
+  profileImage: Image;
+  enabled: boolean;
+  myIntro: string;
+  backgroundColor: string;
+  backgroundImage: BackgroundImage | null;
+  __component: ContentType.Profile;
+}
+
+declare type Content = WelcomeData | ProfileData;
 
 declare interface Attribute {
   Content: Content[];

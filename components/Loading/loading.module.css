@@ -1,5 +1,5 @@
 .loading{
-	@apply w-full h-full  bg-gray-300;
+	@apply w-full h-screen  bg-gray-300;
 
 	&_content {
 		position: fixed;

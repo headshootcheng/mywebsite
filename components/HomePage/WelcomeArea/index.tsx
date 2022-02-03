@@ -1,14 +1,15 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
+import { WelcomeData } from "../../../types/HomeContent";
 import styles from "./Welcome.module.css";
 interface Props {
-  data: WelcomeArea;
+  data: WelcomeData;
 }
-
-const WelcomeArea: React.FC<Props> = ({ data }) => {
+const WelcomeArea = React.forwardRef<HTMLDivElement, Props>(({ data }, ref) => {
   if (!data.enabled) return null;
   return (
     <div
+      ref={ref}
       css={{
         backgroundImage: `url(${data.backgroundImage.image.data.attributes.url})`,
         position: "relative",
@@ -33,6 +34,6 @@ const WelcomeArea: React.FC<Props> = ({ data }) => {
       </div>
     </div>
   );
-};
-
+});
+WelcomeArea.displayName = "WelcomeArea";
 export default WelcomeArea;
