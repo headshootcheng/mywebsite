@@ -1,5 +1,5 @@
 .skillWrapper {
-	@apply w-full bg-white md:px-10 py-20 flex  flex-col items-center md:items-start;
+	@apply w-full md:px-10 py-20 flex  flex-col items-center md:items-start;
 }
 
 .header {
@@ -9,6 +9,14 @@
 
 .skillArea {
 	@apply px-5 my-8 w-full;
+	opacity: 0;
+	transform: translateY(-150px);
+	transition: 1s all ease;
+
+	&_active{
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 
 .subHeader {

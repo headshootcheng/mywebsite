@@ -11,14 +11,18 @@ import CareerArea from "../components/HomePage/CareerArea";
 import NavBar from "../components/NavBar/NavBar";
 import MobileNavBar from "../components/MobileNavBar/MobileNavBar";
 import useMobile from "../hooks/useMobile";
+import SkillArea from "../components/HomePage/SkillArea";
+import ContactArea from "../components/HomePage/ContactArea";
 interface Props {}
 const Home: React.FC<Props> = (props) => {
   const { data: page } = useSWR<HomeRes>(
-    "/home-page?populate[3]=Content.infos&populate[2]=Content.profileImage&populate[1]=Content.backgroundImage.image&populate[0]=Content"
+    "/home-page?populate[5]=Content.SkillInfos&populate[4]=Content.SkillTypes&populate[3]=Content.infos&populate[2]=Content.profileImage&populate[1]=Content.backgroundImage.image&populate[0]=Content"
   );
   const welcomeRef = React.useRef<HTMLDivElement>(null);
   const profileRef = React.useRef<HTMLDivElement>(null);
   const careerRef = React.useRef<HTMLDivElement>(null);
+  const skillRef = React.useRef<HTMLDivElement>(null);
+  const contactRef = React.useRef<HTMLDivElement>(null);
   const isMobile = useMobile();
 
   const renderContentArea = (content: Content) => {
@@ -37,6 +41,16 @@ const Home: React.FC<Props> = (props) => {
         return {
           content: <CareerArea data={content} ref={careerRef} />,
           ref: careerRef,
+        };
+      case ContentType.Skill:
+        return {
+          content: <SkillArea data={content} ref={skillRef} />,
+          ref: skillRef,
+        };
+      case ContentType.Contact:
+        return {
+          content: <ContactArea data={content} ref={contactRef} />,
+          ref: contactRef,
         };
       default:
         return null;
@@ -66,27 +80,30 @@ const Home: React.FC<Props> = (props) => {
       window.pageYOffset >= (welcomeRef?.current?.offsetTop || 0) &&
       window.pageYOffset < (profileRef?.current?.offsetTop || 0)
     ) {
-      setCurrentPage(navList?.[0]?.title ?? "");
+      setCurrentPage(navList[0].title);
       return;
     }
     if (
       window.pageYOffset >= (profileRef?.current?.offsetTop || 0) &&
       window.pageYOffset < (careerRef?.current?.offsetTop || 0)
     ) {
-      setCurrentPage(navList?.[1]?.title ?? "");
+      setCurrentPage(navList[1].title);
       return;
     }
-    if (window.pageYOffset >= (careerRef?.current?.offsetTop || 0)) {
-      setCurrentPage(navList?.[2]?.title ?? "");
+    if (
+      window.pageYOffset >= (careerRef?.current?.offsetTop || 0) &&
+      window.pageYOffset < (skillRef?.current?.offsetTop || 0)
+    ) {
+      setCurrentPage(navList[2].title);
       return;
     }
-    // if (
-    //   window.pageYOffset >= (skillRef?.current?.offsetTop || 0) &&
-    //   window.pageYOffset < (projectRef?.current?.offsetTop || 0)
-    // ) {
-    //   setCurrentPage(navList[3].title);
-    //   return;
-    // }
+    if (
+      window.pageYOffset >= (skillRef?.current?.offsetTop || 0) &&
+      window.pageYOffset < (contactRef?.current?.offsetTop || 0)
+    ) {
+      setCurrentPage(navList[3].title);
+      return;
+    }
     // if (
     //   window.pageYOffset >= (projectRef?.current?.offsetTop || 0) &&
     //   window.pageYOffset < (contactRef?.current?.offsetTop || 0)
@@ -94,10 +111,10 @@ const Home: React.FC<Props> = (props) => {
     //   setCurrentPage(navList[4].title);
     //   return;
     // }
-    // if (window.pageYOffset >= (contactRef?.current?.offsetTop || 0)) {
-    //   setCurrentPage(navList[5].title);
-    //   return;
-    // }
+    if (window.pageYOffset >= (contactRef?.current?.offsetTop || 0)) {
+      setCurrentPage(navList[4].title);
+      return;
+    }
   };
 
   // const updatePosition = () => {

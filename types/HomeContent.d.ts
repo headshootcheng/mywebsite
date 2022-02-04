@@ -24,12 +24,35 @@ declare interface CareerData {
   backgroundImage: BackgroundImage | null;
   enabled: boolean;
   title: string;
-
   infos: CareerInfo[];
   __component: ContentType.Career;
 }
 
-declare type Content = WelcomeData | ProfileData | CareerData;
+declare interface SkillData {
+  backgroundColor: string;
+  SkillInfos: SkillInfo[];
+  title: string;
+  __component: ContentType.Skill;
+  enabled: boolean;
+  SkillTypes: SkillType[];
+}
+
+declare interface ContactData {
+  backgroundColor: string;
+  enabled: boolean;
+  title: string;
+  __component: ContentType.Contact;
+  github: string;
+  linkedin: string;
+  developerNote: string;
+}
+
+declare type Content =
+  | WelcomeData
+  | ProfileData
+  | CareerData
+  | SkillData
+  | ContactData;
 
 declare interface Attribute {
   Content: Content[];
