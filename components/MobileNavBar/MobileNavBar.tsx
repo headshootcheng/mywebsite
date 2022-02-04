@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./MobileNavBar.module.scss";
-import nav from "../../model/Nav";
 import ClassName from "classnames";
 interface Props {
   navList: nav[];

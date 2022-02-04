@@ -3,7 +3,8 @@ import { ContentType } from "./enums/ContentType";
 declare interface WelcomeData {
   backgroundImage: BackgroundImage;
   enabled: boolean;
-  subtitle: string;
+  headerTitle: string;
+  headerSubtitle: string;
   title: string;
   __component: ContentType.Welcome;
 }
@@ -18,7 +19,17 @@ declare interface ProfileData {
   __component: ContentType.Profile;
 }
 
-declare type Content = WelcomeData | ProfileData;
+declare interface CareerData {
+  backgroundColor: string;
+  backgroundImage: BackgroundImage | null;
+  enabled: boolean;
+  title: string;
+
+  infos: CareerInfo[];
+  __component: ContentType.Career;
+}
+
+declare type Content = WelcomeData | ProfileData | CareerData;
 
 declare interface Attribute {
   Content: Content[];

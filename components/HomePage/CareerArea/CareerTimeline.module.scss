@@ -1,3 +1,15 @@
+.timeline-item{
+	opacity: 0;
+	transform: translateY(-150px);
+	transition: 1s all ease;
+	&_active{
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+
+
 .timelineDot {
 	@apply h-8 w-8  md:h-12 md:w-12;
 }

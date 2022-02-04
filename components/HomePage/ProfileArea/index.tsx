@@ -12,11 +12,10 @@ const ProfileArea = React.forwardRef<HTMLDivElement, Props>(({ data }, ref) => {
   if (!data.enabled) return null;
   React.useEffect(() => {
     const handleScroll = () => {
-      console.log(window.scrollY);
       if (
         typeof ref !== "function" &&
         ref?.current?.offsetTop &&
-        window.scrollY > 0
+        window.scrollY > ref?.current?.offsetTop - 250
       )
         setIsReveal(true);
       else setIsReveal(false);

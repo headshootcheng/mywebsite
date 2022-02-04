@@ -27,10 +27,10 @@ const WelcomeArea = React.forwardRef<HTMLDivElement, Props>(({ data }, ref) => {
         }}
       />
       <div className={styles.titleArea}>
-        <span className={styles.title}>{data.title}</span>
+        <span className={styles.title}>{data.headerTitle}</span>
       </div>
       <div className={styles.subtitleArea}>
-        <span className={styles.subtitle}>{data.subtitle}</span>
+        <span className={styles.subtitle}>{data.headerSubtitle}</span>
       </div>
     </div>
   );
