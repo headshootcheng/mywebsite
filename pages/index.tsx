@@ -13,15 +13,20 @@ import MobileNavBar from "../components/MobileNavBar/MobileNavBar";
 import useMobile from "../hooks/useMobile";
 import SkillArea from "../components/HomePage/SkillArea";
 import ContactArea from "../components/HomePage/ContactArea";
+import ProjectArea from "../components/HomePage/ProjectArea";
 interface Props {}
 const Home: React.FC<Props> = (props) => {
   const { data: page } = useSWR<HomeRes>(
     "/home-page?populate[5]=Content.SkillInfos&populate[4]=Content.SkillTypes&populate[3]=Content.infos&populate[2]=Content.profileImage&populate[1]=Content.backgroundImage.image&populate[0]=Content"
   );
+  const { data: projectList } = useSWR<ProjectListRes>(
+    "/projects?populate[0]=previewImage&populate[1]=ProjectImages.image"
+  );
   const welcomeRef = React.useRef<HTMLDivElement>(null);
   const profileRef = React.useRef<HTMLDivElement>(null);
   const careerRef = React.useRef<HTMLDivElement>(null);
   const skillRef = React.useRef<HTMLDivElement>(null);
+  const projectRef = React.useRef<HTMLDivElement>(null);
   const contactRef = React.useRef<HTMLDivElement>(null);
   const isMobile = useMobile();
 
@@ -46,6 +51,17 @@ const Home: React.FC<Props> = (props) => {
         return {
           content: <SkillArea data={content} ref={skillRef} />,
           ref: skillRef,
+        };
+      case ContentType.Project:
+        return {
+          content: (
+            <ProjectArea
+              data={content}
+              projectList={projectList?.data ?? []}
+              ref={projectRef}
+            />
+          ),
+          ref: projectRef,
         };
       case ContentType.Contact:
         return {
@@ -75,6 +91,7 @@ const Home: React.FC<Props> = (props) => {
   );
   const [showMenu, setShowMenu] = React.useState<boolean>(false);
   const [mobileNavHeight, setHeight] = React.useState<number>(0);
+
   const updatePosition = () => {
     if (
       window.pageYOffset >= (welcomeRef?.current?.offsetTop || 0) &&
@@ -99,20 +116,20 @@ const Home: React.FC<Props> = (props) => {
     }
     if (
       window.pageYOffset >= (skillRef?.current?.offsetTop || 0) &&
-      window.pageYOffset < (contactRef?.current?.offsetTop || 0)
+      window.pageYOffset < (projectRef?.current?.offsetTop || 0)
     ) {
       setCurrentPage(navList[3].title);
       return;
     }
-    // if (
-    //   window.pageYOffset >= (projectRef?.current?.offsetTop || 0) &&
-    //   window.pageYOffset < (contactRef?.current?.offsetTop || 0)
-    // ) {
-    //   setCurrentPage(navList[4].title);
-    //   return;
-    // }
-    if (window.pageYOffset >= (contactRef?.current?.offsetTop || 0)) {
+    if (
+      window.pageYOffset >= (projectRef?.current?.offsetTop || 0) &&
+      window.pageYOffset < (contactRef?.current?.offsetTop || 0)
+    ) {
       setCurrentPage(navList[4].title);
+      return;
+    }
+    if (window.pageYOffset >= (contactRef?.current?.offsetTop || 0)) {
+      setCurrentPage(navList[5].title);
       return;
     }
   };
@@ -168,7 +185,7 @@ const Home: React.FC<Props> = (props) => {
         />
       </Head>
       <div className={styles.wrapper}>
-        {!page ? (
+        {!page && !projectList ? (
           <Loading />
         ) : (
           <>

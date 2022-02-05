@@ -1,0 +1,38 @@
+.projectWrapper {
+	@apply w-full  md:px-10 py-20 flex  flex-col items-center md:items-start;
+}
+
+.header {
+	@apply text-5xl md:text-7xl  text-white ;
+	font-family: 'Nunito Sans', sans-serif;
+}
+
+.projectItemWrapper{
+	@apply flex-1 flex md:justify-evenly gap-10 md:gap-0;
+	opacity: 0;
+	transform: translateY(-150px);
+	transition: 1s all ease;
+
+	&_active{
+		opacity: 1;
+		transform: translateY(0);
+	}
+    
+	&_text{
+		@apply md:w-1/3 w-full  flex  flex-col gap-10   ;
+
+		&_title{
+			@apply text-pink-700 md:text-5xl text-3xl font-bold;
+			font-family: 'Nunito Sans', sans-serif;
+		}
+
+	}
+
+	&_image{
+		@apply md:w-1/2 w-full flex  md:max-h-[600px]  max-h-80  justify-center  ;
+
+		&_content{
+			@apply object-contain object-center   ;
+		}
+	}
+}

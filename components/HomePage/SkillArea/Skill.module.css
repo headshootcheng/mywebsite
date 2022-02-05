@@ -20,7 +20,7 @@
 }
 
 .subHeader {
-	@apply text-3xl text-green-400;
+	@apply text-3xl text-blue-500;
 	font-family: 'Nunito Sans', sans-serif;
 }
 
@@ -33,6 +33,6 @@
 }
 
 .skillText {
-	@apply text-2xl;
+	@apply text-2xl text-gray-500;
 	font-family: 'Nunito Sans', sans-serif;
 }

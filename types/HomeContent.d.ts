@@ -37,6 +37,13 @@ declare interface SkillData {
   SkillTypes: SkillType[];
 }
 
+declare interface ProjectData {
+  backgroundColor: string;
+  enabled: boolean;
+  title: string;
+  __component: ContentType.Project;
+}
+
 declare interface ContactData {
   backgroundColor: string;
   enabled: boolean;
@@ -52,6 +59,7 @@ declare type Content =
   | ProfileData
   | CareerData
   | SkillData
+  | ProjectData
   | ContactData;
 
 declare interface Attribute {
