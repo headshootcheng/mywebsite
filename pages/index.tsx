@@ -1,27 +1,38 @@
 import React from "react";
 import Head from "next/head";
 import styles from "./main.module.css";
-import Loading from "../components/Loading";
 import useSWR from "swr";
 import { ContentType } from "../types/enums/ContentType";
 import ProfileArea from "../components/HomePage/ProfileArea";
 import WelcomeArea from "../components/HomePage/WelcomeArea";
 import { Content, HomeRes } from "../types/HomeContent";
 import CareerArea from "../components/HomePage/CareerArea";
-import NavBar from "../components/NavBar/NavBar";
-import MobileNavBar from "../components/MobileNavBar/MobileNavBar";
+import NavBar from "../components/NavBar";
+import MobileNavBar from "../components/MobileNavBar";
 import useMobile from "../hooks/useMobile";
 import SkillArea from "../components/HomePage/SkillArea";
 import ContactArea from "../components/HomePage/ContactArea";
 import ProjectArea from "../components/HomePage/ProjectArea";
+import { useSetRecoilState } from "recoil";
+import projectListAtom from "../statMgmt/projectList";
 interface Props {}
 const Home: React.FC<Props> = (props) => {
+  const setProjectListAtom =
+    useSetRecoilState<ProjectDataRes[]>(projectListAtom);
   const { data: page } = useSWR<HomeRes>(
     "/home-page?populate[5]=Content.SkillInfos&populate[4]=Content.SkillTypes&populate[3]=Content.infos&populate[2]=Content.profileImage&populate[1]=Content.backgroundImage.image&populate[0]=Content"
   );
   const { data: projectList } = useSWR<ProjectListRes>(
-    "/projects?populate[0]=previewImage&populate[1]=ProjectImages.image"
+    "/projects?populate[0]=previewImage&populate[1]=ProjectImages.image",
+    {
+      onSuccess: (projectList) => {
+        console.log("123", projectList.data);
+        setProjectListAtom(projectList.data);
+      },
+    }
   );
+
+  if (!page || !projectList) return null;
   const welcomeRef = React.useRef<HTMLDivElement>(null);
   const profileRef = React.useRef<HTMLDivElement>(null);
   const careerRef = React.useRef<HTMLDivElement>(null);
@@ -56,7 +67,7 @@ const Home: React.FC<Props> = (props) => {
           content: (
             <ProjectArea
               data={content}
-              projectList={projectList?.data ?? []}
+              projectList={projectList.data ?? []}
               ref={projectRef}
             />
           ),
@@ -72,7 +83,7 @@ const Home: React.FC<Props> = (props) => {
     }
   };
 
-  const navList = (page?.data.attributes.Content ?? [])
+  const navList = (page.data.attributes.Content ?? [])
     .filter((content) => content.enabled)
     .map((content) => ({
       title: content.title,
@@ -180,30 +191,24 @@ const Home: React.FC<Props> = (props) => {
   return (
     <>
       <Head>
-        <title>{page?.data.attributes.WebTitle}</title>
+        <title>{page.data.attributes.WebTitle ?? "Loading..."}</title>
         <meta
           name="google-site-verification"
           content="aAsoBFo0oI0JbkRF5wcEqVfGlTobRQ_H_EvkH7LU_7A"
         />
       </Head>
       <div className={styles.wrapper}>
-        {!page && !projectList ? (
-          <Loading />
+        {isMobile ? (
+          <MobileNavBar
+            navList={navList}
+            currentPage={currentPage}
+            height={mobileNavHeight}
+          />
         ) : (
-          <>
-            {isMobile ? (
-              <MobileNavBar
-                navList={navList}
-                currentPage={currentPage}
-                height={mobileNavHeight}
-              />
-            ) : (
-              showMenu && <NavBar navList={navList} currentPage={currentPage} />
-            )}
-            {(page?.data.attributes.Content ?? []).map(
-              (content: Content) => renderContentArea(content)?.content ?? null
-            )}
-          </>
+          showMenu && <NavBar navList={navList} currentPage={currentPage} />
+        )}
+        {(page.data.attributes.Content ?? []).map(
+          (content: Content) => renderContentArea(content)?.content ?? null
         )}
       </div>
     </>

@@ -32,9 +32,7 @@ const ImageGallery: React.FC<Props> = ({ projectList = [], parentStyle }) => {
               className={styles.imgArea}
             />
             <div className={styles.textBlock}>
-              <div className={styles.textArea}>
-                <span className={styles.text}>{project.text}</span>
-              </div>
+              <span className={styles.text}>{project.text}</span>
             </div>
           </SwiperSlide>
         );
