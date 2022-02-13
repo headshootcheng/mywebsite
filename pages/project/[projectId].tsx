@@ -10,15 +10,72 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { useRecoilValue } from "recoil";
 import projectListAtom from "../../statMgmt/projectList";
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
+import axios, { AxiosResponse } from "axios";
+import { ParsedUrlQuery } from "querystring";
 
-interface Props {
-  // data: projectdetail;
-  // error: string;
+export const getStaticPaths: GetStaticPaths = async () => {
+  try {
+    const { data: projectList }: AxiosResponse<ProjectListRes> =
+      await axios.get(
+        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/projects?populate[0]=previewImage&populate[1]=ProjectImages.image`
+      );
+    const pathList = projectList.data.map(({ id }) => ({
+      params: {
+        projectId: id.toString(),
+      },
+    }));
+    return {
+      fallback: false,
+      paths: pathList,
+    };
+  } catch (err) {
+    return {
+      fallback: false,
+      paths: [],
+    };
+  }
+};
+
+interface Params extends ParsedUrlQuery {
+  projectId: string;
 }
-const ProjectDetail: React.FC<Props> = (props) => {
+
+export const getStaticProps: GetStaticProps<
+  {
+    projectRes: ProjectDetailRes;
+  },
+  Params
+> = async (context) => {
+  if (!context?.params)
+    return {
+      notFound: true,
+    };
+  const { projectId } = context.params;
+  try {
+    const { data: project }: AxiosResponse<ProjectDetailRes> = await axios.get(
+      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/projects/${projectId}?populate[0]=projectTechs&populate[1]=ProjectDescriptions&populate[2]=ProjectImages.image&populate[3]=previewImage`
+    );
+    return {
+      props: { projectRes: project },
+      revalidate: 60 * 24 * 60,
+    };
+  } catch (error) {
+    return {
+      notFound: true,
+    };
+  }
+};
+
+const ProjectDetail = ({
+  projectRes,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter();
   const { data: project } = useSWR<ProjectDetailRes>(
-    `/projects/${router.query.projectId}?populate[0]=projectTechs&populate[1]=ProjectDescriptions&populate[2]=ProjectImages.image&populate[3]=previewImage`
+    `/projects/${router.query.projectId}?populate[0]=projectTechs&populate[1]=ProjectDescriptions&populate[2]=ProjectImages.image&populate[3]=previewImage`,
+    {
+      fallbackData: projectRes,
+    }
   );
 
   const goToCodeLink = (link: string) => {
@@ -155,44 +212,4 @@ const ProjectDetail: React.FC<Props> = (props) => {
   );
 };
 
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   try {
-//     const { project } = await import("../../data/project");
-//     const pathList = project.map(({ id }) => ({
-//       params: {
-//         projectId: id,
-//       },
-//     }));
-//     return {
-//       fallback: false,
-//       paths: pathList,
-//     };
-//   } catch (err) {
-//     return {
-//       fallback: true,
-//       paths: [],
-//     };
-//   }
-// };
-
-// interface Params extends ParsedUrlQuery {
-//   projectId: string;
-// }
-
-// export const getStaticProps: GetStaticProps<
-//   { data: projectdetail } | { error: string },
-//   Params
-// > = async (context) => {
-//   const { projectId } = context.params || { projectId: "" };
-//   try {
-//     const { data } = await import(`../../data/${projectId}`);
-//     return {
-//       props: { data },
-//     };
-//   } catch (error) {
-//     return {
-//       props: { error: "error" },
-//     };
-//   }
-// };
 export default ProjectDetail;

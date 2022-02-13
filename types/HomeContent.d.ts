@@ -65,6 +65,7 @@ declare type Content =
 declare interface Attribute {
   Content: Content[];
   WebTitle: string;
+  webIcon: Image;
 }
 
 declare interface DataRes {

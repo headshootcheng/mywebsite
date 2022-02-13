@@ -13,22 +13,49 @@ import useMobile from "../hooks/useMobile";
 import SkillArea from "../components/HomePage/SkillArea";
 import ContactArea from "../components/HomePage/ContactArea";
 import ProjectArea from "../components/HomePage/ProjectArea";
-import { useSetRecoilState } from "recoil";
-import projectListAtom from "../statMgmt/projectList";
-interface Props {}
-const Home: React.FC<Props> = (props) => {
-  const setProjectListAtom =
-    useSetRecoilState<ProjectDataRes[]>(projectListAtom);
+import axios, { AxiosResponse } from "axios";
+import { GetStaticProps, InferGetStaticPropsType } from "next";
+
+export const getStaticProps: GetStaticProps<{
+  pageRes: HomeRes;
+  projectListRes: ProjectListRes;
+}> = async () => {
+  const { data: page }: AxiosResponse<HomeRes> = await axios.get(
+    `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/home-page?&populate[6]=webIcon&populate[5]=Content.SkillInfos&populate[4]=Content.SkillTypes&populate[3]=Content.infos&populate[2]=Content.profileImage&populate[1]=Content.backgroundImage.image&populate[0]=Content`
+  );
+  try {
+    const { data: projectList }: AxiosResponse<ProjectListRes> =
+      await axios.get(
+        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/projects?populate[0]=previewImage&populate[1]=ProjectImages.image`
+      );
+    return {
+      props: {
+        pageRes: page,
+        projectListRes: projectList,
+      },
+      revalidate: 60 * 24 * 60,
+    };
+  } catch (err) {
+    return {
+      notFound: true,
+    };
+  }
+};
+
+const Home = ({
+  pageRes,
+  projectListRes,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   const { data: page } = useSWR<HomeRes>(
-    "/home-page?populate[5]=Content.SkillInfos&populate[4]=Content.SkillTypes&populate[3]=Content.infos&populate[2]=Content.profileImage&populate[1]=Content.backgroundImage.image&populate[0]=Content"
+    "/home-page?&populate[6]=webIcon&populate[5]=Content.SkillInfos&populate[4]=Content.SkillTypes&populate[3]=Content.infos&populate[2]=Content.profileImage&populate[1]=Content.backgroundImage.image&populate[0]=Content",
+    {
+      fallbackData: pageRes,
+    }
   );
   const { data: projectList } = useSWR<ProjectListRes>(
     "/projects?populate[0]=previewImage&populate[1]=ProjectImages.image",
     {
-      onSuccess: (projectList) => {
-        console.log("123", projectList.data);
-        setProjectListAtom(projectList.data);
-      },
+      fallbackData: projectListRes,
     }
   );
 
@@ -87,6 +114,7 @@ const Home: React.FC<Props> = (props) => {
     .filter((content) => content.enabled)
     .map((content) => ({
       title: content.title,
+      position: renderContentArea(content)?.ref?.current?.offsetTop ?? 0,
       onTrigger: (init = false) => {
         window.scrollTo({
           top: renderContentArea(content)?.ref?.current?.offsetTop ?? 0,
@@ -192,6 +220,10 @@ const Home: React.FC<Props> = (props) => {
     <>
       <Head>
         <title>{page.data.attributes.WebTitle ?? "Loading..."}</title>
+        <link
+          rel="icon"
+          href={page.data.attributes.webIcon.data.attributes.url}
+        ></link>
         <meta
           name="google-site-verification"
           content="aAsoBFo0oI0JbkRF5wcEqVfGlTobRQ_H_EvkH7LU_7A"
@@ -207,9 +239,11 @@ const Home: React.FC<Props> = (props) => {
         ) : (
           showMenu && <NavBar navList={navList} currentPage={currentPage} />
         )}
-        {(page.data.attributes.Content ?? []).map(
-          (content: Content) => renderContentArea(content)?.content ?? null
-        )}
+        {(page.data.attributes.Content ?? []).map((content: Content) => (
+          <div key={content.title}>
+            {renderContentArea(content)?.content ?? null}
+          </div>
+        ))}
       </div>
     </>
   );
