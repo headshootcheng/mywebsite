@@ -1,5 +1,5 @@
 .contactWrapper {
-	@apply h-screen w-full md:px-10 py-20 flex  flex-col items-center md:items-start;
+	@apply   h-[900px] w-full md:px-10  py-20 flex  flex-col items-center md:items-start;
 }
 
 .header {

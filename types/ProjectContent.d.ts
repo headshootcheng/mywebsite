@@ -31,6 +31,11 @@ declare interface ProjectDataRes {
   id: number;
 }
 
+declare interface ProjectDetailRes {
+  data: ProjectDataRes;
+  meta: any;
+}
+
 declare interface ProjectListRes {
   data: ProjectDataRes[];
   meta: any;

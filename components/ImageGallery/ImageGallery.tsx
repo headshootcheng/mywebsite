@@ -3,18 +3,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination } from "swiper";
 SwiperCore.use([Navigation, Pagination]);
 import styles from "./ImageGallery.module.scss";
-import projectdata from "../../model/ProjectData";
 import Classnames from "classnames";
 interface Props {
-  parentStyle: Object;
-  projectList: projectdata[];
-  onClickSlide: (id: string) => void;
+  parentStyle: string;
+  projectList: ProjectImage[];
 }
-const ImageGallery: React.FC<Props> = ({
-  projectList = [],
-  onClickSlide = () => {},
-  parentStyle = styles.swiper,
-}) => {
+const ImageGallery: React.FC<Props> = ({ projectList = [], parentStyle }) => {
   return (
     <Swiper
       className={Classnames(parentStyle)}
@@ -30,17 +24,16 @@ const ImageGallery: React.FC<Props> = ({
       }}
       pagination={{ clickable: true }}
     >
-      {(projectList || []).map(({ image, title, id }) => {
+      {projectList.map((project) => {
         return (
-          <SwiperSlide
-            className={styles.swiperSlide}
-            key={id}
-            onClick={() => onClickSlide(id)}
-          >
-            <img src={image} className={styles.imgArea} />
+          <SwiperSlide className={styles.swiperSlide} key={project.id}>
+            <img
+              src={project.image.data.attributes.url}
+              className={styles.imgArea}
+            />
             <div className={styles.textBlock}>
               <div className={styles.textArea}>
-                <span className={styles.text}>{title}</span>
+                <span className={styles.text}>{project.text}</span>
               </div>
             </div>
           </SwiperSlide>

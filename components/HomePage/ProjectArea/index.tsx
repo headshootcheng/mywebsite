@@ -6,6 +6,7 @@ import { ProjectData } from "../../../types/HomeContent";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Button } from "@mui/material";
 import useMobile from "../../../hooks/useMobile";
+import { useRouter } from "next/router";
 interface Props {
   data: ProjectData;
   projectList: ProjectDataRes[];
@@ -14,6 +15,7 @@ interface Props {
 const ProjectArea = React.forwardRef<HTMLDivElement, Props>(
   ({ data, projectList }, ref) => {
     const [isReveal, setIsReveal] = React.useState<boolean>(false);
+    const route = useRouter();
     if (!data.enabled) return null;
     React.useEffect(() => {
       const handleScroll = () => {
@@ -41,10 +43,9 @@ const ProjectArea = React.forwardRef<HTMLDivElement, Props>(
         <div className="gap-28 flex flex-col w-full mt-20">
           {projectList
             .sort((a, b) => a.id - b.id)
-            .map((res) => res.attributes)
             .map((project, i) => (
               <div
-                key={project.ProjectId}
+                key={project.attributes.ProjectId}
                 css={{
                   flexDirection: `${
                     isMobile
@@ -70,7 +71,7 @@ const ProjectArea = React.forwardRef<HTMLDivElement, Props>(
                   className={styles.projectItemWrapper_text}
                 >
                   <span className={styles.projectItemWrapper_text_title}>
-                    {project.ProjectTitle}
+                    {project.attributes.ProjectTitle}
                   </span>
                   <span
                     css={{
@@ -80,20 +81,23 @@ const ProjectArea = React.forwardRef<HTMLDivElement, Props>(
                       height: "100%",
                     }}
                   >
-                    {project.story}
+                    {project.attributes.story}
                   </span>
                   <Button
                     variant="text"
                     endIcon={<ArrowForwardIcon />}
                     sx={{ color: "black" }}
+                    onClick={() => {
+                      route.replace(`/project/${project.id}`);
+                    }}
                   >
                     View Detail
                   </Button>
                 </div>
                 <div className={styles.projectItemWrapper_image}>
                   <img
-                    src={project.previewImage.data.attributes.url}
-                    alt={project.previewImage.data.attributes.name}
+                    src={project.attributes.previewImage.data.attributes.url}
+                    alt={project.attributes.previewImage.data.attributes.name}
                     className={styles.projectItemWrapper_image_content}
                   />
                 </div>

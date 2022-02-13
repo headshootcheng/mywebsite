@@ -29,7 +29,6 @@ const Home: React.FC<Props> = (props) => {
   const projectRef = React.useRef<HTMLDivElement>(null);
   const contactRef = React.useRef<HTMLDivElement>(null);
   const isMobile = useMobile();
-
   const renderContentArea = (content: Content) => {
     switch (content.__component) {
       case ContentType.Welcome:
@@ -77,12 +76,14 @@ const Home: React.FC<Props> = (props) => {
     .filter((content) => content.enabled)
     .map((content) => ({
       title: content.title,
-      position: renderContentArea(content)?.ref?.current?.offsetTop ?? 0,
-      onPress: () => {
+      onTrigger: (init = false) => {
         window.scrollTo({
           top: renderContentArea(content)?.ref?.current?.offsetTop ?? 0,
-          behavior: "smooth",
+          behavior: init ? "auto" : "smooth",
         });
+      },
+      onPress: () => {
+        window.location.hash = content.title;
       },
     }));
 
@@ -94,67 +95,55 @@ const Home: React.FC<Props> = (props) => {
 
   const updatePosition = () => {
     if (
-      window.pageYOffset >= (welcomeRef?.current?.offsetTop || 0) &&
-      window.pageYOffset < (profileRef?.current?.offsetTop || 0)
+      window.scrollY >= (welcomeRef?.current?.offsetTop || 0) &&
+      window.scrollY < (profileRef?.current?.offsetTop || 0)
     ) {
       setCurrentPage(navList[0].title);
       return;
     }
     if (
-      window.pageYOffset >= (profileRef?.current?.offsetTop || 0) &&
-      window.pageYOffset < (careerRef?.current?.offsetTop || 0)
+      window.scrollY >= (profileRef?.current?.offsetTop || 0) &&
+      window.scrollY < (careerRef?.current?.offsetTop || 0)
     ) {
       setCurrentPage(navList[1].title);
       return;
     }
     if (
-      window.pageYOffset >= (careerRef?.current?.offsetTop || 0) &&
-      window.pageYOffset < (skillRef?.current?.offsetTop || 0)
+      window.scrollY >= (careerRef?.current?.offsetTop || 0) &&
+      window.scrollY < (skillRef?.current?.offsetTop || 0)
     ) {
       setCurrentPage(navList[2].title);
       return;
     }
     if (
-      window.pageYOffset >= (skillRef?.current?.offsetTop || 0) &&
-      window.pageYOffset < (projectRef?.current?.offsetTop || 0)
+      window.scrollY >= (skillRef?.current?.offsetTop || 0) &&
+      window.scrollY < (projectRef?.current?.offsetTop || 0)
     ) {
       setCurrentPage(navList[3].title);
       return;
     }
     if (
-      window.pageYOffset >= (projectRef?.current?.offsetTop || 0) &&
-      window.pageYOffset < (contactRef?.current?.offsetTop || 0)
+      window.scrollY >= (projectRef?.current?.offsetTop || 0) &&
+      window.scrollY < (contactRef?.current?.offsetTop || 0)
     ) {
       setCurrentPage(navList[4].title);
       return;
     }
-    if (window.pageYOffset >= (contactRef?.current?.offsetTop || 0)) {
+    if (window.scrollY >= (contactRef?.current?.offsetTop || 0)) {
       setCurrentPage(navList[5].title);
       return;
     }
   };
 
-  // const updatePosition = () => {
-  //   navList.forEach((nav, i) => {
-  //     if (
-  //       !!navList[i + 1] &&
-  //       window.scrollY >= nav.position &&
-  //       window.screenY < navList[i + 1].position
-  //     )
-  //       setCurrentPage(navList[i].title);
-  //     else if (window.scrollY >= nav.position) setCurrentPage(navList[i].title);
-  //   });
-  // };
-
   let isScrolling: NodeJS.Timeout;
   const handleMenuOpen = () => {
     // Manipulate the appearance of desktop menu
-    if (window.pageYOffset > 100) setShowMenu(true);
+    if (window.scrollY > 100) setShowMenu(true);
     else setShowMenu(false);
 
     // Manipulate the height of mobile menu
     const heightRatio =
-      (window.pageYOffset - (profileRef?.current?.offsetTop || 0)) / 300;
+      (window.scrollY - (profileRef?.current?.offsetTop || 0)) / 300;
     if (heightRatio > 1) setHeight(80);
     else if (heightRatio < 0) setHeight(0);
     else setHeight(80 * heightRatio);
@@ -168,12 +157,25 @@ const Home: React.FC<Props> = (props) => {
       setShowMenu(false);
     }, 1000);
   };
+  const hashHandler = () => {
+    navList
+      .find((nav) => nav.title === window.location.hash.replace("#", ""))
+      ?.onTrigger();
+  };
+
   React.useEffect(() => {
-    if (page) window.addEventListener("scroll", scrollHandler);
+    navList
+      .find((nav) => nav.title === window.location.hash.replace("#", ""))
+      ?.onTrigger(true);
+    if (page && projectList) {
+      window.addEventListener("scroll", scrollHandler);
+      window.addEventListener("hashchange", hashHandler);
+    }
     return () => {
       window.removeEventListener("scroll", scrollHandler);
+      window.removeEventListener("hashchange", hashHandler);
     };
-  }, [page]);
+  }, [page, projectList]);
 
   return (
     <>
