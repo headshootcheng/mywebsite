@@ -1,5 +1,13 @@
+.prevButton{
+	@apply  md:flex items-center justify-center fixed cursor-pointer left-0 top-1/2 bg-gray-500 md:w-[80px] hidden  aspect-[1/2]  -translate-y-1/2 rounded-r-full opacity-30 hover:opacity-100 ;
+}
+
+.nextButton{
+	@apply md:flex items-center justify-center fixed cursor-pointer z-10 right-0 top-1/2 bg-gray-500 md:w-[80px] hidden  aspect-[1/2]  -translate-y-1/2 rounded-l-full opacity-30 hover:opacity-100 ;
+}
+
 .wrapper {
-	@apply bg-black md:h-screen w-full p-5 md:p-10;
+	@apply bg-stone-400 md:h-screen w-full p-5 md:p-10;
 }
 
 .backButton {
@@ -7,15 +15,27 @@
 }
 
 .backIcon {
-	@apply text-white ;
+	@apply text-black ;
 }
 
 .backText {
-	@apply text-white text-xl;
+	@apply  text-xl;
 } 
 
 .mainArea {
-	@apply md:m-10  px-10 md:px-5 flex flex-col md:flex-row  md:h-[80%] w-full  justify-center  md:justify-between;
+ 	animation: 1s  slide-in ;
+	@apply md:m-10  px-10 md:px-5 flex flex-col md:flex-row  md:h-[90%] w-full  justify-center  md:justify-between;
+}
+
+@keyframes slide-in{
+	from {
+		transform: translateY(-150px);
+		opacity: 0;
+	}
+	to{
+		transform: translateY(0px);
+		opacity: 1;
+	}
 }
 
 .projectIntroArea {
@@ -27,12 +47,12 @@
 }
 
 .projectTitle {
-	@apply text-2xl  md:text-6xl text-red-600; font-family: 'Nunito Sans', sans-serif;
+	@apply text-2xl  md:text-6xl text-orange-600; font-family: 'Nunito Sans', sans-serif;
 }
 
 .explanationPointList {
 	list-style-type: square;
-	@apply text-base md:text-lg px-5 text-white;
+	@apply text-base md:text-lg px-5 text-black;
 
 	* {
 		@apply my-2;
@@ -48,16 +68,16 @@
 }
 
 .projectFieldName {
-	@apply text-lg md:text-3xl text-red-600  w-14 md:w-24 border-white border-b-2 ;
+	@apply text-lg md:text-3xl text-orange-600  w-14 md:w-24 border-black border-b-2 ;
 	font-family: 'Nunito Sans', sans-serif;
 }
 
 .projectFieldValue {
-	@apply text-base md:text-lg  text-white ;
+	@apply text-base md:text-lg   ;
 }
 
 .imageGallery {
-	@apply flex  h-[200px]  md:h-full  w-[90%] md:w-[60%] m-0  ;
+	@apply flex  w-[90%] aspect-square  md:h-full   md:w-[60%] m-0  ;
 }
 
 .codeButton {

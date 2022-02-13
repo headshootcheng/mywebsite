@@ -1,192 +1,174 @@
-import React, { useRef, useState, useMemo, useEffect } from "react";
+import React from "react";
 import Head from "next/head";
-import styles from "./main.module.scss";
-import { GetStaticProps } from "next";
-import homedata from "../model/HomeData";
-import Welcome from "../components/Welcome/Welcome";
-import Profile from "../components/Profile/Profile";
-import Career from "../components/Career/Career";
-import Skill from "../components/Skill/Skill";
-import Project from "../components/Project/Project";
-import Contact from "../components/Contact/Contact";
-import MobileNavBar from "../components/MobileNavBar/MobileNavBar";
-import { isMobile } from "../utils/screenUtil";
-import NavBar from "../components/NavBar/NavBar";
-import LinkedInIcon from "@material-ui/icons/LinkedIn";
-import GitHubIcon from "@material-ui/icons/GitHub";
-import NoteIcon from "@material-ui/icons/Note";
-interface Props {
-  homeData: homedata;
-  error: string;
-}
-const Home: React.FC<Props> = (props) => {
-  const welcomeRef = useRef<HTMLDivElement>(null);
-  const profileRef = useRef<HTMLDivElement>(null);
-  const careerRef = useRef<HTMLDivElement>(null);
-  const skillRef = useRef<HTMLDivElement>(null);
-  const projectRef = useRef<HTMLDivElement>(null);
-  const contactRef = useRef<HTMLDivElement>(null);
-  const [homeData, setHomeData] = useState<homedata>(props?.homeData);
+import styles from "./main.module.css";
+import useSWR from "swr";
+import { ContentType } from "../types/enums/ContentType";
+import ProfileArea from "../components/HomePage/ProfileArea";
+import WelcomeArea from "../components/HomePage/WelcomeArea";
+import { Content, HomeRes } from "../types/HomeContent";
+import CareerArea from "../components/HomePage/CareerArea";
+import NavBar from "../components/NavBar";
+import MobileNavBar from "../components/MobileNavBar";
+import useMobile from "../hooks/useMobile";
+import SkillArea from "../components/HomePage/SkillArea";
+import ContactArea from "../components/HomePage/ContactArea";
+import ProjectArea from "../components/HomePage/ProjectArea";
+import axios, { AxiosResponse } from "axios";
+import { GetStaticProps, InferGetStaticPropsType } from "next";
 
-  const contactList = [
-    {
-      type: "linkedin",
-      icon: (
-        <LinkedInIcon
-          fontSize="large"
-          style={{
-            height: isMobile() ? 40 : 50,
-            width: isMobile() ? 40 : 50,
-            margin: 0,
-            color: "white",
-          }}
-        />
-      ),
-      link: homeData?.linkedin || "",
-      onPress: () => {
-        if (homeData?.linkedin) window.open(homeData.linkedin);
+export const getStaticProps: GetStaticProps<{
+  pageRes: HomeRes;
+  projectListRes: ProjectListRes;
+}> = async () => {
+  const { data: page }: AxiosResponse<HomeRes> = await axios.get(
+    `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/home-page?&populate[6]=webIcon&populate[5]=Content.SkillInfos&populate[4]=Content.SkillTypes&populate[3]=Content.infos&populate[2]=Content.profileImage&populate[1]=Content.backgroundImage.image&populate[0]=Content`
+  );
+  try {
+    const { data: projectList }: AxiosResponse<ProjectListRes> =
+      await axios.get(
+        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/projects?populate[0]=previewImage&populate[1]=ProjectImages.image`
+      );
+    return {
+      props: {
+        pageRes: page,
+        projectListRes: projectList,
       },
-    },
-    {
-      type: "github",
-      icon: (
-        <GitHubIcon
-          fontSize="large"
-          style={{
-            height: isMobile() ? 40 : 50,
-            width: isMobile() ? 40 : 50,
-            margin: 0,
-            color: "white",
-          }}
-        />
-      ),
-      link: homeData?.github || "",
-      onPress: () => {
-        if (homeData?.github) window.open(homeData.github);
-      },
-    },
-    {
-      type: "gitbook",
-      icon: (
-        <NoteIcon
-          fontSize="large"
-          style={{
-            height: isMobile() ? 40 : 50,
-            width: isMobile() ? 40 : 50,
-            margin: 0,
-            color: "white",
-          }}
-        />
-      ),
-      link: homeData?.gitbook || "",
-      onPress: () => {
-        if (homeData?.linkedin) window.open(homeData.gitbook);
-      },
-    },
-  ];
+      revalidate: 60 * 24 * 60,
+    };
+  } catch (err) {
+    return {
+      notFound: true,
+    };
+  }
+};
 
-  const navList = useMemo(
-    () => [
-      {
-        title: "Welcome",
-        onPress: () => {
-          window.scrollTo({
-            top: welcomeRef?.current?.offsetTop || 0,
-            behavior: "smooth",
-          });
-        },
-      },
-      {
-        title: "Profile",
-        onPress: () => {
-          window.scrollTo({
-            top: profileRef?.current?.offsetTop || 0,
-            behavior: "smooth",
-          });
-        },
-      },
-      {
-        title: "Career",
-        onPress: () => {
-          window.scrollTo({
-            top: careerRef?.current?.offsetTop || 0,
-            behavior: "smooth",
-          });
-        },
-      },
-      {
-        title: "Skill",
-        onPress: () => {
-          window.scrollTo({
-            top: skillRef?.current?.offsetTop || 0,
-            behavior: "smooth",
-          });
-        },
-      },
-      {
-        title: "Project",
-        onPress: () => {
-          window.scrollTo({
-            top: projectRef?.current?.offsetTop || 0,
-            behavior: "smooth",
-          });
-        },
-      },
-      {
-        title: "Contact",
-        onPress: () => {
-          window.scrollTo({
-            top: contactRef?.current?.offsetTop || 0,
-            behavior: "smooth",
-          });
-        },
-      },
-    ],
-    []
+const Home = ({
+  pageRes,
+  projectListRes,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const { data: page } = useSWR<HomeRes>(
+    "/home-page?&populate[6]=webIcon&populate[5]=Content.SkillInfos&populate[4]=Content.SkillTypes&populate[3]=Content.infos&populate[2]=Content.profileImage&populate[1]=Content.backgroundImage.image&populate[0]=Content",
+    {
+      fallbackData: pageRes,
+    }
+  );
+  const { data: projectList } = useSWR<ProjectListRes>(
+    "/projects?populate[0]=previewImage&populate[1]=ProjectImages.image",
+    {
+      fallbackData: projectListRes,
+    }
   );
 
-  const [currentPage, setCurrentPage] = useState<string>(
-    navList[0].title || "Welcome"
+  if (!page || !projectList) return null;
+  const welcomeRef = React.useRef<HTMLDivElement>(null);
+  const profileRef = React.useRef<HTMLDivElement>(null);
+  const careerRef = React.useRef<HTMLDivElement>(null);
+  const skillRef = React.useRef<HTMLDivElement>(null);
+  const projectRef = React.useRef<HTMLDivElement>(null);
+  const contactRef = React.useRef<HTMLDivElement>(null);
+  const isMobile = useMobile();
+  const renderContentArea = (content: Content) => {
+    switch (content.__component) {
+      case ContentType.Welcome:
+        return {
+          content: <WelcomeArea data={content} ref={welcomeRef} />,
+          ref: welcomeRef,
+        };
+      case ContentType.Profile:
+        return {
+          content: <ProfileArea data={content} ref={profileRef} />,
+          ref: profileRef,
+        };
+      case ContentType.Career:
+        return {
+          content: <CareerArea data={content} ref={careerRef} />,
+          ref: careerRef,
+        };
+      case ContentType.Skill:
+        return {
+          content: <SkillArea data={content} ref={skillRef} />,
+          ref: skillRef,
+        };
+      case ContentType.Project:
+        return {
+          content: (
+            <ProjectArea
+              data={content}
+              projectList={projectList.data ?? []}
+              ref={projectRef}
+            />
+          ),
+          ref: projectRef,
+        };
+      case ContentType.Contact:
+        return {
+          content: <ContactArea data={content} ref={contactRef} />,
+          ref: contactRef,
+        };
+      default:
+        return null;
+    }
+  };
+
+  const navList = (page.data.attributes.Content ?? [])
+    .filter((content) => content.enabled)
+    .map((content) => ({
+      title: content.title,
+      position: renderContentArea(content)?.ref?.current?.offsetTop ?? 0,
+      onTrigger: (init = false) => {
+        window.scrollTo({
+          top: renderContentArea(content)?.ref?.current?.offsetTop ?? 0,
+          behavior: init ? "auto" : "smooth",
+        });
+      },
+      onPress: () => {
+        window.location.hash = content.title;
+      },
+    }));
+
+  const [currentPage, setCurrentPage] = React.useState<string>(
+    navList?.[0]?.title || "Welcome"
   );
-  const [showMenu, setShowMenu] = useState<boolean>(false);
-  const [mobileNavHeight, setHeight] = useState<number>(0);
+  const [showMenu, setShowMenu] = React.useState<boolean>(false);
+  const [mobileNavHeight, setHeight] = React.useState<number>(0);
+
   const updatePosition = () => {
     if (
-      window.pageYOffset >= (welcomeRef?.current?.offsetTop || 0) &&
-      window.pageYOffset < (profileRef?.current?.offsetTop || 0)
+      window.scrollY >= (welcomeRef?.current?.offsetTop || 0) &&
+      window.scrollY < (profileRef?.current?.offsetTop || 0)
     ) {
       setCurrentPage(navList[0].title);
       return;
     }
     if (
-      window.pageYOffset >= (profileRef?.current?.offsetTop || 0) &&
-      window.pageYOffset < (careerRef?.current?.offsetTop || 0)
+      window.scrollY >= (profileRef?.current?.offsetTop || 0) &&
+      window.scrollY < (careerRef?.current?.offsetTop || 0)
     ) {
       setCurrentPage(navList[1].title);
       return;
     }
     if (
-      window.pageYOffset >= (careerRef?.current?.offsetTop || 0) &&
-      window.pageYOffset < (skillRef?.current?.offsetTop || 0)
+      window.scrollY >= (careerRef?.current?.offsetTop || 0) &&
+      window.scrollY < (skillRef?.current?.offsetTop || 0)
     ) {
       setCurrentPage(navList[2].title);
       return;
     }
     if (
-      window.pageYOffset >= (skillRef?.current?.offsetTop || 0) &&
-      window.pageYOffset < (projectRef?.current?.offsetTop || 0)
+      window.scrollY >= (skillRef?.current?.offsetTop || 0) &&
+      window.scrollY < (projectRef?.current?.offsetTop || 0)
     ) {
       setCurrentPage(navList[3].title);
       return;
     }
     if (
-      window.pageYOffset >= (projectRef?.current?.offsetTop || 0) &&
-      window.pageYOffset < (contactRef?.current?.offsetTop || 0)
+      window.scrollY >= (projectRef?.current?.offsetTop || 0) &&
+      window.scrollY < (contactRef?.current?.offsetTop || 0)
     ) {
       setCurrentPage(navList[4].title);
       return;
     }
-    if (window.pageYOffset >= (contactRef?.current?.offsetTop || 0)) {
+    if (window.scrollY >= (contactRef?.current?.offsetTop || 0)) {
       setCurrentPage(navList[5].title);
       return;
     }
@@ -195,13 +177,12 @@ const Home: React.FC<Props> = (props) => {
   let isScrolling: NodeJS.Timeout;
   const handleMenuOpen = () => {
     // Manipulate the appearance of desktop menu
-    if (window.pageYOffset > (profileRef?.current?.offsetTop || 0))
-      setShowMenu(true);
+    if (window.scrollY > 100) setShowMenu(true);
     else setShowMenu(false);
 
     // Manipulate the height of mobile menu
     const heightRatio =
-      (window.pageYOffset - (profileRef?.current?.offsetTop || 0)) / 300;
+      (window.scrollY - (profileRef?.current?.offsetTop || 0)) / 300;
     if (heightRatio > 1) setHeight(80);
     else if (heightRatio < 0) setHeight(0);
     else setHeight(80 * heightRatio);
@@ -215,25 +196,41 @@ const Home: React.FC<Props> = (props) => {
       setShowMenu(false);
     }, 1000);
   };
-  useEffect(() => {
-    window.addEventListener("scroll", scrollHandler);
+  const hashHandler = () => {
+    navList
+      .find((nav) => nav.title === window.location.hash.replace("#", ""))
+      ?.onTrigger();
+  };
 
+  React.useEffect(() => {
+    navList
+      .find((nav) => nav.title === window.location.hash.replace("#", ""))
+      ?.onTrigger(true);
+    if (page && projectList) {
+      window.addEventListener("scroll", scrollHandler);
+      window.addEventListener("hashchange", hashHandler);
+    }
     return () => {
       window.removeEventListener("scroll", scrollHandler);
+      window.removeEventListener("hashchange", hashHandler);
     };
-  }, []);
+  }, [page, projectList]);
 
   return (
     <>
       <Head>
-        <title>Peter Cheng - My Personal Profilio</title>
+        <title>{page.data.attributes.WebTitle ?? "Loading..."}</title>
+        <link
+          rel="icon"
+          href={page.data.attributes.webIcon.data.attributes.url}
+        ></link>
         <meta
           name="google-site-verification"
           content="aAsoBFo0oI0JbkRF5wcEqVfGlTobRQ_H_EvkH7LU_7A"
         />
       </Head>
       <div className={styles.wrapper}>
-        {isMobile() ? (
+        {isMobile ? (
           <MobileNavBar
             navList={navList}
             currentPage={currentPage}
@@ -242,33 +239,14 @@ const Home: React.FC<Props> = (props) => {
         ) : (
           showMenu && <NavBar navList={navList} currentPage={currentPage} />
         )}
-        <Welcome ref={welcomeRef} />
-        <Profile
-          image={homeData?.icon || ""}
-          introText={homeData?.intro || ""}
-          ref={profileRef}
-        />
-        <Career ref={careerRef} careerList={homeData?.career || []} />
-        <Skill ref={skillRef} skillList={homeData?.skill || []} />
-        <Project ref={projectRef} projectList={homeData?.project || []} />
-        <Contact ref={contactRef} contactList={contactList} />
+        {(page.data.attributes.Content ?? []).map((content: Content) => (
+          <div key={content.title}>
+            {renderContentArea(content)?.content ?? null}
+          </div>
+        ))}
       </div>
     </>
   );
-};
-export const getStaticProps: GetStaticProps<
-  { homeData: homedata } | { error: string }
-> = async () => {
-  try {
-    const { homeData } = await import("../data/home");
-    return {
-      props: { homeData },
-    };
-  } catch (error) {
-    return {
-      props: { error: error.message },
-    };
-  }
 };
 
 export default Home;

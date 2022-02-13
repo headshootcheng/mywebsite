@@ -11,14 +11,11 @@
 }
 
 .textBlock {
-	@apply absolute bottom-0 w-full h-1/4 bg-opacity-20 bg-black;
+	@apply fixed bottom-0 w-full h-1/4 bg-opacity-80  bg-black  flex items-center justify-center;
 }
 
-.textArea {
-	@apply h-full  flex items-center justify-center;
-}
 
 .text {
-	@apply text-black  text-lg md:text-3xl;
+	@apply text-white  text-lg md:text-3xl z-10;
 	font-family: 'Nunito Sans', sans-serif;
 }

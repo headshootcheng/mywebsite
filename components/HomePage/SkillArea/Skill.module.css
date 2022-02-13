@@ -1,0 +1,38 @@
+.skillWrapper {
+	@apply w-full md:px-10 py-20 flex  flex-col items-center md:items-start;
+}
+
+.header {
+	@apply text-5xl md:text-7xl ;
+	font-family: 'Nunito Sans', sans-serif;
+}
+
+.skillArea {
+	@apply px-5 my-8 w-full;
+	opacity: 0;
+	transform: translateY(-150px);
+	transition: 1s all ease;
+
+	&_active{
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.subHeader {
+	@apply text-3xl text-blue-500;
+	font-family: 'Nunito Sans', sans-serif;
+}
+
+.skillRow {
+	@apply my-10 flex flex-row items-center justify-start w-full flex-wrap ;
+}
+
+.skillItem {
+	@apply my-4 flex flex-row items-center  justify-between w-full  md:w-1/2 pr-10 ;
+}
+
+.skillText {
+	@apply text-2xl text-gray-500;
+	font-family: 'Nunito Sans', sans-serif;
+}
