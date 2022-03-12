@@ -218,7 +218,7 @@ const Home = ({
   return (
     <>
       <Head>
-        <title>{"Loading..."}</title>
+        <title>{page.data.attributes.WebTitle ?? "Loading..."}</title>
         <link
           rel="icon"
           href={page.data.attributes.webIcon.data.attributes.url}
