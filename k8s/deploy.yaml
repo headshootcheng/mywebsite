@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-website
+  namespace: default
+spec:
+  selector:
+    name: my-website
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+    nodePort: 30100
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-website
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      name: my-website
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: my-website
+    spec:
+      containers:
+      - name: my-website
+        image: asia-east2-docker.pkg.dev/geometric-shine-316204/docker/my_website:latest
+        ports:
+        - containerPort: 3000  
+    

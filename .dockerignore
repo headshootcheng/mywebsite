@@ -1,5 +1,9 @@
+Dockerfile
+.dockerignore
 node_modules
-.next
 npm-debug.log
-.husky
+README.md
+.next
+.git
 .github
+.husky
