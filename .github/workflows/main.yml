@@ -29,7 +29,6 @@ env:
   REPOSITORY: asia-east2-docker.pkg.dev/geometric-shine-316204/docker # TODO: update to Artifact Registry docker repository
   IMAGE: my_website
 
-
 jobs:
   setup-build-publish-deploy:
     name: Setup, Build, Publish, and Deploy
@@ -61,7 +60,7 @@ jobs:
     # Build the Docker image
     - name: Build
       run: |-
-        docker build --tag "$REPOSITORY/$IMAGE:latest .
+        docker build --tag "$REPOSITORY/$IMAGE:latest" .
 
     # Push the Docker image to Google Container Registry
     - name: Publish
