@@ -1,6 +1,5 @@
 import React from "react";
 import Head from "next/head";
-import styles from "./main.module.css";
 import useSWR from "swr";
 import { ContentType } from "../types/enums/ContentType";
 import ProfileArea from "../components/HomePage/ProfileArea";
@@ -229,7 +228,7 @@ const Home = ({
           content="aAsoBFo0oI0JbkRF5wcEqVfGlTobRQ_H_EvkH7LU_7A"
         />
       </Head>
-      <div className={styles.wrapper}>
+      <div className="overflow-auto">
         {isMobile ? (
           <MobileNavBar
             navList={navList}
