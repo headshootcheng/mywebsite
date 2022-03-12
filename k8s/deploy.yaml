@@ -31,6 +31,7 @@ spec:
       containers:
       - name: my-website
         image: asia-east2-docker.pkg.dev/geometric-shine-316204/docker/my_website:latest
+        imagePullPolicy: Always       
         ports:
         - containerPort: 3000  
     
