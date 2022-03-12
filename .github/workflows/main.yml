@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: Deploy simple hello app to GKE
+name: Deploy my-website app to GKE
 
 on:
   push:

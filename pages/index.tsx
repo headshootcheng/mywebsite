@@ -16,12 +16,13 @@ import axios, { AxiosResponse } from "axios";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 
 export const getStaticProps: GetStaticProps<{
-  pageRes: HomeRes;
-  projectListRes: ProjectListRes;
+  pageRes: HomeRes | undefined;
+  projectListRes: ProjectListRes | undefined;
 }> = async () => {
   const { data: page }: AxiosResponse<HomeRes> = await axios.get(
     `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/home-page?&populate[6]=webIcon&populate[5]=Content.SkillInfos&populate[4]=Content.SkillTypes&populate[3]=Content.infos&populate[2]=Content.profileImage&populate[1]=Content.backgroundImage.image&populate[0]=Content`
   );
+  console.log("building main page ");
   try {
     const { data: projectList }: AxiosResponse<ProjectListRes> =
       await axios.get(
@@ -35,8 +36,12 @@ export const getStaticProps: GetStaticProps<{
       revalidate: 60 * 24 * 60,
     };
   } catch (err) {
+    console.log("test", err);
     return {
-      notFound: true,
+      props: {
+        pageRes: undefined,
+        projectListRes: undefined,
+      },
     };
   }
 };
