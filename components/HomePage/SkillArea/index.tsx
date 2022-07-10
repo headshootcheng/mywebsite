@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { Divider, Rating } from "@mui/material";
+import { Divider } from "@mui/material";
 import React from "react";
 import ClassNames from "classnames";
 import { SkillData } from "../../../types/HomeContent";
@@ -48,10 +48,9 @@ const SkillArea = React.forwardRef<HTMLDivElement, Props>(({ data }, ref) => {
           <div className={styles.skillRow}>
             {data.SkillInfos.filter(
               (skillInfo) => skillInfo.skillType === type
-            ).map(({ rating, skillTitle }) => (
+            ).map(({ skillTitle }) => (
               <div className={styles.skillItem} key={skillTitle}>
                 <span className={styles.skillText}>{skillTitle}</span>
-                <Rating defaultValue={rating} size="medium" readOnly />
               </div>
             ))}
           </div>
