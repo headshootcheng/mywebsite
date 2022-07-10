@@ -5,9 +5,8 @@
 - TypeScript
 - TailwindCSS
 - Docker 
-- Kubernetes
 - GitHub Action 
-- Google Kubernetes Engine
+- Google Cloud Run
 
 ## Website
  https://peterchengg.com/
