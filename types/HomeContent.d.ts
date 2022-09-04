@@ -19,6 +19,13 @@ declare interface ProfileData {
   __component: ContentType.Profile;
 }
 
+declare interface CertData {
+  title: string;
+  enabled: boolean;
+  backgroundColor: string;
+  __component: ContentType.Cert;
+}
+
 declare interface CareerData {
   backgroundColor: string;
   backgroundImage: BackgroundImage | null;
@@ -58,6 +65,7 @@ declare type Content =
   | WelcomeData
   | ProfileData
   | CareerData
+  | CertArea
   | SkillData
   | ProjectData
   | ContactData;

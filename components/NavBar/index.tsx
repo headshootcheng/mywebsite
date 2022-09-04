@@ -15,7 +15,7 @@ const NavBar: React.FC<Props> = ({ navList, currentPage }) => {
       ({ title }) => title === currentPage
     );
     if (currentIndex >= 0 && currentIndex < navList.length - 1)
-      navList[currentIndex + 1].onPress();
+      navList[currentIndex + 1].onTrigger();
   };
 
   const scrollToPrevItem = () => {
@@ -23,7 +23,7 @@ const NavBar: React.FC<Props> = ({ navList, currentPage }) => {
       ({ title }) => title === currentPage
     );
     if (currentIndex > 0 && currentIndex <= navList.length - 1)
-      navList[currentIndex - 1].onPress();
+      navList[currentIndex - 1].onTrigger();
   };
 
   return (
@@ -39,14 +39,16 @@ const NavBar: React.FC<Props> = ({ navList, currentPage }) => {
           <KeyboardArrowUpIcon style={{ color: "white" }} fontSize="large" />
         </IconButton>
       </div>
-      {navList.map(({ title, onPress }) => {
+      {navList.map(({ title, onTrigger }) => {
         return (
           <div
             className={ClassName(styles.navBox, {
               [styles.navBoxActive]: title === currentPage,
             })}
             key={title}
-            onClick={onPress}
+            onClick={() => {
+              onTrigger();
+            }}
           >
             <span className={styles.navBoxText}>{title}</span>
           </div>

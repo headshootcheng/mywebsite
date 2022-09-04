@@ -14,13 +14,15 @@ const MobileNavBar: React.FC<Props> = ({
   return (
     <div className={styles.topbar} style={{ top: `calc(${height}px - 80px)` }}>
       <div className={styles.topbarRow}>
-        {navList.map(({ title, onPress }) => {
+        {navList.map(({ title, onTrigger }) => {
           return (
             <div
               className={ClassName(styles.topbarOptionBox, {
                 [styles.topbarOptionBoxActive]: title === currentPage,
               })}
-              onClick={onPress}
+              onClick={() => {
+                onTrigger();
+              }}
               key={title}
             >
               <span className={styles.topbarOptionText}>{title}</span>

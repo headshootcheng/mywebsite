@@ -14,13 +14,14 @@ import ContactArea from "../components/HomePage/ContactArea";
 import ProjectArea from "../components/HomePage/ProjectArea";
 import axios, { AxiosResponse } from "axios";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
+import CertArea from "../components/HomePage/CertArea";
 
 export const getStaticProps: GetStaticProps<{
   pageRes: HomeRes;
   projectListRes: ProjectListRes;
 }> = async () => {
   const { data: page }: AxiosResponse<HomeRes> = await axios.get(
-    `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/home-page?&populate[6]=webIcon&populate[5]=Content.SkillInfos&populate[4]=Content.SkillTypes&populate[3]=Content.infos&populate[2]=Content.profileImage&populate[1]=Content.backgroundImage.image&populate[0]=Content`
+    `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/home-page?populate[8]=Content.certInfos.CertPhoto&populate[7]=Content.certInfos&populate[6]=webIcon&populate[5]=Content.SkillInfos&populate[4]=Content.SkillTypes&populate[3]=Content.infos&populate[2]=Content.profileImage&populate[1]=Content.backgroundImage.image&populate[0]=Content`
   );
   try {
     const { data: projectList }: AxiosResponse<ProjectListRes> =
@@ -46,7 +47,7 @@ const Home = ({
   projectListRes,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const { data: page } = useSWR<HomeRes>(
-    "/home-page?&populate[6]=webIcon&populate[5]=Content.SkillInfos&populate[4]=Content.SkillTypes&populate[3]=Content.infos&populate[2]=Content.profileImage&populate[1]=Content.backgroundImage.image&populate[0]=Content",
+    "/home-page?populate[8]=Content.certInfos.CertPhoto&populate[7]=Content.certInfos&populate[6]=webIcon&populate[5]=Content.SkillInfos&populate[4]=Content.SkillTypes&populate[3]=Content.infos&populate[2]=Content.profileImage&populate[1]=Content.backgroundImage.image&populate[0]=Content",
     {
       fallbackData: pageRes,
     }
@@ -62,6 +63,7 @@ const Home = ({
   const welcomeRef = React.useRef<HTMLDivElement>(null);
   const profileRef = React.useRef<HTMLDivElement>(null);
   const careerRef = React.useRef<HTMLDivElement>(null);
+  const certRef = React.useRef<HTMLDivElement>(null);
   const skillRef = React.useRef<HTMLDivElement>(null);
   const projectRef = React.useRef<HTMLDivElement>(null);
   const contactRef = React.useRef<HTMLDivElement>(null);
@@ -82,6 +84,11 @@ const Home = ({
         return {
           content: <CareerArea data={content} ref={careerRef} />,
           ref: careerRef,
+        };
+      case ContentType.Cert:
+        return {
+          content: <CertArea data={content} />,
+          ref: certRef,
         };
       case ContentType.Skill:
         return {
@@ -119,9 +126,6 @@ const Home = ({
           top: renderContentArea(content)?.ref?.current?.offsetTop ?? 0,
           behavior: init ? "auto" : "smooth",
         });
-      },
-      onPress: () => {
-        window.location.hash = content.title;
       },
     }));
 
@@ -190,10 +194,10 @@ const Home = ({
     window.clearTimeout(isScrolling);
     updatePosition();
     handleMenuOpen();
-    // If user stop scrolling over 1 seconds, hide the desktop menu
+    // If user stop scrolling over 2 seconds, hide the desktop menu
     isScrolling = setTimeout(() => {
       setShowMenu(false);
-    }, 1000);
+    }, 2000);
   };
   const hashHandler = () => {
     navList
