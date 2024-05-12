@@ -1,5 +1,5 @@
 .profileWrapper {
-	@apply w-full md:px-10 py-20 flex flex-col items-center md:items-start;
+	@apply w-full md:px-10 py-20 flex flex-col items-center md:items-start bg-white;
 }
 
 .header {

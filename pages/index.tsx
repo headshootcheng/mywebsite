@@ -1,114 +1,99 @@
 import React from "react";
-import Head from "next/head";
 import useSWR from "swr";
-import { ContentType } from "../types/enums/ContentType";
-import ProfileArea from "../components/HomePage/ProfileArea";
-import WelcomeArea from "../components/HomePage/WelcomeArea";
-import { Content, HomeRes } from "../types/HomeContent";
-import CareerArea from "../components/HomePage/CareerArea";
-import NavBar from "../components/NavBar";
-import MobileNavBar from "../components/MobileNavBar";
-import useMobile from "../hooks/useMobile";
-import SkillArea from "../components/HomePage/SkillArea";
-import ContactArea from "../components/HomePage/ContactArea";
-import ProjectArea from "../components/HomePage/ProjectArea";
 import axios, { AxiosResponse } from "axios";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
-import CertArea from "../components/HomePage/CertArea";
+import useMobile from "../hooks/useMobile";
+import { ContentType } from "../types/enums/ContentType";
+import WelcomeArea from "../components/HomePage/WelcomeArea";
+import ProfileArea from "../components/HomePage/ProfileArea";
+import CareerArea from "../components/HomePage/CareerArea";
+import ProjectArea from "../components/HomePage/ProjectArea";
+import SkillArea from "../components/HomePage/SkillArea";
+import ContactArea from "../components/HomePage/ContactArea";
+import MobileNavBar from "../components/MobileNavBar";
+import NavBar from "../components/NavBar";
+import Head from "next/head";
 
 export const getStaticProps: GetStaticProps<{
   pageRes: HomeRes;
-  projectListRes: ProjectListRes;
 }> = async () => {
-  const { data: page }: AxiosResponse<HomeRes> = await axios.get(
-    `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/home-page?populate[8]=Content.certInfos.CertPhoto&populate[7]=Content.certInfos&populate[6]=webIcon&populate[5]=Content.SkillInfos&populate[4]=Content.SkillTypes&populate[3]=Content.infos&populate[2]=Content.profileImage&populate[1]=Content.backgroundImage.image&populate[0]=Content`
-  );
   try {
-    const { data: projectList }: AxiosResponse<ProjectListRes> =
-      await axios.get(
-        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/projects?populate[0]=previewImage&populate[1]=ProjectImages.image`
-      );
+    const { data: page }: AxiosResponse<HomeRes> = await axios.get(
+      `${process.env.BASE_URL}/api/home`
+    );
     return {
       props: {
         pageRes: page,
-        projectListRes: projectList,
       },
       revalidate: 60 * 24 * 60,
     };
   } catch (err) {
+    console.log("get static props err", err);
     return {
       notFound: true,
     };
   }
 };
 
-const Home = ({
-  pageRes,
-  projectListRes,
-}: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const { data: page } = useSWR<HomeRes>(
-    "/home-page?populate[8]=Content.certInfos.CertPhoto&populate[7]=Content.certInfos&populate[6]=webIcon&populate[5]=Content.SkillInfos&populate[4]=Content.SkillTypes&populate[3]=Content.infos&populate[2]=Content.profileImage&populate[1]=Content.backgroundImage.image&populate[0]=Content",
-    {
-      fallbackData: pageRes,
-    }
-  );
-  const { data: projectList } = useSWR<ProjectListRes>(
-    "/projects?populate[0]=previewImage&populate[1]=ProjectImages.image",
-    {
-      fallbackData: projectListRes,
-    }
-  );
+const contentList = [
+  ContentType.Welcome,
+  ContentType.Profile,
+  ContentType.Career,
+  ContentType.Skill,
+  ContentType.Project,
+  ContentType.Contact,
+];
 
-  if (!page || !projectList) return null;
+const Home = ({ pageRes }: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const { data: page } = useSWR<HomeRes>("/api/home", {
+    fallbackData: pageRes,
+  });
+  console.log("page data", page);
+
+  if (!page) return null;
   const welcomeRef = React.useRef<HTMLDivElement>(null);
   const profileRef = React.useRef<HTMLDivElement>(null);
   const careerRef = React.useRef<HTMLDivElement>(null);
-  const certRef = React.useRef<HTMLDivElement>(null);
+  // const certRef = React.useRef<HTMLDivElement>(null);
   const skillRef = React.useRef<HTMLDivElement>(null);
   const projectRef = React.useRef<HTMLDivElement>(null);
   const contactRef = React.useRef<HTMLDivElement>(null);
   const isMobile = useMobile();
-  const renderContentArea = (content: Content) => {
-    switch (content.__component) {
+  const renderContentArea = (contentType: ContentType) => {
+    switch (contentType) {
       case ContentType.Welcome:
         return {
-          content: <WelcomeArea data={content} ref={welcomeRef} />,
+          content: <WelcomeArea data={page[contentType]} ref={welcomeRef} />,
           ref: welcomeRef,
         };
       case ContentType.Profile:
         return {
-          content: <ProfileArea data={content} ref={profileRef} />,
+          content: <ProfileArea data={page[contentType]} ref={profileRef} />,
           ref: profileRef,
         };
       case ContentType.Career:
         return {
-          content: <CareerArea data={content} ref={careerRef} />,
+          content: <CareerArea data={page[contentType]} ref={careerRef} />,
           ref: careerRef,
         };
-      case ContentType.Cert:
-        return {
-          content: <CertArea data={content} />,
-          ref: certRef,
-        };
+      // case ContentType.Cert:
+      //   return {
+      //     content: <CertArea data={content} />,
+      //     ref: certRef,
+      //   };
       case ContentType.Skill:
         return {
-          content: <SkillArea data={content} ref={skillRef} />,
+          content: <SkillArea data={page[contentType]} ref={skillRef} />,
           ref: skillRef,
         };
       case ContentType.Project:
         return {
-          content: (
-            <ProjectArea
-              data={content}
-              projectList={projectList.data ?? []}
-              ref={projectRef}
-            />
-          ),
+          content: <ProjectArea data={page[contentType]} ref={projectRef} />,
           ref: projectRef,
         };
       case ContentType.Contact:
         return {
-          content: <ContactArea data={content} ref={contactRef} />,
+          content: <ContactArea data={page[contentType]} ref={contactRef} />,
           ref: contactRef,
         };
       default:
@@ -116,22 +101,18 @@ const Home = ({
     }
   };
 
-  const navList = (page.data.attributes.Content ?? [])
-    .filter((content) => content.enabled)
-    .map((content) => ({
-      title: content.title,
-      position: renderContentArea(content)?.ref?.current?.offsetTop ?? 0,
-      onTrigger: (init = false) => {
-        window.scrollTo({
-          top: renderContentArea(content)?.ref?.current?.offsetTop ?? 0,
-          behavior: init ? "auto" : "smooth",
-        });
-      },
-    }));
+  const navList = contentList.map((contentType: ContentType) => ({
+    title: page?.[contentType]?.sectionName ?? "Section",
+    position: renderContentArea(contentType)?.ref?.current?.offsetTop ?? 0,
+    onTrigger: (init = false) => {
+      window.scrollTo({
+        top: renderContentArea(contentType)?.ref?.current?.offsetTop ?? 0,
+        behavior: init ? "auto" : "smooth",
+      });
+    },
+  }));
 
-  const [currentPage, setCurrentPage] = React.useState<string>(
-    navList?.[0]?.title || "Welcome"
-  );
+  const [currentPage, setCurrentPage] = React.useState<string>("Welcome");
   const [showMenu, setShowMenu] = React.useState<boolean>(false);
   const [mobileNavHeight, setHeight] = React.useState<number>(0);
 
@@ -209,7 +190,7 @@ const Home = ({
     navList
       .find((nav) => nav.title === window.location.hash.replace("#", ""))
       ?.onTrigger(true);
-    if (page && projectList) {
+    if (page) {
       window.addEventListener("scroll", scrollHandler);
       window.addEventListener("hashchange", hashHandler);
     }
@@ -217,16 +198,13 @@ const Home = ({
       window.removeEventListener("scroll", scrollHandler);
       window.removeEventListener("hashchange", hashHandler);
     };
-  }, [page, projectList]);
+  }, [page]);
 
   return (
     <>
       <Head>
-        <title>{page.data.attributes.WebTitle ?? "Loading..."}</title>
-        <link
-          rel="icon"
-          href={page.data.attributes.webIcon.data.attributes.url}
-        ></link>
+        <title>{page.title}</title>
+        <link rel="icon" href={page.icon}></link>
         <meta
           name="google-site-verification"
           content="aAsoBFo0oI0JbkRF5wcEqVfGlTobRQ_H_EvkH7LU_7A"
@@ -242,9 +220,9 @@ const Home = ({
         ) : (
           showMenu && <NavBar navList={navList} currentPage={currentPage} />
         )}
-        {(page.data.attributes.Content ?? []).map((content: Content) => (
-          <div key={content.title}>
-            {renderContentArea(content)?.content ?? null}
+        {contentList.map((contentType: ContentType) => (
+          <div key={contentType}>
+            {renderContentArea(contentType)?.content ?? null}
           </div>
         ))}
       </div>

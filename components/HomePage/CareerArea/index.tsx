@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
 import styles from "./Career.module.css";
-import { CareerData } from "../../../types/HomeContent";
 import CareerTimeline from "./CareerTimeline";
 
 interface Props {
@@ -10,7 +9,7 @@ interface Props {
 
 const CareerArea = React.forwardRef<HTMLDivElement, Props>(({ data }, ref) => {
   const [isReveal, setIsReveal] = React.useState<boolean>(false);
-  if (!data.enabled) return null;
+  if (!data.isEnabled) return null;
   React.useEffect(() => {
     const handleScroll = () => {
       if (
@@ -27,14 +26,10 @@ const CareerArea = React.forwardRef<HTMLDivElement, Props>(({ data }, ref) => {
     };
   }, []);
   return (
-    <div
-      className={styles.careerWrapper}
-      css={{ backgroundColor: `${data.backgroundColor}` }}
-      ref={ref}
-    >
-      <span className={styles.header}>{data.title}</span>
+    <div className={styles.careerWrapper} ref={ref}>
+      <span className={styles.header}>{data.sectionName}</span>
       <div className={styles.timelineContainer}>
-        <CareerTimeline careerList={data.infos} isReveal={isReveal} />
+        <CareerTimeline careerList={data.items} isReveal={isReveal} />
       </div>
     </div>
   );

@@ -41,13 +41,15 @@ const CareerTimeline: React.FC<Props> = ({ careerList = [], isReveal }) => {
                 <span className={style.jobTitle}>{career.jobTitle}</span>
                 <div className={style.companyRow}>
                   <WorkIcon />
-                  <span className={style.companyName}>{career.company}</span>
+                  <span className={style.companyName}>
+                    {career.companyName}
+                  </span>
                 </div>
-                <span className={style.date}>{`${career.startDate} - ${
-                  career.endDate ? career.endDate : "Current"
+                <span className={style.date}>{`${career.fromDate} - ${
+                  career.toDate ? career.toDate : "Current"
                 }`}</span>
                 <ul className={style.explanationPointList}>
-                  {career.Description.split("\n").map((item) => {
+                  {career.description.split("\n").map((item) => {
                     return <li key={item}>{item}</li>;
                   })}
                 </ul>

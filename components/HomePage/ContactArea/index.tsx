@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
 import useMobile from "../../../hooks/useMobile";
-import { ContactData } from "../../../types/HomeContent";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import NoteIcon from "@mui/icons-material/Note";
@@ -11,20 +10,16 @@ interface Props {
 }
 
 const ContactArea = React.forwardRef<HTMLDivElement, Props>(({ data }, ref) => {
-  if (!data.enabled) return null;
+  // if (!data.isEnabled) return null;
   const isMobile = useMobile();
   return (
-    <div
-      css={{ backgroundColor: `${data.backgroundColor}` }}
-      className={styles.contactWrapper}
-      ref={ref}
-    >
-      <span className={styles.header}>{data.title}</span>
+    <div className={styles.contactWrapper} ref={ref}>
+      <span className={styles.header}>{data.sectionName}</span>
       <div className={styles.contactRow}>
         <div
           className={styles.contactItem}
           onClick={() => {
-            window.open(data.linkedin);
+            window.open(data.linkedinUrl);
           }}
         >
           <LinkedInIcon
@@ -36,12 +31,12 @@ const ContactArea = React.forwardRef<HTMLDivElement, Props>(({ data }, ref) => {
               color: "white",
             }}
           />
-          <span className={styles.contactLink}>{data.linkedin}</span>
+          <span className={styles.contactLink}>{data.linkedinUrl}</span>
         </div>
         <div
           className={styles.contactItem}
           onClick={() => {
-            window.open(data.github);
+            window.open(data.gitUrl);
           }}
         >
           <GitHubIcon
@@ -53,12 +48,12 @@ const ContactArea = React.forwardRef<HTMLDivElement, Props>(({ data }, ref) => {
               color: "white",
             }}
           />
-          <span className={styles.contactLink}>{data.github}</span>
+          <span className={styles.contactLink}>{data.gitUrl}</span>
         </div>
         <div
           className={styles.contactItem}
           onClick={() => {
-            window.open(data.developerNote);
+            window.open(data.developernoteUrl);
           }}
         >
           <NoteIcon
@@ -70,7 +65,7 @@ const ContactArea = React.forwardRef<HTMLDivElement, Props>(({ data }, ref) => {
               color: "white",
             }}
           />
-          <span className={styles.contactLink}>{data.developerNote}</span>
+          <span className={styles.contactLink}>{data.developernoteUrl}</span>
         </div>
       </div>
     </div>

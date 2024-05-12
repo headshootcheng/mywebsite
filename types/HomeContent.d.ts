@@ -1,64 +1,47 @@
-import { ContentType } from "./enums/ContentType";
-
 declare interface WelcomeData {
-  backgroundImage: BackgroundImage;
-  enabled: boolean;
-  headerTitle: string;
-  headerSubtitle: string;
+  backgroundImage: string;
+  isEnabled: boolean;
+  sectionName: string;
+  subTitle: string;
   title: string;
-  __component: ContentType.Welcome;
 }
 
 declare interface ProfileData {
-  title: string;
-  profileImage: Image;
-  enabled: boolean;
-  myIntro: string;
-  backgroundColor: string;
-  backgroundImage: BackgroundImage | null;
-  __component: ContentType.Profile;
+  image: string;
+  isEnabled: boolean;
+  text: string;
+  sectionName: string;
 }
 
 declare interface CertData {
   title: string;
   enabled: boolean;
-  backgroundColor: string;
-  __component: ContentType.Cert;
 }
 
 declare interface CareerData {
-  backgroundColor: string;
-  backgroundImage: BackgroundImage | null;
-  enabled: boolean;
-  title: string;
-  infos: CareerInfo[];
-  __component: ContentType.Career;
+  sectionName: string;
+  isEnabled: boolean;
+  items: CareerInfo[];
 }
 
 declare interface SkillData {
-  backgroundColor: string;
-  SkillInfos: SkillInfo[];
-  title: string;
-  __component: ContentType.Skill;
-  enabled: boolean;
-  SkillTypes: SkillType[];
+  sectionName: string;
+  isEnabled: boolean;
+  items: SkillInfo[];
 }
 
 declare interface ProjectData {
-  backgroundColor: string;
-  enabled: boolean;
-  title: string;
-  __component: ContentType.Project;
+  isEnabled: boolean;
+  sectionName: string;
+  items: ProjectItem[];
 }
 
 declare interface ContactData {
-  backgroundColor: string;
-  enabled: boolean;
-  title: string;
-  __component: ContentType.Contact;
-  github: string;
-  linkedin: string;
-  developerNote: string;
+  sectionName: string;
+  isEnabled: boolean;
+  gitUrl: string;
+  linkedinUrl: string;
+  developernoteUrl: string;
 }
 
 declare type Content =
@@ -76,12 +59,13 @@ declare interface Attribute {
   webIcon: Image;
 }
 
-declare interface DataRes {
-  attributes: Attribute;
-  id: number;
-}
-
 declare interface HomeRes {
-  data: DataRes;
-  meta: any;
+  title: string;
+  icon: string;
+  welcomeArea: WelcomeData;
+  profileArea: ProfileData;
+  careerArea: CareerData;
+  skillArea: SkillData;
+  projectArea: ProjectData;
+  contactArea: ContactData;
 }

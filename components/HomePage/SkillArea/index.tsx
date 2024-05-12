@@ -2,17 +2,15 @@
 import { Divider } from "@mui/material";
 import React from "react";
 import ClassNames from "classnames";
-import { SkillData } from "../../../types/HomeContent";
 import styles from "./Skill.module.css";
 interface Props {
   data: SkillData;
 }
 
 const SkillArea = React.forwardRef<HTMLDivElement, Props>(({ data }, ref) => {
-  if (!data.enabled) return null;
   const [isReveal, setIsReveal] = React.useState<boolean>(false);
 
-  if (!data.enabled) return null;
+  if (!data.isEnabled) return null;
   React.useEffect(() => {
     const handleScroll = () => {
       if (
@@ -28,14 +26,11 @@ const SkillArea = React.forwardRef<HTMLDivElement, Props>(({ data }, ref) => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+  const typeList = Array.from(new Set(data.items.map((item) => item.type)));
   return (
-    <div
-      css={{ backgroundColor: `${data.backgroundColor}` }}
-      className={styles.skillWrapper}
-      ref={ref}
-    >
-      <span className={styles.header}>{data.title}</span>
-      {data.SkillTypes.map(({ type }, index) => (
+    <div className={styles.skillWrapper} ref={ref}>
+      <span className={styles.header}>{data.sectionName}</span>
+      {typeList.map((type, index) => (
         <div
           css={{ transitionDelay: `${index / 2}s` }}
           className={ClassNames([
@@ -44,17 +39,19 @@ const SkillArea = React.forwardRef<HTMLDivElement, Props>(({ data }, ref) => {
           ])}
           key={type}
         >
-          <span className={styles.subHeader}>{type}</span>
+          <span className={styles.subHeader}>
+            {type.charAt(0).toUpperCase() + type.slice(1)}
+          </span>
           <div className={styles.skillRow}>
-            {data.SkillInfos.filter(
-              (skillInfo) => skillInfo.skillType === type
-            ).map(({ skillTitle }) => (
-              <div className={styles.skillItem} key={skillTitle}>
-                <span className={styles.skillText}>{skillTitle}</span>
-              </div>
-            ))}
+            {data.items
+              .filter((skillInfo) => skillInfo.type === type)
+              .map(({ name }) => (
+                <div className={styles.skillItem} key={name}>
+                  <span className={styles.skillText}>{name}</span>
+                </div>
+              ))}
           </div>
-          {index !== data.SkillTypes.length - 1 && <Divider />}
+          {index !== typeList.length - 1 && <Divider />}
         </div>
       ))}
     </div>

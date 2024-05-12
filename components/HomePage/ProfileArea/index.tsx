@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
 import ClassNames from "classnames";
-import { ProfileData } from "../../../types/HomeContent";
 import styles from "./Profile.module.css";
 interface Props {
   data: ProfileData;
@@ -9,7 +8,7 @@ interface Props {
 const ProfileArea = React.forwardRef<HTMLDivElement, Props>(({ data }, ref) => {
   const [isReveal, setIsReveal] = React.useState<boolean>(false);
 
-  if (!data.enabled) return null;
+  if (!data.isEnabled) return null;
   React.useEffect(() => {
     const handleScroll = () => {
       if (
@@ -26,12 +25,8 @@ const ProfileArea = React.forwardRef<HTMLDivElement, Props>(({ data }, ref) => {
     };
   }, []);
   return (
-    <div
-      ref={ref}
-      css={{ backgroundColor: `${data.backgroundColor}` }}
-      className={styles.profileWrapper}
-    >
-      <span className={styles.header}>{data.title}</span>
+    <div ref={ref} className={styles.profileWrapper}>
+      <span className={styles.header}>{data.sectionName}</span>
       <div
         className={ClassNames([
           styles.introArea,
@@ -39,13 +34,10 @@ const ProfileArea = React.forwardRef<HTMLDivElement, Props>(({ data }, ref) => {
         ])}
       >
         <div className={styles.iconArea}>
-          <img
-            className={styles.icon}
-            src={data.profileImage.data.attributes.url}
-          />
+          <img className={styles.icon} src={data.image} />
         </div>
         <div className={styles.textArea}>
-          <span className={styles.introText}>{data.myIntro}</span>
+          <span className={styles.introText}>{data.text}</span>
         </div>
       </div>
     </div>

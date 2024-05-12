@@ -1,8 +1,8 @@
 declare interface CareerInfo {
-  Description: string;
-  company: string;
-  endDate: string | null;
-  startDate: string;
+  description: string;
+  companyName: string;
+  toDate: string | null;
+  fromDate: string;
   jobTitle: string;
   isCurrent: boolean;
 }

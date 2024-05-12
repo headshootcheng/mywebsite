@@ -11,10 +11,7 @@ import { Suspense } from "react";
 import Loading from "../components/Loading";
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
-  const fetcher = (url: string) =>
-    axios
-      .get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${url}`)
-      .then((res) => res.data);
+  const fetcher = (url: string) => axios.get(`${url}`).then((res) => res.data);
   return (
     <>
       <DefaultSeo {...SEO} />
