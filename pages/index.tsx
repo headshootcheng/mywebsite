@@ -1,6 +1,5 @@
 import React from "react";
 import useSWR from "swr";
-import axios, { AxiosResponse } from "axios";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import useMobile from "../hooks/useMobile";
 import { ContentType } from "../types/enums/ContentType";
@@ -13,14 +12,13 @@ import ContactArea from "../components/HomePage/ContactArea";
 import MobileNavBar from "../components/MobileNavBar";
 import NavBar from "../components/NavBar";
 import Head from "next/head";
+import { getHomePageData } from "./api/home";
 
 export const getStaticProps: GetStaticProps<{
   pageRes: HomeRes;
 }> = async () => {
   try {
-    const { data: page }: AxiosResponse<HomeRes> = await axios.get(
-      `${process.env.BASE_URL}/api/home`
-    );
+    const page: HomeRes = await getHomePageData();
     return {
       props: {
         pageRes: page,
