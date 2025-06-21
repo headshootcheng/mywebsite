@@ -69,3 +69,9 @@ declare interface HomeRes {
   projectArea: ProjectData;
   contactArea: ContactData;
 }
+
+declare interface Nav {
+  title: string;
+  position: number;
+  onTrigger: (init?: boolean) => void;
+}

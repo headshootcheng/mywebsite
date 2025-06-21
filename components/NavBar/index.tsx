@@ -6,7 +6,7 @@ import styles from "./NavBar.module.scss";
 import ClassName from "classnames";
 
 interface Props {
-  navList: nav[];
+  navList: Nav[];
   currentPage: string;
 }
 
@@ -55,7 +55,7 @@ const NavBar: React.FC<Props> = React.memo(({ navList, currentPage }) => {
               [styles.navBoxActive]: isActive,
             })}
             key={title}
-            onClick={onTrigger}
+            onClick={() => onTrigger()}
             aria-label={`Navigate to ${title} section`}
             aria-current={isActive ? "page" : undefined}
             tabIndex={0}

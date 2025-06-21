@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./MobileNavBar.module.scss";
 import ClassName from "classnames";
 interface Props {
-  navList: nav[];
+  navList: Nav[];
   currentPage: string;
   height: number;
 }

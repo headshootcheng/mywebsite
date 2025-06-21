@@ -102,7 +102,7 @@ const Home = ({ pageRes }: InferGetStaticPropsType<typeof getStaticProps>) => {
     [page]
   );
 
-  const navList = React.useMemo(
+  const navList: Nav[] = React.useMemo(
     () =>
       contentList.map((contentType: ContentType) => ({
         title: page?.[contentType]?.sectionName ?? "Section",
