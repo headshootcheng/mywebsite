@@ -28,11 +28,6 @@ export function useIntersectionObserver(
       ([entry]) => {
         const isElementVisible = entry.isIntersecting;
         setIsVisible(isElementVisible);
-
-        // If frozen and now visible, disconnect observer
-        if (freezeOnceVisible && isElementVisible) {
-          observer.disconnect();
-        }
       },
       {
         root,

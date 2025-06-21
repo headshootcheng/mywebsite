@@ -12,8 +12,10 @@ interface Props {
 const ProjectArea = React.forwardRef<HTMLDivElement, Props>(({ data }, ref) => {
   const [observerRef, isVisible] = useIntersectionObserver({
     threshold: 0.2,
-    rootMargin: "-100px",
+    rootMargin: "0px",
   });
+  console.log("ProjectArea isVisible", isVisible, observerRef);
+
   const isMobile = useIsMobile();
 
   // Combine refs - must be called before any early returns

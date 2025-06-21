@@ -9,11 +9,7 @@ interface Props {
 }
 
 const ProfileArea = React.forwardRef<HTMLDivElement, Props>(({ data }, ref) => {
-  const [observerRef, isVisible] = useIntersectionObserver({
-    threshold: 0.3,
-    rootMargin: "-50px",
-    freezeOnceVisible: true,
-  });
+  const [observerRef, isVisible] = useIntersectionObserver();
 
   // Combine refs - must be called before any early returns
   React.useImperativeHandle(ref, () => observerRef.current as HTMLDivElement);
