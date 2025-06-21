@@ -10,7 +10,6 @@ interface Props {
 const SkillArea = React.forwardRef<HTMLDivElement, Props>(({ data }, ref) => {
   const [isReveal, setIsReveal] = React.useState<boolean>(false);
 
-  if (!data.isEnabled) return null;
   React.useEffect(() => {
     const handleScroll = () => {
       if (
@@ -25,7 +24,10 @@ const SkillArea = React.forwardRef<HTMLDivElement, Props>(({ data }, ref) => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [ref]);
+
+  if (!data.isEnabled) return null;
+
   const typeList = Array.from(new Set(data.items.map((item) => item.type)));
   return (
     <div className={styles.skillWrapper} ref={ref}>

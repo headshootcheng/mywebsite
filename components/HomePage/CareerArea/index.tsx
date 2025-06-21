@@ -9,7 +9,6 @@ interface Props {
 
 const CareerArea = React.forwardRef<HTMLDivElement, Props>(({ data }, ref) => {
   const [isReveal, setIsReveal] = React.useState<boolean>(false);
-  if (!data.isEnabled) return null;
   React.useEffect(() => {
     const handleScroll = () => {
       if (
@@ -24,7 +23,9 @@ const CareerArea = React.forwardRef<HTMLDivElement, Props>(({ data }, ref) => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [ref]);
+
+  if (!data.isEnabled) return null;
   return (
     <div className={styles.careerWrapper} ref={ref}>
       <span className={styles.header}>{data.sectionName}</span>

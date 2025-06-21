@@ -1,5 +1,5 @@
-declare interface nav {
+declare interface Nav {
   title: string;
-  ref?: any;
+  ref?: React.RefObject<HTMLDivElement>;
   onTrigger: () => void;
 }

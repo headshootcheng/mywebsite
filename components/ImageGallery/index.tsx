@@ -1,8 +1,7 @@
 import React from "react";
-import SwiperCore, { Navigation, Pagination } from "swiper";
 
 // Initialize Swiper modules outside of component
-SwiperCore.use([Navigation, Pagination]);
+// SwiperCore.use([Navigation, Pagination]);
 
 interface Props {
   // Future implementation for image gallery

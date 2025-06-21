@@ -1,31 +1,31 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
-import useMobile from "../../../hooks/useMobile";
-import { useRouter } from "next/router";
+// import useMobile from "../../../hooks/useMobile";
+// import { useRouter } from "next/router";
 interface Props {
   data: CertData;
 }
 
 const CertArea = React.forwardRef<HTMLDivElement, Props>(({ data }, ref) => {
-  const [isReveal, setIsReveal] = React.useState<boolean>(false);
-  const route = useRouter();
-  if (!data.enabled) return null;
-  React.useEffect(() => {
-    const handleScroll = () => {
-      if (
-        typeof ref !== "function" &&
-        ref?.current?.offsetTop &&
-        window.scrollY > ref?.current?.offsetTop - 400
-      )
-        setIsReveal(true);
-      else setIsReveal(false);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-  const isMobile = useMobile();
+  // const [isReveal, setIsReveal] = React.useState<boolean>(false);
+  // const route = useRouter();
+  // const isMobile = useMobile();
+  // if (!data.enabled) return null;
+  // React.useEffect(() => {
+  //   const handleScroll = () => {
+  //     if (
+  //       typeof ref !== "function" &&
+  //       ref?.current?.offsetTop &&
+  //       window.scrollY > ref?.current?.offsetTop - 400
+  //     )
+  //       setIsReveal(true);
+  //     else setIsReveal(false);
+  //   };
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, []);
   return null;
   // return (
   //   <div
