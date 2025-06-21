@@ -92,7 +92,9 @@ export const measureWebVitals = () => {
  */
 export const getMemoryUsage = (): MemoryInfo | null => {
   if (typeof window !== "undefined" && "performance" in window) {
-    return (performance as Performance & { memory?: MemoryInfo }).memory || null;
+    return (
+      (performance as Performance & { memory?: MemoryInfo }).memory || null
+    );
   }
   return null;
 };

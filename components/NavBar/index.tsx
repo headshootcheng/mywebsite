@@ -30,7 +30,7 @@ const NavBar: React.FC<Props> = React.memo(({ navList, currentPage }) => {
   }, [navList, currentPage]);
 
   return (
-    <nav 
+    <nav
       className={styles.navBar}
       role="navigation"
       aria-label="Page navigation"

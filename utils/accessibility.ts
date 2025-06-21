@@ -54,10 +54,7 @@ export const createImageA11yProps = (
 /**
  * Creates proper ARIA attributes for sections
  */
-export const createSectionA11yProps = (
-  title: string,
-  headingId?: string
-) => ({
+export const createSectionA11yProps = (title: string, headingId?: string) => ({
   role: "region",
   "aria-labelledby": headingId || generateA11yId("heading"),
 });
