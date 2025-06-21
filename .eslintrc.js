@@ -1,38 +1,43 @@
 module.exports = {
-  parser: "babel-eslint",
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 2020,
     ecmaFeatures: { jsx: true },
-    sourceType: "module",
+    sourceType: 'module',
     tsconfigRootDir: __dirname,
-    project: "./tsconfig.json",
+    project: './tsconfig.json',
   },
-  plugins: ["prettier", "unused-imports", "@typescript-eslint"], // use plugin
+  plugins: ['prettier', 'unused-imports', '@typescript-eslint', 'jsx-a11y'],
   extends: [
-    "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended", // as prettier has different set of rule,
-    "plugin:prettier/recommended", // we use the recommended set
+    'next/core-web-vitals',
+    'plugin:react/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:jsx-a11y/recommended',
+    'plugin:prettier/recommended',
   ],
   rules: {
-    "@typescript-eslint/ban-ts-comment": "off",
-    "@typescript-eslint/ban-ts-ignore": "off",
-    "@typescript-eslint/camelcase": "off",
-    "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-empty-function": "off",
-    "@typescript-eslint/no-empty-interface": "off",
-    "@typescript-eslint/no-explicit-any": "warn", // : any
-    "@typescript-eslint/no-floating-promises": "off",
-    "@typescript-eslint/no-inferrable-types": "off", // allow typing default variables
-    "@typescript-eslint/no-unused-vars": "off",
-    "@typescript-eslint/no-var-requires": "off", // Using require('...')
-    "react/react-in-jsx-scope": "off", // must include import from react, otherwise show error
-    "prettier/prettier": "warn", // styling warning based on prettier
-    "react/prop-types": "off",
-    "prefer-const": "warn", // const type is preferred
-    "jsx-a11y/anchor-is-valid": "off",
-    "unused-imports/no-unused-imports": "warn",
-    "unused-imports/no-unused-vars": "warn",
+    '@typescript-eslint/ban-ts-comment': 'off',
+    '@typescript-eslint/ban-ts-ignore': 'off',
+    '@typescript-eslint/camelcase': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-empty-function': 'off',
+    '@typescript-eslint/no-empty-interface': 'off',
+    '@typescript-eslint/no-explicit-any': 'warn',
+    '@typescript-eslint/no-floating-promises': 'off',
+    '@typescript-eslint/no-inferrable-types': 'off',
+    '@typescript-eslint/no-unused-vars': 'warn',
+    '@typescript-eslint/no-var-requires': 'off',
+    'react/react-in-jsx-scope': 'off',
+    'prettier/prettier': 'warn',
+    'react/prop-types': 'off',
+    'prefer-const': 'warn',
+    'jsx-a11y/anchor-is-valid': 'off',
+    'jsx-a11y/click-events-have-key-events': 'warn',
+    'jsx-a11y/no-noninteractive-element-interactions': 'warn',
+    'unused-imports/no-unused-imports': 'warn',
+    'unused-imports/no-unused-vars': 'warn',
+    '@next/next/no-img-element': 'warn',
   },
-  ignorePatterns: ["generated*"],
+  ignorePatterns: ['generated*', 'node_modules', '.next'],
 };
