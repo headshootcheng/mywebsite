@@ -2,45 +2,48 @@
 import React from "react";
 import ClassNames from "classnames";
 import styles from "./Profile.module.css";
+import { useIntersectionObserver } from "../../../hooks/useIntersectionObserver";
+
 interface Props {
   data: ProfileData;
 }
+
 const ProfileArea = React.forwardRef<HTMLDivElement, Props>(({ data }, ref) => {
-  const [isReveal, setIsReveal] = React.useState<boolean>(false);
+  const [observerRef, isVisible] = useIntersectionObserver();
+
+  // Combine refs - must be called before any early returns
+  React.useImperativeHandle(ref, () => observerRef.current as HTMLDivElement);
 
   if (!data.isEnabled) return null;
-  React.useEffect(() => {
-    const handleScroll = () => {
-      if (
-        typeof ref !== "function" &&
-        ref?.current?.offsetTop &&
-        window.scrollY > ref?.current?.offsetTop - 250
-      )
-        setIsReveal(true);
-      else setIsReveal(false);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+
   return (
-    <div ref={ref} className={styles.profileWrapper}>
-      <span className={styles.header}>{data.sectionName}</span>
+    <section
+      ref={observerRef}
+      className={styles.profileWrapper}
+      aria-labelledby="profile-header"
+    >
+      <h2 id="profile-header" className={styles.header}>
+        {data.sectionName}
+      </h2>
       <div
         className={ClassNames([
           styles.introArea,
-          { [styles.introArea_active]: isReveal },
+          { [styles.introArea_active]: isVisible },
         ])}
       >
         <div className={styles.iconArea}>
-          <img className={styles.icon} src={data.image} />
+          <img
+            className={styles.icon}
+            src={data.image}
+            alt="Profile photo"
+            loading="lazy"
+          />
         </div>
         <div className={styles.textArea}>
-          <span className={styles.introText}>{data.text}</span>
+          <p className={styles.introText}>{data.text}</p>
         </div>
       </div>
-    </div>
+    </section>
   );
 });
 ProfileArea.displayName = "ProfileArea";

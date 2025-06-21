@@ -1,11 +1,16 @@
 import React from "react";
-import SwiperCore, { Navigation, Pagination } from "swiper";
-SwiperCore.use([Navigation, Pagination]);
+
+// Initialize Swiper modules outside of component
+// SwiperCore.use([Navigation, Pagination]);
+
 interface Props {
-  parentStyle: string;
-  // projectList: ProjectItem;
+  // Future implementation for image gallery
+  // parentStyle?: string;
+  // projectList?: ProjectItem[];
 }
-const ImageGallery: React.FC<Props> = ({ parentStyle }) => {
+
+const ImageGallery: React.FC<Props> = () => {
+  // TODO: Implement image gallery functionality
   return null;
   // return (
   //   <Swiper

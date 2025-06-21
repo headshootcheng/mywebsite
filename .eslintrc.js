@@ -1,5 +1,5 @@
 module.exports = {
-  parser: "babel-eslint",
+  parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: 2020,
     ecmaFeatures: { jsx: true },
@@ -7,12 +7,18 @@ module.exports = {
     tsconfigRootDir: __dirname,
     project: "./tsconfig.json",
   },
-  plugins: ["prettier", "unused-imports", "@typescript-eslint"], // use plugin
+  plugins: ["prettier", "unused-imports", "@typescript-eslint"],
   extends: [
     "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended", // as prettier has different set of rule,
-    "plugin:prettier/recommended", // we use the recommended set
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "plugin:react-hooks/recommended",
   ],
+  settings: {
+    react: {
+      version: "detect",
+    },
+  },
   rules: {
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/ban-ts-ignore": "off",

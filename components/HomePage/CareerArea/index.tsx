@@ -2,34 +2,23 @@
 import React from "react";
 import styles from "./Career.module.css";
 import CareerTimeline from "./CareerTimeline";
+import { useIntersectionObserver } from "../../../hooks/useIntersectionObserver";
 
 interface Props {
   data: CareerData;
 }
 
 const CareerArea = React.forwardRef<HTMLDivElement, Props>(({ data }, ref) => {
-  const [isReveal, setIsReveal] = React.useState<boolean>(false);
+  const [observerRef, isVisible] = useIntersectionObserver();
+  // Combine refs - must be called before any early returns
+  React.useImperativeHandle(ref, () => observerRef.current as HTMLDivElement);
+
   if (!data.isEnabled) return null;
-  React.useEffect(() => {
-    const handleScroll = () => {
-      if (
-        typeof ref !== "function" &&
-        ref?.current?.offsetTop &&
-        window.scrollY > ref?.current?.offsetTop - 150
-      )
-        setIsReveal(true);
-      else setIsReveal(false);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
   return (
-    <div className={styles.careerWrapper} ref={ref}>
+    <div className={styles.careerWrapper} ref={observerRef}>
       <span className={styles.header}>{data.sectionName}</span>
       <div className={styles.timelineContainer}>
-        <CareerTimeline careerList={data.items} isReveal={isReveal} />
+        <CareerTimeline careerList={data.items} isReveal={isVisible} />
       </div>
     </div>
   );

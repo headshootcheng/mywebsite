@@ -48,73 +48,76 @@ const Home = ({ pageRes }: InferGetStaticPropsType<typeof getStaticProps>) => {
   });
   console.log("page data", page);
 
-  if (!page) return null;
   const welcomeRef = React.useRef<HTMLDivElement>(null);
   const profileRef = React.useRef<HTMLDivElement>(null);
   const careerRef = React.useRef<HTMLDivElement>(null);
-  // const certRef = React.useRef<HTMLDivElement>(null);
   const skillRef = React.useRef<HTMLDivElement>(null);
   const projectRef = React.useRef<HTMLDivElement>(null);
   const contactRef = React.useRef<HTMLDivElement>(null);
   const isMobile = useMobile();
-  const renderContentArea = (contentType: ContentType) => {
-    switch (contentType) {
-      case ContentType.Welcome:
-        return {
-          content: <WelcomeArea data={page[contentType]} ref={welcomeRef} />,
-          ref: welcomeRef,
-        };
-      case ContentType.Profile:
-        return {
-          content: <ProfileArea data={page[contentType]} ref={profileRef} />,
-          ref: profileRef,
-        };
-      case ContentType.Career:
-        return {
-          content: <CareerArea data={page[contentType]} ref={careerRef} />,
-          ref: careerRef,
-        };
-      // case ContentType.Cert:
-      //   return {
-      //     content: <CertArea data={content} />,
-      //     ref: certRef,
-      //   };
-      case ContentType.Skill:
-        return {
-          content: <SkillArea data={page[contentType]} ref={skillRef} />,
-          ref: skillRef,
-        };
-      case ContentType.Project:
-        return {
-          content: <ProjectArea data={page[contentType]} ref={projectRef} />,
-          ref: projectRef,
-        };
-      case ContentType.Contact:
-        return {
-          content: <ContactArea data={page[contentType]} ref={contactRef} />,
-          ref: contactRef,
-        };
-      default:
-        return null;
-    }
-  };
-
-  const navList = contentList.map((contentType: ContentType) => ({
-    title: page?.[contentType]?.sectionName ?? "Section",
-    position: renderContentArea(contentType)?.ref?.current?.offsetTop ?? 0,
-    onTrigger: (init = false) => {
-      window.scrollTo({
-        top: renderContentArea(contentType)?.ref?.current?.offsetTop ?? 0,
-        behavior: init ? "auto" : "smooth",
-      });
-    },
-  }));
+  const isScrolling = React.useRef<NodeJS.Timeout>();
 
   const [currentPage, setCurrentPage] = React.useState<string>("Welcome");
   const [showMenu, setShowMenu] = React.useState<boolean>(false);
   const [mobileNavHeight, setHeight] = React.useState<number>(0);
 
-  const updatePosition = () => {
+  const renderContentArea = React.useCallback(
+    (contentType: ContentType) => {
+      if (!page) return null;
+      switch (contentType) {
+        case ContentType.Welcome:
+          return {
+            content: <WelcomeArea data={page[contentType]} ref={welcomeRef} />,
+            ref: welcomeRef,
+          };
+        case ContentType.Profile:
+          return {
+            content: <ProfileArea data={page[contentType]} ref={profileRef} />,
+            ref: profileRef,
+          };
+        case ContentType.Career:
+          return {
+            content: <CareerArea data={page[contentType]} ref={careerRef} />,
+            ref: careerRef,
+          };
+        case ContentType.Skill:
+          return {
+            content: <SkillArea data={page[contentType]} ref={skillRef} />,
+            ref: skillRef,
+          };
+        case ContentType.Project:
+          return {
+            content: <ProjectArea data={page[contentType]} ref={projectRef} />,
+            ref: projectRef,
+          };
+        case ContentType.Contact:
+          return {
+            content: <ContactArea data={page[contentType]} ref={contactRef} />,
+            ref: contactRef,
+          };
+        default:
+          return null;
+      }
+    },
+    [page]
+  );
+
+  const navList = React.useMemo(
+    () =>
+      contentList.map((contentType: ContentType) => ({
+        title: page?.[contentType]?.sectionName ?? "Section",
+        position: renderContentArea(contentType)?.ref?.current?.offsetTop ?? 0,
+        onTrigger: (init = false) => {
+          window.scrollTo({
+            top: renderContentArea(contentType)?.ref?.current?.offsetTop ?? 0,
+            behavior: init ? "auto" : "smooth",
+          });
+        },
+      })),
+    [page, renderContentArea]
+  );
+
+  const updatePosition = React.useCallback(() => {
     if (
       window.scrollY >= (welcomeRef?.current?.offsetTop || 0) &&
       window.scrollY < (profileRef?.current?.offsetTop || 0)
@@ -154,41 +157,39 @@ const Home = ({ pageRes }: InferGetStaticPropsType<typeof getStaticProps>) => {
       setCurrentPage(navList[5].title);
       return;
     }
-  };
+  }, [navList]);
 
-  let isScrolling: NodeJS.Timeout;
-  const handleMenuOpen = () => {
-    // Manipulate the appearance of desktop menu
+  const handleMenuOpen = React.useCallback(() => {
     if (window.scrollY > 100) setShowMenu(true);
     else setShowMenu(false);
 
-    // Manipulate the height of mobile menu
     const heightRatio =
       (window.scrollY - (profileRef?.current?.offsetTop || 0)) / 300;
     if (heightRatio > 1) setHeight(80);
     else if (heightRatio < 0) setHeight(0);
     else setHeight(80 * heightRatio);
-  };
-  const scrollHandler = () => {
-    window.clearTimeout(isScrolling);
+  }, []);
+
+  const scrollHandler = React.useCallback(() => {
+    if (isScrolling.current) {
+      window.clearTimeout(isScrolling.current);
+    }
     updatePosition();
     handleMenuOpen();
-    // If user stop scrolling over 2 seconds, hide the desktop menu
-    isScrolling = setTimeout(() => {
+    isScrolling.current = setTimeout(() => {
       setShowMenu(false);
     }, 2000);
-  };
-  const hashHandler = () => {
+  }, [handleMenuOpen, updatePosition]);
+
+  const hashHandler = React.useCallback(() => {
     navList
       .find((nav) => nav.title === window.location.hash.replace("#", ""))
       ?.onTrigger();
-  };
+  }, [navList]);
 
   React.useEffect(() => {
-    navList
-      .find((nav) => nav.title === window.location.hash.replace("#", ""))
-      ?.onTrigger(true);
     if (page) {
+      hashHandler();
       window.addEventListener("scroll", scrollHandler);
       window.addEventListener("hashchange", hashHandler);
     }
@@ -196,7 +197,9 @@ const Home = ({ pageRes }: InferGetStaticPropsType<typeof getStaticProps>) => {
       window.removeEventListener("scroll", scrollHandler);
       window.removeEventListener("hashchange", hashHandler);
     };
-  }, [page]);
+  }, [page, hashHandler, scrollHandler]);
+
+  if (!page) return null;
 
   return (
     <>
